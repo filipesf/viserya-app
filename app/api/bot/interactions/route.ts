@@ -1,12 +1,12 @@
 import { InteractionType, APIInteractionResponse } from 'discord.js';
 import { NextResponse } from 'next/server';
-import { PUBLIC_KEY } from '@viserya/config/constants';
+import { DISCORD_AUTH_KEY } from '@viserya/config/constants';
 import getCommands from '@viserya/utils/discord/getCommands';
 import { verifyInteractionRequest } from '@viserya/utils/discord/verifyDiscordRequest';
 
 export async function POST(req: Request) {
   try {
-    const verifyRes = await verifyInteractionRequest(req, PUBLIC_KEY);
+    const verifyRes = await verifyInteractionRequest(req, DISCORD_AUTH_KEY);
 
     if (!verifyRes.isValid || !verifyRes.interaction) {
       return new NextResponse('Invalid request', { status: 401 });

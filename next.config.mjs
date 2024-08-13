@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    BOT_TOKEN: process.env.BOT_TOKEN,
-    PUBLIC_KEY: process.env.PUBLIC_KEY,
+    DISCORD_BOT_TOKEN: process.env.DISCORD_BOT_TOKEN,
+    DISCORD_AUTH_KEY: process.env.DISCORD_AUTH_KEY,
     REGISTER_COMMANDS_KEY: process.env.REGISTER_COMMANDS_KEY,
-    CLIENT_APPLICATION_ID: process.env.NEXT_PUBLIC_APPLICATION_ID,
+    CLIENT_APPLICATION_ID: process.env.DISCORD_APP_ID,
     AUTHORIZATION_KEY: process.env.AUTHORIZATION_KEY,
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     ASSISTANT_ID_DM: process.env.ASSISTANT_ID_DM,
