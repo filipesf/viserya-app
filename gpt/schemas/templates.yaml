@@ -1,0 +1,35 @@
+openapi: 3.1.0
+info:
+  title: ViseryaApp Template Actions
+  version: 1.0.0
+servers:
+  - url: https://gpt-viserya-actions.vercel.app
+    description: Actions definition for retrieving markdown templates
+paths:
+  /api/template:
+    get:
+      operationId: getTemplate
+      description: This endpoint retrieves the specific markdown template.
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: The unique identifier of the template. (adventure, character, deity, location, lore, monster, pantheon, story)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response containing the markdown template to format the output.
+          content:
+            text/markdown:
+              schema:
+                type: string
+        '404':
+          description: Template not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string

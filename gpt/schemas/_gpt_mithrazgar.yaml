@@ -1,0 +1,601 @@
+openapi: 3.1.0
+info:
+  title: ViseryaApp Actions
+  version: 1.0.0
+servers:
+  - url: https://gpt-viserya-actions.vercel.app
+    description: Actions definition for Mitrâzgar, The Geomancer
+paths:
+  /api/template:
+    get:
+      operationId: getTemplate
+      description: This endpoint retrieves the specific markdown template.
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: The unique identifier of the template. (adventure, character, deity, location, lore, monster, pantheon)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response containing the markdown template to format the output.
+          content:
+            text/markdown:
+              schema:
+                type: string
+        '404':
+          description: Template not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /api/write/story:
+    post:
+      operationId: writeStory
+      tags:
+        - Sotry Writting
+      summary:
+        Write a story with a formatted markdown template and populate all placeholders. Proper names should be given
+        using the Viselar language. Non-relevant or unpopulated sections should be removed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  description: The prompt for generating the story
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+              required:
+                - prompt
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/write/lore:
+    post:
+      operationId: writeLore
+      tags:
+        - Lore Writting
+      summary:
+        Write a lore document with a formatted markdown template and populate all placeholders. Proper names should be
+        given using the Viselar language. Non-relevant or unpopulated sections should be removed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  description: The prompt for generating the lore
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+              required:
+                - prompt
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/create/adventure:
+    post:
+      operationId: createAdventure
+      tags:
+        - Adventure Creation
+      summary:
+        Generate an adventure with a formatted markdown template and populate all placeholders. Proper names should be
+        given using the Viselar language. Non-relevant or unpopulated sections should be removed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  description: The prompt for generating the adventure
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+              required:
+                - prompt
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/create/character:
+    post:
+      operationId: createCharacter
+      tags:
+        - Character Creation
+      summary:
+        Generate a character with a formatted markdown template and populate all placeholders. Proper names should be
+        given using the Viselar language. Non-relevant or unpopulated sections should be removed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  description: The prompt for generating the character
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+              required:
+                - prompt
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/create/item:
+    post:
+      operationId: createItem
+      tags:
+        - Item Creation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  description: The prompt for generating the item
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+              required:
+                - prompt
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/create/location:
+    post:
+      operationId: createLocation
+      tags:
+        - Location Creation
+      summary:
+        Generate a location with a formatted markdown template and populate all placeholders. Proper names should be
+        given using the Viselar language. Non-relevant or unpopulated sections should be removed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  description: The prompt for generating the location
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+              required:
+                - prompt
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/create/monster:
+    post:
+      operationId: createMonster
+      tags:
+        - Monster Creation
+      summary:
+        Generate a monster with a formatted markdown template and populate all placeholders. Proper names should be
+        given using the Viselar language. Non-relevant or unpopulated sections should be removed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  description: The prompt for generating the monster
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+              required:
+                - prompt
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/create/organisation:
+    post:
+      operationId: createOrganisation
+      tags:
+        - Organisation Creation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  description: The prompt for generating the organisation
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+              required:
+                - prompt
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/random/adventure:
+    post:
+      operationId: createRandomAdventure
+      tags:
+        - Random Generation
+        - Adventure Creation
+      summary:
+        Generate a random adventure with a formatted markdown template and populate all placeholders. Proper names
+        should be given using the Viselar language. Non-relevant or unpopulated sections should be removed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/random/character:
+    post:
+      operationId: createRandomCharacter
+      tags:
+        - Random Generation
+        - Character Creation
+      summary:
+        Generate a random character with a formatted markdown template and populate all placeholders. Proper names
+        should be given using the Viselar language. Non-relevant or unpopulated sections should be removed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/random/item:
+    post:
+      operationId: createRandomItem
+      tags:
+        - Random Generation
+        - Item Creation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/random/location:
+    post:
+      operationId: createRandomLocation
+      tags:
+        - Random Generation
+        - Location Creation
+      summary:
+        Generate a random location with a formatted markdown template and populate all placeholders. Proper names
+        should be given using the Viselar language. Non-relevant or unpopulated sections should be removed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/random/monster:
+    post:
+      operationId: createRandomMonster
+      tags:
+        - Random Generation
+        - Monster Creation
+      summary:
+        Generate a random monster with a formatted markdown template and populate all placeholders. Proper names should
+        be given using the Viselar language. Non-relevant or unpopulated sections should be removed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/random/organisation:
+    post:
+      operationId: createRandomOrganisation
+      tags:
+        - Random Generation
+        - Organisation Creation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.

@@ -7,7 +7,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -18,8 +18,17 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@viserya/*": ["./*"]
+    },
+    "outDir": "dist",
+    "target": "es2022",
+    "useUnknownInCatchVariables": true,
+    "allowUnreachableCode": false,
+    "importHelpers": true,
+    "typeRoots": ["node_modules/@types"],
+    "types": ["node"],
+    "sourceMap": true,
+    "strictPropertyInitialization": false
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

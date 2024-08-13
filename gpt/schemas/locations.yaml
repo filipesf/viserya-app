@@ -1,0 +1,86 @@
+openapi: 3.1.0
+info:
+  title: ViseryaApp Location Actions
+  version: 1.0.0
+servers:
+  - url: https://gpt-viserya-actions.vercel.app
+    description: Actions definition for creating locations in Viserya
+paths:
+  /api/create/location:
+    post:
+      operationId: createLocation
+      tags:
+        - Location Creation
+      summary: Generate a location with a formatted markdown template and populate all placeholders. Proper names should be given using the Viselar language. Non-relevant or unpopulated sections should be removed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  description: The prompt for generating the location
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+              required:
+                - prompt
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/random/location:
+    post:
+      operationId: createRandomLocation
+      tags:
+        - Random Generation
+        - Location Creation
+      summary: Generate a random location with a formatted markdown template and populate all placeholders. Proper names should be given using the Viselar language. Non-relevant or unpopulated sections should be removed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.

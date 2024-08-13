@@ -1,0 +1,84 @@
+openapi: 3.1.0
+info:
+  title: ViseryaApp Organisations Actions
+  version: 1.0.0
+servers:
+  - url: https://gpt-viserya-actions.vercel.app
+    description: Actions definition for creating organisations in Viserya
+paths:
+  /api/create/organisation:
+    post:
+      operationId: createOrganisation
+      tags:
+        - Organisation Creation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  description: The prompt for generating the organisation
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+              required:
+                - prompt
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/random/organisation:
+    post:
+      operationId: createRandomOrganisation
+      tags:
+        - Random Generation
+        - Organisation Creation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
