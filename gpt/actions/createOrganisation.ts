@@ -1,5 +1,6 @@
 import { PromptAndTemplate } from '@viserya/types';
-import { getTemplateById, getRandomOrganisation } from '@viserya/utils';
+import { getRandomOrganisation } from '@viserya/utils/getRandomElement';
+import { getTemplateById } from '@viserya/utils/getTemplateById';
 
 /**
  * Creates a formatted organisation prompt.
@@ -25,7 +26,7 @@ export const createOrganisation = async (
  */
 export const createRandomOrganisation =
   async (): Promise<PromptAndTemplate> => {
-    const prompt = getRandomOrganisation();
+    const prompt = await getRandomOrganisation();
     const template = await getTemplateById('organisation');
 
     console.log(`Random organisation created: ${prompt}`);

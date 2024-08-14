@@ -1,11 +1,7 @@
 import { PromptAndTemplate } from '@viserya/types';
-import { getTemplateById, getRandomCharacter } from '@viserya/utils';
+import { getRandomCharacter } from '@viserya/utils/getRandomElement';
+import { getTemplateById } from '@viserya/utils/getTemplateById';
 
-/**
- * Creates a formatted character prompt.
- * @param prompt - The initial prompt string.
- * @returns The formatted character prompt object containing the prompt and its template.
- */
 export const createCharacter = async (
   prompt: string,
 ): Promise<PromptAndTemplate> => {
@@ -19,12 +15,8 @@ export const createCharacter = async (
   };
 };
 
-/**
- * Creates a random formatted character prompt.
- * @returns The formatted random character prompt object containing the prompt and its template.
- */
 export const createRandomCharacter = async (): Promise<PromptAndTemplate> => {
-  const prompt = getRandomCharacter();
+  const prompt = await getRandomCharacter();
   const template = await getTemplateById('character');
 
   console.log(`Random character created: ${prompt}`);

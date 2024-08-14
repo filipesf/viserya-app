@@ -1,5 +1,7 @@
 import { PromptAndTemplate } from '@viserya/types';
-import { getTemplateById, getRandomMonster } from '@viserya/utils';
+import { getRandomMonster } from '@viserya/utils/getRandomElement';
+import { getTemplateById } from '@viserya/utils/getTemplateById';
+
 
 /**
  * Creates a formatted monster prompt.
@@ -24,7 +26,7 @@ export const createMonster = async (
  * @returns The formatted random monster prompt object containing the prompt and its template.
  */
 export const createRandomMonster = async (): Promise<PromptAndTemplate> => {
-  const prompt = getRandomMonster();
+  const prompt = await getRandomMonster();
   const template = await getTemplateById('monster');
 
   console.log(`Random monster created: ${prompt}`);

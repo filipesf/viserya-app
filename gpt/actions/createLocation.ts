@@ -1,5 +1,6 @@
 import { PromptAndTemplate } from '@viserya/types';
-import { getTemplateById, getRandomLocation } from '@viserya/utils';
+import { getRandomLocation } from '@viserya/utils/getRandomElement';
+import { getTemplateById } from '@viserya/utils/getTemplateById';
 
 /**
  * Creates a formatted location prompt.
@@ -24,7 +25,7 @@ export const createLocation = async (
  * @returns The formatted random location prompt object containing the prompt and its template.
  */
 export const createRandomLocation = async (): Promise<PromptAndTemplate> => {
-  const prompt = getRandomLocation();
+  const prompt = await getRandomLocation();
   const template = await getTemplateById('location');
 
   console.log(`Random location created: ${prompt}`);

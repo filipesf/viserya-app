@@ -129,6 +129,7 @@ export const GlobalStyles = createGlobalStyle`
 body {
   background-color: var(--background-color);
   color: var(--text-color);
+  min-height: 100svh;
 }
 
 a {

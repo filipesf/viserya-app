@@ -1,5 +1,5 @@
 import { PromptAndTemplate } from '@viserya/types';
-import { getTemplateById } from '@viserya/utils';
+import { getTemplateById } from '@viserya/utils/getTemplateById';
 
 /**
  * Generates lore based on the provided prompt.

@@ -1,8 +1,8 @@
 import { InteractionType, APIInteractionResponse } from 'discord.js';
 import { NextResponse } from 'next/server';
 import { DISCORD_AUTH_KEY } from '@viserya/config/constants';
-import getCommands from '@viserya/utils/discord/getCommands';
-import { verifyInteractionRequest } from '@viserya/utils/discord/verifyDiscordRequest';
+import getCommands from '@viserya/utils/getCommands';
+import { verifyInteractionRequest } from '@viserya/utils/verifyDiscordRequest';
 
 export async function POST(req: Request) {
   try {

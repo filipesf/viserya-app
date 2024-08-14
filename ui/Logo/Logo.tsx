@@ -1,5 +1,3 @@
-'use client';
-
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -20,7 +18,13 @@ const LogoLabel = styled.figcaption`
 export function Logo() {
   return (
     <LogoStyled>
-      <Image src="/viserya.svg" alt="viserya logo" width={48} height={48} />
+      <Image
+        src="/viserya.svg"
+        alt="viserya logo"
+        width={48}
+        height={48}
+        priority
+      />
       <LogoLabel>Viserya App</LogoLabel>
     </LogoStyled>
   );

@@ -3,7 +3,7 @@
 import axios from 'axios';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
-import { CLIENT_APPLICATION_ID } from '@viserya/config/constants';
+import { NEXT_PUBLIC_DISCORD_APP_ID } from '@viserya/config/constants';
 import { Logo } from '@viserya/ui/Logo';
 import { PageHeader } from '../../ui/PageHeader/PageHeader';
 
@@ -52,7 +52,7 @@ export default function Page() {
 
       <center>
         <Link
-          href={`https://discord.com/api/oauth2/authorize?client_id=${CLIENT_APPLICATION_ID}&permissions=2147483648&scope=bot`}
+          href={`https://discord.com/api/oauth2/authorize?client_id=${NEXT_PUBLIC_DISCORD_APP_ID}&permissions=2147483648&scope=bot`}
           target="_blank"
           rel="noreferrer noopener"
         >

@@ -1,5 +1,3 @@
-'use client';
-
 import styled from 'styled-components';
 import { ContentSelectorButtons, ContentTypes } from '@viserya/types';
 import { Button } from '@viserya/ui/Button';
@@ -20,8 +18,8 @@ const ContentSelectorStyled = styled.section`
 
 const ContentSelectorButton = styled(Button)`
   padding: var(--spacing-1);
+  flex-direction: column;
   flex-shrink: 0;
-  /* flex-grow: 1; */
   width: 100%;
 `;
 

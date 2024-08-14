@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useAppContext } from '@viserya/contexts';
-import { fetchContent } from '@viserya/services';
+import { fetchContent } from '@viserya/services/fetchContent';
 import { ContentTypes } from '@viserya/types';
 import { Card, CardContent, CardsContainer, CardTitle } from '@viserya/ui/Card';
 import { CardHeader } from '@viserya/ui/Card/CardHeader';
@@ -10,6 +10,7 @@ import { ContentSelector } from '@viserya/ui/ContentSelector';
 import { Emoji } from '@viserya/ui/Emoji';
 import { Logo } from '@viserya/ui/Logo/Logo';
 import { PageHeader } from '@viserya/ui/PageHeader';
+import { CopyTopClipboard } from '@viserya/ui/CopyToClipboard';
 
 export default function Home() {
   const [pageTitle, setPageTitle] = useState('');
@@ -37,10 +38,11 @@ export default function Home() {
         <CardsContainer>
           <Card>
             <CardHeader>
-              <Emoji name={pageTitle as ContentTypes} size='xl' />
+              <Emoji name={pageTitle as ContentTypes} size="xl" />
               <CardTitle>{pageTitle}</CardTitle>
             </CardHeader>
             <CardContent>{generatedContent}</CardContent>
+            <CopyTopClipboard content={generatedContent} />
           </Card>
         </CardsContainer>
       )}

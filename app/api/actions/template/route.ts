@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { handleMiddleware, getTemplateById } from '@viserya/utils';
+import { getTemplateById } from '@viserya/utils/getTemplateById';
+import { handleMiddleware } from '@viserya/utils/handleMiddleware';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,7 +17,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   if (templateId) {
     // Retrieve specific template by ID
     try {
-      const content = await getTemplateById(templateId);
+      const prompt = await getTemplateById(templateId);
       return new NextResponse(content, {
         headers: { 'Content-Type': 'text/markdown' },
       });

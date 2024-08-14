@@ -1,18 +1,9 @@
-import axios from 'axios';
-import { AUTHORIZATION_KEY } from '@viserya/config/constants';
+import { viseryaApi } from '@viserya/services/api';
 import { ContentTypes } from '@viserya/types';
 
 export async function fetchContent(endpoint: ContentTypes): Promise<string> {
   try {
-    const response = await axios.post(
-      `/api/actions/random/${endpoint}`,
-      {},
-      {
-        headers: {
-          AUTHORIZATION_KEY: AUTHORIZATION_KEY,
-        },
-      },
-    );
+    const response = await viseryaApi.post(`actions/random/${endpoint}`, {});
     return response.data.prompt;
   } catch (error) {
     console.log(error);

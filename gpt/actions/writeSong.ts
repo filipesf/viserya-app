@@ -1,5 +1,5 @@
 import { SongSubject, Song } from '@viserya/types';
-import { getSongTemplate } from '@viserya/utils/generators/getSongTemplate';
+import { getSongTemplate } from '@viserya/utils/getSongTemplate';
 
 /**
  * Writes a song based on a given prompt and subject.

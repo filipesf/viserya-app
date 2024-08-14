@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { handleMiddleware } from '@viserya/utils';
+import { handleMiddleware } from '@viserya/utils/handleMiddleware';
 
 let recentContext: string[] = [];
 

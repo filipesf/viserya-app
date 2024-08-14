@@ -1,7 +1,4 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
-import { TEMPLATES_PATH } from '@viserya/config/constants';
-import { readTemplateFile } from '../handlers/readJsonFile';
+import { readTemplateFile } from '@viserya/utils/readJsonFile';
 
 /**
  * Get a specific markdown template by filename.
@@ -13,9 +10,7 @@ import { readTemplateFile } from '../handlers/readJsonFile';
  * @throws Will throw an error if the template is not found.
  */
 export const getTemplateById = async (id: string): Promise<string> => {
-  // const filePath = join(TEMPLATES_PATH, `${id}.md`);
   try {
-    // const content = readFileSync(filePath, 'utf-8');
     const content = await readTemplateFile(id);
     return content;
   } catch (error) {

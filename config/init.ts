@@ -5,36 +5,25 @@ import {
   MonsterData,
   OrganisationData,
 } from '@viserya/types';
-import { readDataFile } from '@viserya/utils';
+import { loadData } from '@viserya/utils/handleDataFiles';
 
-/**
- * Global variables to store the loaded configuration data.
- */
-export let characterData: CharacterData;
-export let itemData: ItemData;
-export let locationData: LocationData;
-export let monsterData: MonsterData;
-export let organisationData: OrganisationData;
+export let CHARACTER_DATA: CharacterData;
+export let ITEM_DATA: ItemData;
+export let LOCATION_DATA: LocationData;
+export let MONSTER_DATA: MonsterData;
+export let ORGANISATION_DATA: OrganisationData;
 
-/**
- * Initializes the global configuration data by loading it from JSON files.
- *
- * This function reads the configuration data from predefined JSON files and assigns
- * it to the corresponding global variables. If any of the files cannot be read or parsed,
- * an error is thrown.
- *
- * @throws {Error} If any of the JSON files cannot be read or parsed.
- * @returns {Promise<void>} A promise that resolves when the initialization is complete.
- */
 export const init = async (): Promise<void> => {
   try {
     console.log('Initialization started...');
 
-    characterData = await readDataFile('characters');
-    itemData = await readDataFile('items');
-    locationData = await readDataFile('locations');
-    monsterData = await readDataFile('monsters');
-    organisationData = await readDataFile('organisations');
+    const loadedData = await loadData();
+
+    CHARACTER_DATA = loadedData.characterData;
+    ITEM_DATA = loadedData.itemData;
+    LOCATION_DATA = loadedData.locationData;
+    MONSTER_DATA = loadedData.monsterData;
+    ORGANISATION_DATA = loadedData.organisationData;
 
     console.log('Initialization completed successfully.');
   } catch (error) {
