@@ -23,6 +23,8 @@ const MessageStyled = styled.div`
   color: var(--text-reverse-color);
   background-color: var(--background-reverse-color);
   animation: show 2000ms ease-in-out;
+  transform: translateY(-24px) translateX(-50%);
+  opacity: 1;
   z-index: 1;
 
   @keyframes show {
@@ -50,8 +52,27 @@ export const CopyTopClipboard = ({ content }: CopyTopClipboardProps) => {
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(content);
-      setNotificationMessage('Copied!');
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(content);
+        setNotificationMessage('Copied!');
+      } else {
+        // Fallback method: prompt user to copy manually
+        const textArea = document.createElement('textarea');
+        textArea.value = content;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        const successful = document.execCommand('copy');
+        if (successful) {
+          setNotificationMessage('Copied!');
+        } else {
+          setNotificationMessage('Copy failed. Please copy manually.');
+          window.prompt('Copy to clipboard: Ctrl+C, Enter', content);
+        }
+        document.body.removeChild(textArea);
+      }
     } catch (err) {
       setNotificationMessage('Failed to copy.');
     }
