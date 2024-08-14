@@ -96,6 +96,8 @@ export const GlobalStyles = createGlobalStyle`
 [data-theme="light"] {
   --background-color: var(--color-neutral-50);
   --text-color: var(--color-neutral-900);
+  --background-reverse-color: var(--color-neutral-900);
+  --text-reverse-color: var(--color-neutral-50);
   --primary-color: var(--color-yellow-500);
   --secondary-color: var(--color-neutral-100);
   --border-color: var(--color-neutral-300);
@@ -113,6 +115,8 @@ export const GlobalStyles = createGlobalStyle`
 [data-theme="dark"] {
   --background-color: var(--color-neutral-950);
   --text-color: var(--color-neutral-50);
+  --background-reverse-color: var(--color-neutral-50);
+  --text-reverse-color: var(--color-neutral-950);
   --primary-color: var(--color-yellow-500);
   --secondary-color: var(--color-neutral-900);
   --border-color: var(--color-neutral-600);
