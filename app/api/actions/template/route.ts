@@ -18,7 +18,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     // Retrieve specific template by ID
     try {
       const prompt = await getTemplateById(templateId);
-      return new NextResponse(content, {
+      return new NextResponse(prompt, {
         headers: { 'Content-Type': 'text/markdown' },
       });
     } catch (error) {
