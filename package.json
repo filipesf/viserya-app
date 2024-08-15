@@ -10,9 +10,9 @@
   "bugs": "https://github.com/filipesf/viserya-app/issues",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 7988",
     "build": "next build",
-    "start": "next start",
+    "start": "next start --port 7988",
     "lint": "next lint",
     "format": "prettier --write \"**/*.ts\"",
     "deploy": "vercel --prod",
