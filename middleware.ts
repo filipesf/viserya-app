@@ -2,6 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import { AUTHORIZATION_KEY } from '@viserya/config/constants';
 
 export default async function middleware(request: NextRequest) {
+  // List of URL paths to exclude from the authorization check
+  const exceptionPaths = ['/api/bot/interactions'];
+
+  // Check if the current request URL matches any of the exception paths
+  if (
+    exceptionPaths.some((path) => request.nextUrl.pathname.startsWith(path))
+  ) {
+    // If the request matches an exception, skip the authorization check
+    return NextResponse.next();
+  }
+
   const authKey = request.headers.get('AUTHORIZATION_KEY');
 
   if (!authKey || authKey !== AUTHORIZATION_KEY) {
