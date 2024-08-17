@@ -30,7 +30,7 @@ export const register = new SlashCommandBuilder()
 export const execute: ExecuteCommand = async (interaction) => {
   let content = '';
 
-  console.log('--- GENERATE ---', { interaction });
+  console.log('--- GENERATE ---', interaction.data.options);
 
   // const type = interaction.options.getString('type');
 
