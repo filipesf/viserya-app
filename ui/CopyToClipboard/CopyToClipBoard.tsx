@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Copy } from '@phosphor-icons/react';
-import { Button } from '@viserya/ui/Button';
+import { ButtonIcon } from '@viserya/ui/Button';
+import { Notify } from '@viserya/ui/Notify';
 
 type CopyTopClipboardProps = {
   content: string;
@@ -9,42 +10,6 @@ type CopyTopClipboardProps = {
 
 const CopyTopClipboardStyled = styled.div`
   position: relative;
-`;
-
-const MessageStyled = styled.div`
-  position: absolute;
-  left: 50%;
-  padding: var(--spacing-1) var(--spacing-3);
-  border-radius: var(--border-radius-sm);
-  font-size: var(--font-size-sm);
-  line-height: 1;
-  text-align: center;
-  text-wrap: nowrap;
-  color: var(--text-reverse-color);
-  background-color: var(--background-reverse-color);
-  animation: show 2000ms ease-in-out;
-  transform: translateY(-24px) translateX(-50%);
-  opacity: 1;
-  z-index: 1;
-
-  @keyframes show {
-    0% {
-      opacity: 0;
-      transform: translateY(0) translateX(-50%);
-    }
-    25% {
-      opacity: 1;
-      transform: translateY(-24px) translateX(-50%);
-    }
-    75% {
-      opacity: 1;
-      transform: translateY(-24px) translateX(-50%);
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(-48px) translateX(-50%);
-    }
-  }
 `;
 
 export const CopyTopClipboard = ({ content }: CopyTopClipboardProps) => {
@@ -90,12 +55,14 @@ export const CopyTopClipboard = ({ content }: CopyTopClipboardProps) => {
 
   return (
     <CopyTopClipboardStyled>
-      {notificationMessage && (
-        <MessageStyled>{notificationMessage}</MessageStyled>
-      )}
-      <Button $variant="outline" $size="sm" onClick={copyToClipboard}>
-        <Copy size="16px" weight="duotone" /> Copy to Clipboard
-      </Button>
+      {notificationMessage && <Notify>{notificationMessage}</Notify>}
+      <ButtonIcon
+        $variant="secondary"
+        $size="md"
+        icon="Copy"
+        onClick={copyToClipboard}
+        title="Copy to clipboard"
+      />
     </CopyTopClipboardStyled>
   );
 };

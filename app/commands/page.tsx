@@ -1,64 +1,63 @@
 'use client';
 
-import axios from 'axios';
 import Link from 'next/link';
-import { FormEvent, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NEXT_PUBLIC_DISCORD_APP_ID } from '@viserya/config/constants';
-import { Logo } from '@viserya/ui/Logo';
-import { PageHeader } from '../../ui/PageHeader/PageHeader';
+import { viseryaApi } from '@viserya/services/api';
+import { Button } from '@viserya/ui/Button';
+import { CardsContainer } from '@viserya/ui/Card';
+import { Icon } from '@viserya/ui/Icon/Icon';
+import { Notify } from '@viserya/ui/Notify';
 
 export default function Page() {
-  const [registerCommandsKey, setRegisterCommandsKey] = useState<string>('');
   const [status, setStatus] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleRegisterCommand = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const requestLink =
-      '/api/bot/register-commands?REGISTER_COMMANDS_KEY=' + registerCommandsKey;
-
+  const handleRegisterCommand = async () => {
     try {
-      setStatus('Loading...');
-      if (registerCommandsKey.length > 0) {
-        await axios.post(requestLink);
-      }
+      setIsLoading(true);
+      await viseryaApi.post('/bot/register-commands');
       setStatus('Commands registered!');
+      setIsLoading(false);
     } catch (error: any) {
       console.log(error);
       setStatus(error.message);
+      setIsLoading(false);
     }
   };
 
+  useEffect(() => {
+    if (status) {
+      const timer = setTimeout(() => {
+        setStatus('');
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [status]);
+
   return (
-    <>
-      <PageHeader>
-        <Logo />
-      </PageHeader>
+    <CardsContainer>
+      {status && <Notify>{status}</Notify>}
 
-      {status && <p className="status">{status}</p>}
+      <Button
+        $isLoading={isLoading}
+        $variant="secondary"
+        disabled={isLoading}
+        onClick={handleRegisterCommand}
+      >
+        <Icon name="Keyboard" /> Register Commands
+      </Button>
 
-      <form onSubmit={handleRegisterCommand}>
-        <input
-          type="text"
-          placeholder="Register Commands Key"
-          value={registerCommandsKey}
-          onChange={(e) => setRegisterCommandsKey(e.target.value)}
-        />
-
-        <button disabled={registerCommandsKey.length < 1} type="submit">
-          Register Commands
-        </button>
-      </form>
-
-      <center>
-        <Link
-          href={`https://discord.com/api/oauth2/authorize?client_id=${NEXT_PUBLIC_DISCORD_APP_ID}&permissions=2147483648&scope=bot`}
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          Invite Discord Bot
-        </Link>
-      </center>
-    </>
+      <Button
+        as={Link}
+        $variant="outline"
+        href={`https://discord.com/api/oauth2/authorize?client_id=${NEXT_PUBLIC_DISCORD_APP_ID}&permissions=2147483648&scope=bot`}
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <Icon name="SignIn" /> Invite Discord Bot
+      </Button>
+    </CardsContainer>
   );
 }

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
-export const CardHeader = styled.header`
+export const CardActions = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   gap: var(--spacing-rg);
+  width: 100%;
 `;

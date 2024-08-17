@@ -6,7 +6,7 @@ export const CardContent = styled.p`
   line-height: 1.333;
   letter-spacing: -0.3px;
   text-align: center;
-  text-wrap: balance;
+  text-wrap: pretty;
 
   &::first-letter {
     text-transform: capitalize;

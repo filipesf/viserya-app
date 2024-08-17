@@ -1,6 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 import { RESTGetAPIApplicationCommandsResult } from 'discord.js';
-import { DISCORD_BOT_TOKEN } from '@viserya/config/constants';
+import {
+  AUTHORIZATION_KEY,
+  DISCORD_BOT_TOKEN,
+} from '@viserya/config/constants';
 
 export const discord_api = axios.create({
   baseURL: 'https://discord.com/api/',
@@ -8,8 +11,9 @@ export const discord_api = axios.create({
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-    'Access-Control-Allow-Headers': 'Authorization',
+    'Access-Control-Allow-Headers': 'Authorization, AUTHORIZATION_KEY',
     Authorization: `Bot ${DISCORD_BOT_TOKEN}`,
+    AUTHORIZATION_KEY: AUTHORIZATION_KEY,
   },
 });
 

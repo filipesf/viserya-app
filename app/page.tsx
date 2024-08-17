@@ -1,48 +1,70 @@
 'use client';
 
 import { useState } from 'react';
+import { ArrowsClockwise } from '@phosphor-icons/react';
 import { useAppContext } from '@viserya/contexts';
 import { fetchContent } from '@viserya/services/fetchContent';
 import { ContentTypes } from '@viserya/types';
-import { Card, CardContent, CardsContainer, CardTitle } from '@viserya/ui/Card';
+import { ButtonIcon } from '@viserya/ui/Button';
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardsContainer,
+  CardTitle,
+} from '@viserya/ui/Card';
 import { CardHeader } from '@viserya/ui/Card/CardHeader';
 import { ContentSelector } from '@viserya/ui/ContentSelector';
-import { Emoji } from '@viserya/ui/Emoji';
-import { Logo } from '@viserya/ui/Logo/Logo';
-import { PageHeader } from '@viserya/ui/PageHeader';
 import { CopyTopClipboard } from '@viserya/ui/CopyToClipboard';
+import { Emoji } from '@viserya/ui/Emoji';
 
 export default function Home() {
-  const [pageTitle, setPageTitle] = useState('');
+  const [contentTitle, setContentTitle] = useState<ContentTypes>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { contextValue, setContextValue } = useAppContext();
   const { generatedContent } = contextValue;
 
   const getContent = async (endpoint: ContentTypes) => {
     try {
+      setIsLoading(true);
       const content = await fetchContent(endpoint);
       setContextValue({ generatedContent: content });
-      setPageTitle(endpoint);
+      setContentTitle(endpoint);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.error('Error fetching content:', error);
     }
   };
 
   return (
     <>
-      <PageHeader>
-        <Logo />
-        <ContentSelector getContent={getContent} />
-      </PageHeader>
+      <ContentSelector getContent={getContent} />
 
       {generatedContent && (
         <CardsContainer>
           <Card>
             <CardHeader>
-              <Emoji name={pageTitle as ContentTypes} size="xl" />
-              <CardTitle>{pageTitle}</CardTitle>
+              <Emoji name={contentTitle} size="xl" />
+              <CardTitle>{contentTitle}</CardTitle>
             </CardHeader>
+
             <CardContent>{generatedContent}</CardContent>
-            <CopyTopClipboard content={generatedContent} />
+
+            <CardActions>
+              <ButtonIcon
+                $isLoading={isLoading}
+                $variant="secondary"
+                $size="md"
+                icon="ArrowsClockwise"
+                title={`Generate new ${contentTitle}`}
+                onClick={() => {
+                  getContent(contentTitle as ContentTypes);
+                }}
+              />
+
+              <CopyTopClipboard content={generatedContent} />
+            </CardActions>
           </Card>
         </CardsContainer>
       )}

@@ -14,7 +14,7 @@ let SeenCommands: {
 
 const getCommands = async () => {
   if (SeenCommands) return SeenCommands;
-  const commandDir = resolve(process.cwd(), 'src/bot/commands');
+  const commandDir = resolve(process.cwd(), 'bot/commands');
   const commandFiles = getTsFiles(commandDir);
   const commands: { [key: string]: CommandModule } = {};
 

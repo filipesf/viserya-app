@@ -2,7 +2,6 @@ import { PromptAndTemplate } from '@viserya/types';
 import { getRandomMonster } from '@viserya/utils/getRandomElement';
 import { getTemplateById } from '@viserya/utils/getTemplateById';
 
-
 /**
  * Creates a formatted monster prompt.
  * @param prompt - The initial prompt string.

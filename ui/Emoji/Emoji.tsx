@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import { ContentTypes } from '@viserya/types';
-import { getEmoji } from '../../utils/getEmoji';
+import { getEmoji } from '@viserya/utils/getEmoji';
 
 interface EmojiProps extends PropsWithChildren {
   size?: 'xs' | 'sm' | 'rg' | 'md' | 'lg' | 'xl';

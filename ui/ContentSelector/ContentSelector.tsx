@@ -6,18 +6,21 @@ import { Emoji } from '@viserya/ui/Emoji';
 const ContentSelectorStyled = styled.section`
   display: grid;
   grid-template-columns: repeat(6, minmax(var(--spacing-24), 1fr));
-  gap: var(--spacing-1);
+  gap: var(--spacing-xs);
+  padding: 0 var(--spacing-md);
+  margin: 0 auto;
+  max-width: 800px;
 
   @media screen and (max-width: 768px) {
     grid-template-columns: repeat(3, minmax(var(--spacing-24), 1fr));
-    gap: var(--spacing-4);
+    gap: var(--spacing-rg);
     align-items: center;
     justify-content: center;
   }
 `;
 
 const ContentSelectorButton = styled(Button)`
-  padding: var(--spacing-1);
+  padding: var(--spacing-xs);
   flex-direction: column;
   flex-shrink: 0;
   width: 100%;
@@ -25,6 +28,7 @@ const ContentSelectorButton = styled(Button)`
 
 const ContentSelectorLabel = styled.span`
   font-size: var(--font-size-sm);
+  font-weight: 600;
   line-height: 1;
   opacity: 0.8;
   text-transform: capitalize;

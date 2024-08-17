@@ -9,7 +9,6 @@ const nextConfig = {
     NEXT_PUBLIC_DISCORD_APP_ID: process.env.NEXT_PUBLIC_DISCORD_APP_ID,
     DISCORD_BOT_TOKEN: process.env.DISCORD_BOT_TOKEN,
     DISCORD_AUTH_KEY: process.env.DISCORD_AUTH_KEY,
-    REGISTER_COMMANDS_KEY: process.env.REGISTER_COMMANDS_KEY,
   },
   compiler: {
     styledComponents: true,

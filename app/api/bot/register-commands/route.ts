@@ -1,12 +1,15 @@
-import { NextResponse } from 'next/server';
-import { REGISTER_COMMANDS_KEY } from '@viserya/config/constants';
+import { NextRequest, NextResponse } from 'next/server';
 import { discord_api } from '@viserya/utils/discordApi';
 import getCommands from '@viserya/utils/getCommands';
+import { handleMiddleware } from '@viserya/utils/handleMiddleware';
 
-export async function POST(req: Request) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
+  const authResponse = await handleMiddleware(request);
+  if (authResponse) {
+    return authResponse;
+  }
+
   try {
-    if (!req.url.endsWith(REGISTER_COMMANDS_KEY))
-      throw new Error('Register commands key was invalid!');
     const allCommands = await getCommands();
     const arrayOfSlashCommandsRegister = Object.values(allCommands);
     const arrayOfSlashCommandsRegisterJSON = arrayOfSlashCommandsRegister.map(
@@ -18,9 +21,9 @@ export async function POST(req: Request) {
       arrayOfSlashCommandsRegisterJSON,
     );
 
-    console.log('== COMMANDS REGISTERED ===');
+    console.log('=== COMMANDS REGISTERED ===');
     console.log(registerCommands.data);
-    console.log('== COMMANDS REGISTERED ===');
+    console.log('=== COMMANDS REGISTERED ===');
 
     return NextResponse.json({ error: null });
   } catch (error) {

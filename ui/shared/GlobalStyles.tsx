@@ -72,6 +72,13 @@ export const GlobalStyles = createGlobalStyle`
   --spacing-18: 72px;
   --spacing-24: 96px;
 
+  --spacing-xs: var(--spacing-1);
+  --spacing-sm: var(--spacing-2);
+  --spacing-rg: var(--spacing-4);
+  --spacing-md: var(--spacing-6);
+  --spacing-lg: var(--spacing-8);
+  --spacing-xl: var(--spacing-12);
+
   /* Typography */
   --font-size-xs: 12px;
   --font-size-sm: 14px;
@@ -90,17 +97,37 @@ export const GlobalStyles = createGlobalStyle`
 
   /* Card */
   --card-background-color: var(--secondary-color);
+
+  @media screen and (max-width: 768px) {
+    /* Spacing */
+    --spacing-rg: var(--spacing-3);
+    --spacing-md: var(--spacing-4);
+    --spacing-lg: var(--spacing-6);
+    --spacing-xl: var(--spacing-8);
+
+    /* Typography */
+    --font-size-lg: 20px;
+    --font-size-xl: 24px;
+  }
 }
 
 /* Light Theme */
 [data-theme="light"] {
+  /* Colours */
   --background-color: var(--color-neutral-50);
-  --text-color: var(--color-neutral-900);
   --background-reverse-color: var(--color-neutral-900);
+
+  --text-color: var(--color-neutral-900);
   --text-reverse-color: var(--color-neutral-50);
+
   --primary-color: var(--color-yellow-500);
+  --primary-color-hover: var(--color-yellow-700);
+
   --secondary-color: var(--color-neutral-100);
+  --secondary-color-hover: var(--color-neutral-200);
+
   --border-color: var(--color-neutral-300);
+  --border-color-hover: var(--color-neutral-400);
 
   /* Shadows */
   --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -113,13 +140,21 @@ export const GlobalStyles = createGlobalStyle`
 
 /* Dark Theme */
 [data-theme="dark"] {
+  /* Colours */
   --background-color: var(--color-neutral-950);
-  --text-color: var(--color-neutral-50);
   --background-reverse-color: var(--color-neutral-50);
+
+  --text-color: var(--color-neutral-50);
   --text-reverse-color: var(--color-neutral-950);
+
   --primary-color: var(--color-yellow-500);
+  --primary-color-hover: var(--color-yellow-700);
+
   --secondary-color: var(--color-neutral-900);
+  --secondary-color-hover: var(--color-neutral-800);
+
   --border-color: var(--color-neutral-600);
+  --border-color-hover: var(--color-neutral-700);
 
   /* Shadows adjusted for dark mode */
   --box-shadow: 0 2px 4px rgba(255, 255, 255, 0.05);
