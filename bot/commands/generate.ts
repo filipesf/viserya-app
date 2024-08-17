@@ -1,12 +1,20 @@
+import { CommandInteraction } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { CommandInteraction, InteractionResponse } from 'discord.js';
-import { getRandomAdventure, getRandomCharacter, getRandomItem, getRandomLocation, getRandomMonster, getRandomOrganisation } from '@viserya/utils/getRandomElement';
+import {
+  getRandomAdventure,
+  getRandomCharacter,
+  getRandomItem,
+  getRandomLocation,
+  getRandomMonster,
+  getRandomOrganisation,
+} from '@viserya/utils/getRandomElement';
 
 export const register = new SlashCommandBuilder()
   .setName('generate')
-  .setDescription('Generate a random concept')
-  .addStringOption(option =>
-    option.setName('type')
+  .setDescription('Generate a random concept based on the provided type')
+  .addStringOption((option) =>
+    option
+      .setName('type')
       .setDescription('The type of concept to generate')
       .setRequired(true)
       .addChoices(
@@ -15,41 +23,49 @@ export const register = new SlashCommandBuilder()
         { name: 'Item', value: 'item' },
         { name: 'Location', value: 'location' },
         { name: 'Monster', value: 'monster' },
-        { name: 'Organisation', value: 'organisation' }
-      )
+        { name: 'Organisation', value: 'organisation' },
+      ),
   );
 
-export const execute = async (interaction: CommandInteraction): Promise<InteractionResponse> => {
-  const type = interaction.options.data[0].value as string;
+export const execute = async (interaction: CommandInteraction) => {
+  console.log('--- INTERACTION OBJ ---', interaction);
 
-  let content: string;
+  console.log(
+    '--- INTERACTION GET ---',
+    interaction.options.get('type')?.value,
+  );
 
-  switch (type) {
-    case 'adventure':
-      content = await getRandomAdventure();
-      break;
-    case 'character':
-      content = await getRandomCharacter();
-      break;
-    case 'item':
-      content = await getRandomItem();
-      break;
-    case 'location':
-      content = await getRandomLocation();
-      break;
-    case 'monster':
-      content = await getRandomMonster();
-      break;
-    case 'organisation':
-      content = await getRandomOrganisation();
-      break;
-    default:
-      content = 'Unknown type.';
-      break;
-  }
+  let content = 'Hi!';
+  // const type = interaction.data?.options[0]?.value;
 
-  return interaction.reply({
-    content,
-    ephemeral: true,
-  });
+  // switch (type) {
+  //   case 'adventure':
+  //     content = await getRandomAdventure();
+  //     break;
+  //   case 'character':
+  //     content = await getRandomCharacter();
+  //     break;
+  //   case 'item':
+  //     content = await getRandomItem();
+  //     break;
+  //   case 'location':
+  //     content = await getRandomLocation();
+  //     break;
+  //   case 'monster':
+  //     content = await getRandomMonster();
+  //     break;
+  //   case 'organisation':
+  //     content = await getRandomOrganisation();
+  //     break;
+  //   default:
+  //     content = 'Invalid type selected.';
+  //     break;
+  // }
+
+  return {
+    type: 4,
+    data: {
+      content,
+    },
+  };
 };
