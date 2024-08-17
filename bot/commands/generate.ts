@@ -1,4 +1,3 @@
-import { CommandInteraction } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
 import {
   getRandomAdventure,
@@ -27,40 +26,35 @@ export const register = new SlashCommandBuilder()
       ),
   );
 
-export const execute = async (interaction: CommandInteraction) => {
-  console.log('--- INTERACTION OBJ ---', interaction);
+export const execute = async (interaction: any) => {
+  if (interaction.data?.options[0]?.name !== 'type') return;
 
-  console.log(
-    '--- INTERACTION GET ---',
-    interaction.options.get('type')?.value,
-  );
+  let content = '';
+  const type = interaction.data?.options[0]?.value;
 
-  let content = 'Hi!';
-  // const type = interaction.data?.options[0]?.value;
-
-  // switch (type) {
-  //   case 'adventure':
-  //     content = await getRandomAdventure();
-  //     break;
-  //   case 'character':
-  //     content = await getRandomCharacter();
-  //     break;
-  //   case 'item':
-  //     content = await getRandomItem();
-  //     break;
-  //   case 'location':
-  //     content = await getRandomLocation();
-  //     break;
-  //   case 'monster':
-  //     content = await getRandomMonster();
-  //     break;
-  //   case 'organisation':
-  //     content = await getRandomOrganisation();
-  //     break;
-  //   default:
-  //     content = 'Invalid type selected.';
-  //     break;
-  // }
+  switch (type) {
+    case 'adventure':
+      content = await getRandomAdventure();
+      break;
+    case 'character':
+      content = await getRandomCharacter();
+      break;
+    case 'item':
+      content = await getRandomItem();
+      break;
+    case 'location':
+      content = await getRandomLocation();
+      break;
+    case 'monster':
+      content = await getRandomMonster();
+      break;
+    case 'organisation':
+      content = await getRandomOrganisation();
+      break;
+    default:
+      content = 'Invalid type selected.';
+      break;
+  }
 
   return {
     type: 4,
