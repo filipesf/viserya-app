@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { NEXT_PUBLIC_DISCORD_APP_ID } from '@viserya/config/constants';
 import { discord_api } from '@viserya/utils/discordApi';
 import getCommands from '@viserya/utils/getCommands';
 import { handleMiddleware } from '@viserya/utils/handleMiddleware';
@@ -17,7 +18,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
 
     const registerCommands = await discord_api.put(
-      `/applications/${process.env.NEXT_PUBLIC_DISCORD_APP_ID!}/commands`,
+      `/applications/${NEXT_PUBLIC_DISCORD_APP_ID!}/commands`,
       arrayOfSlashCommandsRegisterJSON,
     );
 

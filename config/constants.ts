@@ -4,7 +4,7 @@ export const ASSISTANT_ID_DM = process.env.ASSISTANT_ID_DM || '';
 export const NEXT_PUBLIC_DISCORD_APP_ID =
   process.env.NEXT_PUBLIC_DISCORD_APP_ID || '';
 export const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN || '';
-export const PUBLIC_DISCORD_KEY = process.env.PUBLIC_DISCORD_KEY || '';
+export const DISCORD_KEY = process.env.DISCORD_KEY || '';
 
 export const LOCAL_STORAGE_THEME = 'viserya-theme';
 export const COMMAND_END_SESSION = '!endsession';

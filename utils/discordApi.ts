@@ -3,6 +3,7 @@ import { RESTGetAPIApplicationCommandsResult } from 'discord.js';
 import {
   AUTHORIZATION_KEY,
   DISCORD_BOT_TOKEN,
+  NEXT_PUBLIC_DISCORD_APP_ID,
 } from '@viserya/config/constants';
 
 export const discord_api = axios.create({
@@ -19,6 +20,6 @@ export const discord_api = axios.create({
 
 export const fetchBotCommands = async () => {
   return (await discord_api.get(
-    `/applications/${process.env.NEXT_PUBLIC_DISCORD_APP_ID!}/commands`,
+    `/applications/${NEXT_PUBLIC_DISCORD_APP_ID!}/commands`,
   )) as AxiosResponse<RESTGetAPIApplicationCommandsResult>;
 };
