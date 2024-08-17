@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { ExecuteCommand } from '@viserya/types';
+// import { ExecuteCommand } from '@viserya/types';
 import {
   getRandomAdventure,
   getRandomCharacter,
@@ -8,6 +8,8 @@ import {
   getRandomMonster,
   getRandomOrganisation,
 } from '@viserya/utils/getRandomElement';
+
+// import { Interaction } from 'discord-api-types';
 
 export const register = new SlashCommandBuilder()
   .setName('generate')
@@ -27,36 +29,35 @@ export const register = new SlashCommandBuilder()
       ),
   );
 
-export const execute: ExecuteCommand = async (interaction) => {
+export const execute = async (interaction: any) => {
+  if (interaction.data?.options[0]?.name !== 'type') return;
+
   let content = '';
+  const type = interaction.data?.options[0]?.value;
 
-  console.log('--- GENERATE ---', interaction.data);
-
-  // const type = interaction.options.getString('type');
-
-  // switch (type) {
-  //   case 'adventure':
-  //     content = await getRandomAdventure();
-  //     break;
-  //   case 'character':
-  //     content = await getRandomCharacter();
-  //     break;
-  //   case 'item':
-  //     content = await getRandomItem();
-  //     break;
-  //   case 'location':
-  //     content = await getRandomLocation();
-  //     break;
-  //   case 'monster':
-  //     content = await getRandomMonster();
-  //     break;
-  //   case 'organisation':
-  //     content = await getRandomOrganisation();
-  //     break;
-  //   default:
-  //     content = 'Invalid type selected.';
-  //     break;
-  // }
+  switch (type) {
+    case 'adventure':
+      content = await getRandomAdventure();
+      break;
+    case 'character':
+      content = await getRandomCharacter();
+      break;
+    case 'item':
+      content = await getRandomItem();
+      break;
+    case 'location':
+      content = await getRandomLocation();
+      break;
+    case 'monster':
+      content = await getRandomMonster();
+      break;
+    case 'organisation':
+      content = await getRandomOrganisation();
+      break;
+    default:
+      content = 'Invalid type selected.';
+      break;
+  }
 
   return {
     type: 4,
