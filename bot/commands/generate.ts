@@ -1,22 +1,12 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-// import { ExecuteCommand } from '@viserya/types';
-import {
-  getRandomAdventure,
-  getRandomCharacter,
-  getRandomItem,
-  getRandomLocation,
-  getRandomMonster,
-  getRandomOrganisation,
-} from '@viserya/utils/getRandomElement';
-
-// import { Interaction } from 'discord-api-types';
+import { CommandInteraction, InteractionResponse } from 'discord.js';
+import { getRandomAdventure, getRandomCharacter, getRandomItem, getRandomLocation, getRandomMonster, getRandomOrganisation } from '@viserya/utils/getRandomElement';
 
 export const register = new SlashCommandBuilder()
   .setName('generate')
-  .setDescription('Generate a random concept based on the provided type')
-  .addStringOption((option) =>
-    option
-      .setName('type')
+  .setDescription('Generate a random concept')
+  .addStringOption(option =>
+    option.setName('type')
       .setDescription('The type of concept to generate')
       .setRequired(true)
       .addChoices(
@@ -25,15 +15,14 @@ export const register = new SlashCommandBuilder()
         { name: 'Item', value: 'item' },
         { name: 'Location', value: 'location' },
         { name: 'Monster', value: 'monster' },
-        { name: 'Organisation', value: 'organisation' },
-      ),
+        { name: 'Organisation', value: 'organisation' }
+      )
   );
 
-export const execute = async (interaction: any) => {
-  if (interaction.data?.options[0]?.name !== 'type') return;
+export const execute = async (interaction: CommandInteraction): Promise<InteractionResponse> => {
+  const type = interaction.options.data[0].value as string;
 
-  let content = '';
-  const type = interaction.data?.options[0]?.value;
+  let content: string;
 
   switch (type) {
     case 'adventure':
@@ -55,14 +44,12 @@ export const execute = async (interaction: any) => {
       content = await getRandomOrganisation();
       break;
     default:
-      content = 'Invalid type selected.';
+      content = 'Unknown type.';
       break;
   }
 
-  return {
-    type: 4,
-    data: {
-      content,
-    },
-  };
+  return interaction.reply({
+    content,
+    ephemeral: true,
+  });
 };
