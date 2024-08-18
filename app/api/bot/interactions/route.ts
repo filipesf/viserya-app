@@ -37,10 +37,12 @@ export async function POST(request: NextRequest) {
 
     console.log('=== NextResponse 2 ===', NextResponse);
 
+    console.log('=== reply 1 ===', reply);
+
     if (!reply) throw new Error();
 
     console.log('=== NextResponse 3 ===', NextResponse);
-    console.log('=== reply ===', reply);
+    console.log('=== reply 2 ===', reply);
     return NextResponse.json(reply);
   } catch (error: any) {
     console.log(error);
