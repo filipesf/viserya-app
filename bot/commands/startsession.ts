@@ -43,7 +43,7 @@ export const execute: ExecuteCommand = async (
   return {
     type: 4,
     data: {
-      content: `Session started successfully! Session ID: ${newSession.rows[0].id}`,
+      content: `Session started successfully! Session ID: ${newSession.rows[0]['id']}`,
     },
   };
 };

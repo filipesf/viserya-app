@@ -1,9 +1,9 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 import { SessionsParams } from '@viserya/types';
 
 export async function GET(
-  _request: Request,
+  _request: NextRequest,
   { params: { channelId } }: SessionsParams,
 ) {
   try {
