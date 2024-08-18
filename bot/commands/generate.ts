@@ -1,4 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
+import { ExecuteCommand } from '@viserya/types';
 import {
   getRandomAdventure,
   getRandomCharacter,
@@ -26,9 +27,7 @@ export const register = new SlashCommandBuilder()
       ),
   );
 
-export const execute = async (interaction: any) => {
-  if (interaction.data?.options[0]?.name !== 'type') return;
-
+export const execute: ExecuteCommand = async (interaction) => {
   let content = '';
   const type = interaction.data?.options[0]?.value;
 

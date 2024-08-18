@@ -5,5 +5,7 @@ import type {
 } from 'discord.js';
 
 export type ExecuteCommand = (
-  interaction: APIApplicationCommandInteraction,
+  interaction:
+    | APIApplicationCommandInteraction
+    | APIChatInputApplicationCommandInteraction,
 ) => Promise<APIInteractionResponse>;
