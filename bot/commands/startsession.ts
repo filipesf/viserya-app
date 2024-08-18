@@ -13,10 +13,8 @@ export const execute: ExecuteCommand = async (
 ) => {
   console.log('Started refreshing application (/) commands.');
 
-  console.log('--- interaction:', interaction);
-
-  const channelId = interaction.channelId;
-  const userId = interaction.user.id;
+  const channelId = interaction.channel?.id;
+  const userId = interaction.member?.user.id;
 
   const existingSession = await sql`
     SELECT * FROM sessions
