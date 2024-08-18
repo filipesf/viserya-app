@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(reply);
   } catch (error: any) {
     console.log(error);
-    console.log('SOMETHING WENT WRONG');
+    console.log('SOMETHING WENT WRONG', NextResponse);
     return NextResponse.error();
   }
 }
