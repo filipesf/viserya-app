@@ -40,10 +40,12 @@ export const execute: ExecuteCommand = async (
     RETURNING id
   `;
 
+  console.log('--- newSession:', newSession);
+
   return {
     type: 4,
     data: {
-      content: `Session started successfully! Session ID: ${newSession.rows[0]['id']}`,
+      content: `Session started successfully!}`,
     },
   };
 };
