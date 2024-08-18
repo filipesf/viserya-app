@@ -34,6 +34,8 @@ export const execute: ExecuteCommand = async (
 
   const { data: threadId } = await viseryaApi.post('/assistants/threads');
 
+  console.log('--- newSession:', threadId, interaction.channelId, userId);
+
   const newSession = await sql`
     INSERT INTO sessions (thread_id, channel_id, user_id)
     VALUES (${threadId}, ${interaction.channelId}, ${userId})
