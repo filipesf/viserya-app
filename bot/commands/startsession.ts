@@ -13,6 +13,8 @@ export const execute: ExecuteCommand = async (
 ) => {
   console.log('Started refreshing application (/) commands.');
 
+  console.log('--- interaction:', interaction);
+
   const channelId = interaction.channelId;
   const userId = interaction.user.id;
 
