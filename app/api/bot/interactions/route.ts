@@ -30,6 +30,9 @@ export async function POST(request: NextRequest) {
 
     // execute command
     let reply: APIInteractionResponse | null = null;
+
+    console.log('=== reply 1 ===', reply);
+
     const commandName = interaction.data.name + '.ts';
     if (allCommands[commandName]) {
       reply = await allCommands[commandName].execute(interaction);
@@ -37,12 +40,12 @@ export async function POST(request: NextRequest) {
 
     console.log('=== NextResponse 2 ===', NextResponse);
 
-    console.log('=== reply 1 ===', reply);
+    console.log('=== reply 2 ===', reply);
 
     if (!reply) throw new Error();
 
     console.log('=== NextResponse 3 ===', NextResponse);
-    console.log('=== reply 2 ===', reply);
+    console.log('=== reply 3 ===', reply);
     return NextResponse.json(reply);
   } catch (error: any) {
     console.log(error);
