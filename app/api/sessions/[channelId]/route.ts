@@ -3,7 +3,7 @@ import { sql } from '@vercel/postgres';
 import { SessionsParams } from '@viserya/types';
 
 export async function GET(
-  _request: Response,
+  _request: Request,
   { params: { channelId } }: SessionsParams,
 ) {
   try {

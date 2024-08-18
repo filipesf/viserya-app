@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 
-export async function GET(request: Response) {
+export async function GET(_request: Request) {
   try {
     const result = await sql`
     CREATE TABLE IF NOT EXISTS sessions (

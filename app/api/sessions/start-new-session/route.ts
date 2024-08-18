@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 
-export async function POST(request: Response) {
+export async function POST(request: NextRequest) {
   const body = await request.json();
   const { threadId, channelId, userId } = body;
 
