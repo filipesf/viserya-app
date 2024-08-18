@@ -25,67 +25,91 @@ export const sizeStyles = {
 };
 
 export const variantStyles = {
-  default: css`
-    background-color: var(--background-color);
-    color: var(--text-color);
-
-    &:hover,
-    &:active,
-    &:focus {
-      background-color: var(--background-reverse-color);
-      color: var(--text-reverse-color);
-    }
-  `,
-
   primary: css`
-    background-color: var(--primary-color);
-    color: var(--text-color);
-
-    &:hover,
-    &:active,
-    &:focus {
-      background-color: var(--primary-color-hover);
-    }
+    --button-background-color: var(--primary-background-color);
+    --button-background-color-hover: var(--primary-background-color-hover);
+    --button-border-color: var(--primary-border-color);
+    --button-border-color-hover: var(--primary-border-color-hover);
+    --button-text-color: var(--primary-text-color);
+    --button-text-color-hover: var(--primary-text-color-hover);
   `,
 
   secondary: css`
-    background-color: var(--secondary-color);
-    color: var(--text-color);
-
-    &:hover,
-    &:active,
-    &:focus {
-      background-color: var(--secondary-color-hover);
-    }
+    --button-background-color: var(--secondary-background-color);
+    --button-background-color-hover: var(--secondary-background-color-hover);
+    --button-border-color: var(--secondary-border-color);
+    --button-border-color-hover: var(--secondary-border-color-hover);
+    --button-text-color: var(--secondary-text-color);
+    --button-text-color-hover: var(--secondary-text-color-hover);
   `,
 
-  outline: css`
-    background-color: transparent;
-    color: var(--text-color);
-    border: 2px solid var(--border-color);
-
-    &:hover,
-    &:active,
-    &:focus {
-      border-color: var(--border-color-hover);
-    }
+  info: css`
+    --button-background-color: var(--info-background-color);
+    --button-background-color-hover: var(--info-background-color-hover);
+    --button-border-color: var(--info-border-color);
+    --button-border-color-hover: var(--info-border-color-hover);
+    --button-text-color: var(--info-text-color);
+    --button-text-color-hover: var(--info-text-color-hover);
   `,
 
-  link: css`
-    background-color: transparent;
-    color: var(--primary-color);
-    text-decoration: underline;
-    padding: 0;
-    border: none;
+  success: css`
+    --button-background-color: var(--success-background-color);
+    --button-background-color-hover: var(--success-background-color-hover);
+    --button-border-color: var(--success-border-color);
+    --button-border-color-hover: var(--success-border-color-hover);
+    --button-text-color: var(--success-text-color);
+    --button-text-color-hover: var(--success-text-color-hover);
+  `,
 
-    &:hover,
-    &:active,
-    &:focus {
-      color: var(--secondary-color);
-      text-decoration: none;
-    }
+  warning: css`
+    --button-background-color: var(--warning-background-color);
+    --button-background-color-hover: var(--warning-background-color-hover);
+    --button-border-color: var(--warning-border-color);
+    --button-border-color-hover: var(--warning-border-color-hover);
+    --button-text-color: var(--warning-text-color);
+    --button-text-color-hover: var(--warning-text-color-hover);
+  `,
+
+  danger: css`
+    --button-background-color: var(--danger-background-color);
+    --button-background-color-hover: var(--danger-background-color-hover);
+    --button-border-color: var(--danger-border-color);
+    --button-border-color-hover: var(--danger-border-color-hover);
+    --button-text-color: var(--danger-text-color);
+    --button-text-color-hover: var(--danger-text-color-hover);
   `,
 };
+
+export const linkStyles = css`
+  display: inline-flex;
+  background-color: transparent;
+  color: var(--link-text-color);
+  text-decoration: underline;
+  padding: 0;
+  border: none;
+
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: transparent;
+    color: var(--link-text-color-hover);
+    text-decoration: none;
+  }
+`;
+
+export const outlinedStyles = css`
+  background-color: var(--button-outlined-background-color);
+  border-color: var(--button-outlined-border-color);
+  color: var(--button-outlined-text-color);
+
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: var(--button-outlined-background-color-hover);
+    border-color: var(--button-outlined-border-color-hover);
+    color: var(--button-outlined-text-color-hover);
+  }
+`;
 
 export const iconSizeStyles = {
   sm: css`
@@ -103,6 +127,23 @@ export const iconSizeStyles = {
 };
 
 export const ButtonStyled = styled.button<ButtonProps<any>>`
+  --button-background-color: var(--background-reverse-color);
+  --button-background-color-hover: var(--background-color);
+  --button-border-color: var(--button-background-color);
+  --button-border-color-hover: var(--button-background-color-hover);
+  --button-text-color: var(--text-reverse-color);
+  --button-text-color-hover: var(--text-color);
+
+  --button-outlined-background-color: transparent;
+  --button-outlined-background-color-hover: var(--button-background-color);
+  --button-outlined-border-color: var(--button-border-color);
+  --button-outlined-border-color-hover: var(--button-outlined-background-color-hover);
+  --button-outlined-text-color: var(--button-background-color);
+  --button-outlined-text-color-hover: var(--button-text-color);
+
+  --link-text-color: var(--button-background-color);
+  --link-text-color-hover: var(--button-background-color);
+
   --button-icon-size: 1em;
 
   display: inline-flex;
@@ -117,13 +158,24 @@ export const ButtonStyled = styled.button<ButtonProps<any>>`
   line-height: 1.5;
   cursor: pointer;
   outline: none;
-  transition: box-shadow var(--transition-speed);
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 
+  background-color: var(--button-background-color);
+  border-color: var(--button-border-color);
+  color: var(--button-text-color);
+
+  &:hover,
+  &:active,
   &:focus {
-    outline: 2px solid var(--primary-color);
+    background-color: var(--button-background-color-hover);
+    border-color: var(--button-border-color-hover);
+    color: var(--button-text-color-hover);
+  }
+
+  &:focus {
+    outline: 2px solid var(--primary-background-color);
     outline-offset: 2px;
   }
 
@@ -133,7 +185,9 @@ export const ButtonStyled = styled.button<ButtonProps<any>>`
   }
 
   ${(props) => sizeStyles[props.$size || 'md']}
-  ${(props) => variantStyles[props.$variant || 'default']}
+  ${(props) => props.$outlined && outlinedStyles}
+  ${(props) => props.href && linkStyles}
+  ${(props) => props.$variant && variantStyles[props.$variant]}
 
   & > svg {
     width: var(--button-icon-size);
@@ -179,6 +233,8 @@ export const ButtonStyled = styled.button<ButtonProps<any>>`
 `;
 
 export const ButtonIconStyled = styled(ButtonStyled)`
-  ${(props) => variantStyles[props.$variant || 'default']}
   ${(props) => iconSizeStyles[props.$size || 'md']}
+  ${(props) => props.$outlined && outlinedStyles}
+  ${(props) => props.href && linkStyles}
+  ${(props) => props.$variant && variantStyles[props.$variant]}
 `;

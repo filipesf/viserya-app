@@ -4,9 +4,8 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { NEXT_PUBLIC_DISCORD_APP_ID } from '@viserya/config/constants';
 import { viseryaApi } from '@viserya/services/api';
-import { Button } from '@viserya/ui/Button';
+import { ButtonIcon } from '@viserya/ui/Button';
 import { CardsContainer } from '@viserya/ui/Card';
-import { Icon } from '@viserya/ui/Icon/Icon';
 import { Notify } from '@viserya/ui/Notify';
 
 export default function Page() {
@@ -16,8 +15,71 @@ export default function Page() {
   const handleRegisterCommand = async () => {
     try {
       setIsLoading(true);
+
       await viseryaApi.post('/bot/register-commands');
+
       setStatus('Commands registered!');
+      setIsLoading(false);
+    } catch (error: any) {
+      console.log(error);
+      setStatus(error.message);
+      setIsLoading(false);
+    }
+  };
+
+  const handleDatabase = async () => {
+    try {
+      setIsLoading(true);
+
+      await viseryaApi.get('/sessions/create-sessions-table');
+
+      setStatus('Database created successfully');
+      setIsLoading(false);
+    } catch (error: any) {
+      console.log(error);
+      setStatus(error.message);
+      setIsLoading(false);
+    }
+  };
+
+  const handleNewSession = async () => {
+    try {
+      setIsLoading(true);
+
+      await viseryaApi.post('/sessions/start-new-session', {
+        threadId: 'threadId_003',
+        channelId: 'channelId_003',
+        userId: 'userId_003',
+      });
+
+      setStatus('Session created successfully');
+      setIsLoading(false);
+    } catch (error: any) {
+      console.log(error);
+      setStatus(error.message);
+      setIsLoading(false);
+    }
+  };
+
+  const handleStartSession = async () => {
+    try {
+      setIsLoading(true);
+      const response = await viseryaApi.get('/sessions/CHANNELID_TEST_000');
+      const threadId = response.data.result.rows[0]['thread_id'];
+      setStatus(`Thread ID: ${threadId}`);
+      setIsLoading(false);
+    } catch (error: any) {
+      console.log(error);
+      setStatus(error.message);
+      setIsLoading(false);
+    }
+  };
+
+  const handleClearDB = async () => {
+    try {
+      setIsLoading(true);
+      await viseryaApi.delete('/sessions/clear');
+      setStatus('Database cleared successfully');
       setIsLoading(false);
     } catch (error: any) {
       console.log(error);
@@ -40,24 +102,53 @@ export default function Page() {
     <CardsContainer>
       {status && <Notify>{status}</Notify>}
 
-      <Button
+      <ButtonIcon
+        $variant="primary"
         $isLoading={isLoading}
-        $variant="secondary"
         disabled={isLoading}
         onClick={handleRegisterCommand}
-      >
-        <Icon name="Keyboard" /> Register Commands
-      </Button>
+        icon="Command"
+      />
 
-      <Button
-        as={Link}
-        $variant="outline"
+      <ButtonIcon
+        $variant="secondary"
+        $isLoading={isLoading}
+        disabled={isLoading}
+        onClick={handleDatabase}
+        icon="Database"
+      />
+
+      <ButtonIcon
+        $variant="info"
+        $isLoading={isLoading}
+        disabled={isLoading}
+        onClick={handleNewSession}
+        icon="Plus"
+      />
+
+      <ButtonIcon
+        $variant="success"
+        $isLoading={isLoading}
+        disabled={isLoading}
+        onClick={handleStartSession}
+        icon="Play"
+      />
+
+      <ButtonIcon
+        $variant="danger"
+        $isLoading={isLoading}
+        disabled={isLoading}
+        onClick={handleClearDB}
+        icon="Trash"
+      />
+
+      <ButtonIcon
         href={`https://discord.com/api/oauth2/authorize?client_id=${NEXT_PUBLIC_DISCORD_APP_ID}&permissions=2147483648&scope=bot`}
-        target="_blank"
         rel="noreferrer noopener"
-      >
-        <Icon name="SignIn" /> Invite Discord Bot
-      </Button>
+        target="_blank"
+        icon="SignIn"
+        as={Link}
+      />
     </CardsContainer>
   );
 }

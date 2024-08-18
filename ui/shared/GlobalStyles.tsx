@@ -59,6 +59,55 @@ export const GlobalStyles = createGlobalStyle`
   --color-neutral-900: #31363c;
   --color-neutral-950: #1e2226;
 
+  --background-color: var(--color-neutral-950);
+  --background-reverse-color: var(--color-neutral-50);
+  --text-color: var(--color-neutral-50);
+  --text-reverse-color: var(--color-neutral-950);
+  --link-text-color: var(--text-color);
+  --link-text-color-hover: var(--text-reverse-color);
+
+  --primary-background-color: var(--color-neutral-500);
+  --primary-background-color-hover: var(--color-neutral-700);
+  --primary-border-color: var(--primary-background-color);
+  --primary-border-color-hover: var(--primary-background-color-hover);
+  --primary-text-color: var(--color-neutral-50);
+  --primary-text-color-hover: var(--color-neutral-50);
+
+  --secondary-background-color: var(--color-neutral-900);
+  --secondary-background-color-hover: var(--color-neutral-600);
+  --secondary-border-color: var(--secondary-background-color);
+  --secondary-border-color-hover: var(--secondary-background-color-hover);
+  --secondary-text-color: var(--text-color);
+  --secondary-text-color-hover: var(--text-color);
+
+  --info-background-color: var(--color-blue-700);
+  --info-background-color-hover: var(--color-blue-900);
+  --info-border-color: var(--info-background-color);
+  --info-border-color-hover: var(--info-background-color-hover);
+  --info-text-color: var(--color-neutral-50);
+  --info-text-color-hover: var(--color-neutral-50);
+
+  --success-background-color: var(--color-green-700);
+  --success-background-color-hover: var(--color-green-900);
+  --success-border-color: var(--success-background-color);
+  --success-border-color-hover: var(--success-background-color-hover);
+  --success-text-color: var(--color-neutral-50);
+  --success-text-color-hover: var(--color-neutral-50);
+
+  --warning-background-color: var(--color-yellow-500);
+  --warning-background-color-hover: var(--color-yellow-700);
+  --warning-border-color: var(--warning-background-color);
+  --warning-border-color-hover: var(--warning-background-color-hover);
+  --warning-text-color: var(--color-neutral-50);
+  --warning-text-color-hover: var(--color-neutral-50);
+
+  --danger-background-color: var(--color-red-700);
+  --danger-background-color-hover: var(--color-red-900);
+  --danger-border-color: var(--danger-background-color);
+  --danger-border-color-hover: var(--danger-background-color-hover);
+  --danger-text-color: var(--color-neutral-50);
+  --danger-text-color-hover: var(--color-neutral-50);
+
   /* Spacing */
   --spacing-1: 4px;
   --spacing-2: 8px;
@@ -96,7 +145,7 @@ export const GlobalStyles = createGlobalStyle`
   --transition-speed: 300ms;
 
   /* Card */
-  --card-background-color: var(--secondary-color);
+  --card-background-color: var(--secondary-background-color);
 
   @media screen and (max-width: 768px) {
     /* Spacing */
@@ -120,11 +169,12 @@ export const GlobalStyles = createGlobalStyle`
   --text-color: var(--color-neutral-900);
   --text-reverse-color: var(--color-neutral-50);
 
-  --primary-color: var(--color-yellow-500);
-  --primary-color-hover: var(--color-yellow-700);
-
-  --secondary-color: var(--color-neutral-100);
-  --secondary-color-hover: var(--color-neutral-200);
+  --secondary-background-color: var(--color-neutral-200);
+  --secondary-background-color-hover: var(--color-neutral-300);
+  --secondary-border-color: var(--secondary-background-color);
+  --secondary-border-color-hover: var(--secondary-background-color-hover);
+  --secondary-text-color: var(--text-color);
+  --secondary-text-color-hover: var(--text-color);
 
   --border-color: var(--color-neutral-300);
   --border-color-hover: var(--color-neutral-400);
@@ -147,11 +197,12 @@ export const GlobalStyles = createGlobalStyle`
   --text-color: var(--color-neutral-50);
   --text-reverse-color: var(--color-neutral-950);
 
-  --primary-color: var(--color-yellow-500);
-  --primary-color-hover: var(--color-yellow-700);
-
-  --secondary-color: var(--color-neutral-900);
-  --secondary-color-hover: var(--color-neutral-800);
+  --secondary-background-color: var(--color-neutral-900);
+  --secondary-background-color-hover: var(--color-neutral-600);
+  --secondary-border-color: var(--secondary-background-color);
+  --secondary-border-color-hover: var(--secondary-background-color-hover);
+  --secondary-text-color: var(--text-color);
+  --secondary-text-color-hover: var(--text-color);
 
   --border-color: var(--color-neutral-600);
   --border-color-hover: var(--color-neutral-700);
@@ -172,7 +223,7 @@ body {
 }
 
 a {
-  color: var(--primary-color);
+  color: var(--primary-background-color);
   text-decoration: none;
 }
 `;
