@@ -26,6 +26,8 @@ export async function POST(request: NextRequest) {
     // get all commands
     const allCommands = await getCommands();
 
+    console.log('=== allCommands ===', allCommands);
+
     // execute command
     let reply: APIInteractionResponse | null = null;
     const commandName = interaction.data.name + '.ts';
