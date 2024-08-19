@@ -1,6 +1,6 @@
 import { CommandInteraction } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { viseryaApi } from '@viserya/services/api';
+import { viseryaApi } from '@viserya/services/viseryaApi';
 import { ExecuteCommand } from '@viserya/types';
 
 export const register = new SlashCommandBuilder()

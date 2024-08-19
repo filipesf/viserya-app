@@ -1,4 +1,4 @@
-import { viseryaApi } from '@viserya/services/api';
+import { viseryaApi } from '@viserya/services/viseryaApi';
 import { ContentTypes } from '@viserya/types';
 
 export async function fetchContent(endpoint: ContentTypes): Promise<string> {

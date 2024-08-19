@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
-import { viseryaApi } from '@viserya/services/api';
+import { viseryaApi } from '@viserya/services/viseryaApi';
 import { SessionsParams } from '@viserya/types';
 
 export async function POST(
@@ -55,9 +55,9 @@ export async function POST(
       },
       { status: 200 },
     );
-  } catch (error: any) {
+  } catch (error) {
     console.error(
-      '💀 ERROR DURING COMMAND EXECUTION:',
+      '💀 Error while trying to execute the startsession command:',
       NextResponse.json(error),
     );
     return NextResponse.error();

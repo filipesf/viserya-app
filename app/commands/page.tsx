@@ -3,10 +3,13 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { NEXT_PUBLIC_DISCORD_APP_ID } from '@viserya/config/constants';
-import { viseryaApi } from '@viserya/services/api';
+import { viseryaApi } from '@viserya/services/viseryaApi';
 import { ButtonIcon } from '@viserya/ui/Button';
 import { CardsContainer } from '@viserya/ui/Card';
 import { Notify } from '@viserya/ui/Notify';
+
+const channelId = 'ch_07091988';
+const userId = 'id_07091988';
 
 export default function Page() {
   const [status, setStatus] = useState<string>('');
@@ -64,9 +67,35 @@ export default function Page() {
   const handleStartSession = async () => {
     try {
       setIsLoading(true);
-      const response = await viseryaApi.get('/sessions/CHANNELID_TEST_000');
-      const threadId = response.data.result.rows[0]['thread_id'];
-      setStatus(`Thread ID: ${threadId}`);
+
+      const response = await viseryaApi.post(
+        `/sessions/${channelId}/start`,
+        null,
+        {
+          params: { userId: userId },
+        },
+      );
+
+      console.log(response.data);
+
+      setStatus('Session started successfully');
+      setIsLoading(false);
+    } catch (error: any) {
+      console.log(error);
+      setStatus(error.message);
+      setIsLoading(false);
+    }
+  };
+
+  const checkSessions = async () => {
+    try {
+      setIsLoading(true);
+
+      const response = await viseryaApi.get(`/sessions/${channelId}`);
+
+      console.log(response.data);
+
+      setStatus('Session checked!');
       setIsLoading(false);
     } catch (error: any) {
       console.log(error);
@@ -132,6 +161,14 @@ export default function Page() {
         disabled={isLoading}
         onClick={handleStartSession}
         icon="Play"
+      />
+
+      <ButtonIcon
+        $variant="warning"
+        $isLoading={isLoading}
+        disabled={isLoading}
+        onClick={checkSessions}
+        icon="Check"
       />
 
       <ButtonIcon

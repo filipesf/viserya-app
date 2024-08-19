@@ -7,13 +7,30 @@ export async function GET(
   { params: { channelId } }: SessionsParams,
 ) {
   try {
+    console.log(`🔎 CHECKING FOR EXISTING SESSIONS IN ${channelId} CHANNEL`);
+
     const result = await sql`
       SELECT * FROM sessions
-      WHERE channel_id = ${channelId} AND status = 'active'
+      WHERE channel_id = ${channelId}
     `;
 
-    return NextResponse.json({ result }, { status: 200 });
+    console.log('✅ SESSIONS RETRIEVED');
+
+    const totalSessions = result.rows.length;
+
+    console.log(
+      `🧐 THERE'S A TOTAL OF ${totalSessions} IN ${channelId} CHANNEL`,
+    );
+
+    return NextResponse.json(
+      { ...result, sessions_in_channel: totalSessions },
+      { status: 200 },
+    );
   } catch (error) {
-    return NextResponse.json({ error }, { status: 500 });
+    console.error(
+      '💀 Error while trying to delete sessions from channel:',
+      NextResponse.json(error),
+    );
+    return NextResponse.error();
   }
 }

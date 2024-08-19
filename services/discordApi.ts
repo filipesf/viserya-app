@@ -1,14 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
-import { RESTGetAPIApplicationCommandsResult } from 'discord.js';
 import {
   AUTHORIZATION_KEY,
   DISCORD_BOT_TOKEN,
-  NEXT_PUBLIC_DISCORD_APP_ID,
 } from '@viserya/config/constants';
 
-export const discord_api = axios.create({
+export const discordApi = axios.create({
   baseURL: 'https://discord.com/api/',
-  timeout: 3000,
+  timeout: 10000,
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
@@ -17,9 +15,3 @@ export const discord_api = axios.create({
     AUTHORIZATION_KEY: AUTHORIZATION_KEY,
   },
 });
-
-export const fetchBotCommands = async () => {
-  return (await discord_api.get(
-    `/applications/${NEXT_PUBLIC_DISCORD_APP_ID!}/commands`,
-  )) as AxiosResponse<RESTGetAPIApplicationCommandsResult>;
-};

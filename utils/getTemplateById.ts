@@ -1,4 +1,4 @@
-import { readTemplateFile } from '@viserya/utils/readJsonFile';
+import { readTemplateFile } from '@viserya/utils/readFiles';
 
 /**
  * Get a specific markdown template by filename.

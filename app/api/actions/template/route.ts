@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getTemplateById } from '@viserya/utils/getTemplateById';
-import { handleMiddleware } from '@viserya/utils/handleMiddleware';
+import { handleMiddleware } from '@viserya/services/handleMiddleware';
 
 export const dynamic = 'force-dynamic';
 

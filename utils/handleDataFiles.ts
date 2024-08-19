@@ -5,7 +5,7 @@ import {
   MonsterData,
   OrganisationData,
 } from '@viserya/types';
-import { readDataFile } from './readJsonFile';
+import { readDataFile } from './readFiles';
 
 type DataItems = {
   characterData: CharacterData;

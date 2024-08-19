@@ -3,9 +3,18 @@ import { sql } from '@vercel/postgres';
 
 export async function DELETE(_request: Request) {
   try {
-    const result = await sql`DELETE FROM sessions;`;
-    return NextResponse.json({ result }, { status: 200 });
+    console.log('🤞 ATTEMPTING TO DELETE SESSIONS');
+
+    await sql`DELETE FROM sessions;`;
+
+    console.log('🗑️ SESSIONS CLEARED');
+
+    return NextResponse.json({}, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error }, { status: 500 });
+    console.error(
+      '💀 Error while trying to delete the sessions:',
+      NextResponse.json(error),
+    );
+    return NextResponse.error();
   }
 }

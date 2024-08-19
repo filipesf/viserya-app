@@ -7,6 +7,9 @@ export async function POST(
   { params: { channelId } }: SessionsParams,
 ) {
   try {
+    console.log('🤖 EXECUTING ENDSESSION COMMAND');
+    console.log('🔎 CHECKING FOR EXISTING SESSION');
+
     const existingSession = await sql`
       SELECT * FROM sessions
       WHERE channel_id = ${channelId} AND status = 'active'
@@ -25,11 +28,16 @@ export async function POST(
       );
     }
 
+    console.log('💬 ATTEMPTING TO END ACTIVE SESSION');
+
     await sql`
       UPDATE sessions
       SET status = 'ended', end_time = NOW()
       WHERE id = ${existingSession.rows[0].id}
     `;
+
+    console.log('✅ SESSION ENDED SUCCESSFULLY');
+    console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
 
     return NextResponse.json(
       {
@@ -41,6 +49,10 @@ export async function POST(
       { status: 200 },
     );
   } catch (error) {
-    return NextResponse.json({ error }, { status: 500 });
+    console.error(
+      '💀 Error while trying to execute the endsession command:',
+      NextResponse.json(error),
+    );
+    return NextResponse.error();
   }
 }
