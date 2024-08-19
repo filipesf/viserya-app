@@ -17,7 +17,7 @@ export const execute: ExecuteCommand = async (
     WHERE channel_id = ${channelId} AND status = 'active'
   `;
 
-  if (existingSession.rows.length > 0) {
+  if (existingSession.rows.length === 0) {
     return {
       type: 4,
       ephemeral: true,
