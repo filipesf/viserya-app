@@ -19,37 +19,25 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ type: 1 });
     }
 
-    console.log('=== INTERACTION ===', interaction);
-
-    console.log('=== NextResponse 1 ===', NextResponse);
-
     // get all commands
     const allCommands = await getCommands();
 
-    console.log('=== allCommands ===', allCommands);
-
     // execute command
     let reply: APIInteractionResponse | null = null;
-
-    console.log('=== reply 1 ===', reply);
 
     const commandName = interaction.data.name + '.ts';
     if (allCommands[commandName]) {
       reply = await allCommands[commandName].execute(interaction);
     }
 
-    console.log('=== NextResponse 2 ===', NextResponse);
-
-    console.log('=== reply 2 ===', reply);
-
     if (!reply) throw new Error();
 
-    console.log('=== NextResponse 3 ===', NextResponse);
-    console.log('=== reply 3 ===', reply);
     return NextResponse.json(reply);
   } catch (error: any) {
-    console.log(error);
-    console.log('SOMETHING WENT WRONG', NextResponse);
+    console.error(
+      '⚠️ Error during command interaction: ',
+      NextResponse.json(error),
+    );
     return NextResponse.error();
   }
 }

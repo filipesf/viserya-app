@@ -1,7 +1,6 @@
 import { CommandInteraction } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { sql } from '@vercel/postgres';
-import { viseryaApi } from '@viserya/services/api';
 import { ExecuteCommand } from '@viserya/types';
 
 export const register = new SlashCommandBuilder()
@@ -11,10 +10,7 @@ export const register = new SlashCommandBuilder()
 export const execute: ExecuteCommand = async (
   interaction: CommandInteraction,
 ) => {
-  console.log('Started refreshing application (/) commands.');
-
   const channelId = interaction.channel?.id;
-  const userId = interaction.member?.user.id;
 
   const existingSession = await sql`
     SELECT * FROM sessions
@@ -26,25 +22,21 @@ export const execute: ExecuteCommand = async (
       type: 4,
       ephemeral: true,
       data: {
-        content:
-          'There is already an active session in this channel. Please end the current session before starting a new one.',
+        content: 'There is no active session in this channel.',
       },
     };
   }
 
-  const threads = await viseryaApi.post('/assistants/threads');
-  const threadId = threads.data.threadId;
-
   await sql`
-    INSERT INTO sessions (thread_id, channel_id, user_id)
-    VALUES (${threadId}, ${channelId}, ${userId})
-    RETURNING id
+    UPDATE sessions
+    SET status = 'ended', end_time = NOW()
+    WHERE id = ${existingSession.rows[0].id}
   `;
 
   return {
     type: 4,
     data: {
-      content: `Session started successfully!`,
+      content: 'Session ended successfully!',
     },
   };
 };
