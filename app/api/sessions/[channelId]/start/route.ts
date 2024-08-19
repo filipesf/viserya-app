@@ -4,11 +4,15 @@ import { viseryaApi } from '@viserya/services/api';
 import { SessionsParams } from '@viserya/types';
 
 export async function POST(
-  _request: NextRequest,
-  { params: { channelId, userId } }: SessionsParams,
+  request: NextRequest,
+  { params: { channelId } }: SessionsParams,
 ) {
+  const { searchParams } = new URL(request.url);
+  const userId = searchParams.get('userId');
+
   try {
     console.log('🤖 EXECUTING STARTSESSION COMMAND');
+    console.log('🔎 CHECKING FOR EXISTING SESSION');
 
     const existingSession = await sql`
       SELECT * FROM sessions
