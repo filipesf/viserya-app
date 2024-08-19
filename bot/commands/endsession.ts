@@ -4,8 +4,8 @@ import { sql } from '@vercel/postgres';
 import { ExecuteCommand } from '@viserya/types';
 
 export const register = new SlashCommandBuilder()
-  .setName('startsession')
-  .setDescription('Start a new D&D session in this channel.');
+  .setName('endsession')
+  .setDescription('End the current D&D session in this channel.');
 
 export const execute: ExecuteCommand = async (
   interaction: CommandInteraction,

@@ -18,11 +18,6 @@ const getCommands = async () => {
   const commandFiles = getTsFiles(commandDir);
   const commands: { [key: string]: CommandModule } = {};
 
-  console.log('--- commandDir', commandDir);
-  console.log('--- commandFiles', commandFiles);
-  console.log('--- commands', commands);
-  console.log('--- SeenCommands 1', SeenCommands);
-
   for (const file of commandFiles) {
     try {
       const fileContents = (await import(
@@ -35,8 +30,6 @@ const getCommands = async () => {
   }
 
   SeenCommands = commands;
-
-  console.log('--- SeenCommands 2', SeenCommands);
 
   return commands;
 };

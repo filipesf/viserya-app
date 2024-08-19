@@ -33,7 +33,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       arrayOfSlashCommandsRegisterJSON,
     );
 
-    console.log('✅ COMMANDS REGISTERED', registerCommands.data);
+    console.log('🎉 COMMANDS REGISTERED', registerCommands.data);
 
     return NextResponse.json({ error: null });
   } catch (error) {
