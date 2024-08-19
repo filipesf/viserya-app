@@ -12,5 +12,9 @@ export const execute: ExecuteCommand = async (
 ) => {
   const channelId = interaction.channel?.id;
 
-  return await viseryaApi.post(`/sessions/${channelId}/end`);
+  const result = await viseryaApi.post(`/sessions/${channelId}/end`);
+
+  console.log('🕵️‍♂️ EXECUTION RESULTS FROM ENDSESSION', result.data);
+
+  return result.data;
 };
