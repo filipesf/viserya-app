@@ -19,18 +19,9 @@ const ContentSelectorStyled = styled.section`
   }
 `;
 
-const ContentSelectorButton = styled(Button)`
-  padding: var(--spacing-xs);
-  flex-direction: column;
-  flex-shrink: 0;
-  width: 100%;
-`;
-
 const ContentSelectorLabel = styled.span`
   font-size: var(--font-size-sm);
   font-weight: 600;
-  line-height: 1;
-  opacity: 0.8;
   text-transform: capitalize;
 `;
 
@@ -51,10 +42,15 @@ export function ContentSelector({ getContent }: ContentSelectorProps) {
   return (
     <ContentSelectorStyled>
       {contentSelectorButtons.map(({ emoji, label }) => (
-        <ContentSelectorButton key={label} onClick={() => getContent(label)}>
+        <Button
+          $variant="secondary"
+          $vertical
+          key={label}
+          onClick={() => getContent(label)}
+        >
           <Emoji>{emoji}</Emoji>
           <ContentSelectorLabel>{label}</ContentSelectorLabel>
-        </ContentSelectorButton>
+        </Button>
       ))}
     </ContentSelectorStyled>
   );

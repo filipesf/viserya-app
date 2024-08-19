@@ -81,7 +81,6 @@ export const variantStyles = {
 };
 
 export const linkStyles = css`
-  display: inline-flex;
   background-color: transparent;
   color: var(--link-text-color);
   text-decoration: underline;
@@ -111,6 +110,10 @@ export const outlinedStyles = css`
   }
 `;
 
+export const verticalStyles = css`
+  flex-direction: column;
+`;
+
 export const iconSizeStyles = {
   sm: css`
     padding: var(--spacing-xs);
@@ -137,7 +140,9 @@ export const ButtonStyled = styled.button<ButtonProps<any>>`
   --button-outlined-background-color: transparent;
   --button-outlined-background-color-hover: var(--button-background-color);
   --button-outlined-border-color: var(--button-border-color);
-  --button-outlined-border-color-hover: var(--button-outlined-background-color-hover);
+  --button-outlined-border-color-hover: var(
+    --button-outlined-background-color-hover
+  );
   --button-outlined-text-color: var(--button-background-color);
   --button-outlined-text-color-hover: var(--button-text-color);
 
@@ -188,6 +193,7 @@ export const ButtonStyled = styled.button<ButtonProps<any>>`
   ${(props) => props.$outlined && outlinedStyles}
   ${(props) => props.href && linkStyles}
   ${(props) => props.$variant && variantStyles[props.$variant]}
+  ${(props) => props.$vertical && verticalStyles}
 
   & > svg {
     width: var(--button-icon-size);

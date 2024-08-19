@@ -20,6 +20,7 @@ export type ButtonProps<C extends React.ElementType> = AsProp<C> & {
   $icon?: IconName;
   $variant?: ButtonVariant;
   $outlined?: boolean;
+  $vertical?: boolean;
   $isLoading?: boolean;
 } & Omit<React.ComponentPropsWithoutRef<C>, keyof AsProp<C>>;
 
@@ -30,6 +31,7 @@ export const Button = <C extends React.ElementType = 'button'>({
   $size: size = 'md',
   $icon: icon = undefined,
   $variant: variant,
+  $vertical: vertical =  false,
   $isLoading: isLoading = false,
   disabled,
   ...rest
@@ -39,6 +41,7 @@ export const Button = <C extends React.ElementType = 'button'>({
       as={as || 'button'}
       $size={size}
       $variant={variant}
+      $vertical={vertical}
       $isLoading={isLoading}
       disabled={disabled || isLoading}
       aria-disabled={disabled || isLoading}
