@@ -12,8 +12,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return authResponse;
   }
 
-  console.log('🔑 AUTHENTICATED REQUEST');
-
   try {
     const allCommands = await getCommands();
     const arrayOfSlashCommandsRegister = Object.values(allCommands);
@@ -21,11 +19,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       (command) => command.register.toJSON(),
     );
 
-    console.log('✅ COMMANDS RETRIEVED');
+    console.log('📦 COMMANDS RETRIEVED');
 
-    console.log('🥺 TRYING TO REGISTER COMMANDS');
+    console.log('🤞 TRYING TO REGISTER COMMANDS');
 
-    const registerCommands = await discordApi.put(
+    await discordApi.put(
       `/applications/${NEXT_PUBLIC_DISCORD_APP_ID!}/commands`,
       arrayOfSlashCommandsRegisterJSON,
     );

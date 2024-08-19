@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
       return new NextResponse('Invalid request', { status: 401 });
     }
 
-    console.log('✅ VERIFIED REQUEST');
+    console.log('🪪 VERIFIED REQUEST');
 
     const { interaction } = verifyRes;
 
@@ -26,11 +26,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ type: 1 });
     }
 
-    console.log('🥺 TRYING TO GET COMMANDS');
+    console.log('🤞 TRYING TO GET COMMANDS');
 
     const allCommands = await getCommands();
 
-    console.log('✅ COMMANDS RETRIEVED');
+    console.log('📦 COMMANDS RETRIEVED');
 
     let reply: APIInteractionResponse | null = null;
     const commandName = interaction.data.name + '.ts';
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
 
     if (!reply) throw new Error();
 
-    console.log('🎉 INTERACTION RESPONSE SENT');
+    console.log('📨 INTERACTION RESPONSE SENT');
 
     return NextResponse.json(reply);
   } catch (error) {

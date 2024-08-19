@@ -38,6 +38,8 @@ export default async function middleware(request: NextRequest) {
     'Content-Type, Authorization, AUTHORIZATION_KEY',
   );
 
+  console.log('🔑 REQUEST AUTHENTICATED');
+
   return response;
 }
 

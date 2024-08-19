@@ -36,8 +36,7 @@ export async function POST(
       WHERE id = ${existingSession.rows[0].id}
     `;
 
-    console.log('✅ SESSION ENDED SUCCESSFULLY');
-    console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
+    console.log('🎉 SESSION ENDED SUCCESSFULLY');
 
     return NextResponse.json(
       {

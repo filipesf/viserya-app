@@ -44,7 +44,7 @@ export async function POST(
       RETURNING id
     `;
 
-    console.log('🎉 COMMAND EXECUTED SUCCESSFULLY!');
+    console.log('🎉 SESSION STARTED SUCCESSFULLY');
 
     return NextResponse.json(
       {
