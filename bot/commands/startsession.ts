@@ -15,8 +15,8 @@ export const execute: ExecuteCommand = async (
 
   console.log('🤖 EXECUTING STARTSESSION COMMAND');
 
-  const result = await viseryaApi.post(`/sessions/${channelId}/start`, {
-    userId,
+  const result = await viseryaApi.post(`/sessions/${channelId}/start`, null, {
+    params: { userId },
   });
 
   console.log('🎉 COMMAND EXECUTED SUCCESSFULLY!');
