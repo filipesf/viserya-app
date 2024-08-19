@@ -23,17 +23,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     console.log('✅ COMMANDS RETRIEVED');
 
-    console.log(
-      '🥺 TRYING TO REGISTER COMMANDS',
-      arrayOfSlashCommandsRegisterJSON,
-    );
+    console.log('🥺 TRYING TO REGISTER COMMANDS');
 
     const registerCommands = await discord_api.put(
       `/applications/${NEXT_PUBLIC_DISCORD_APP_ID!}/commands`,
       arrayOfSlashCommandsRegisterJSON,
     );
 
-    console.log('🎉 COMMANDS REGISTERED', registerCommands.data);
+    console.log('🎉 COMMANDS REGISTERED');
 
     return NextResponse.json({ error: null });
   } catch (error) {

@@ -35,13 +35,13 @@ export async function POST(request: NextRequest) {
     let reply: APIInteractionResponse | null = null;
     const commandName = interaction.data.name + '.ts';
 
-    console.log('🕵️‍♂️ COMMAND FOUND', commandName);
+    console.log('🕵️‍♂️ COMMAND FOUND');
 
     if (allCommands[commandName]) {
       reply = await allCommands[commandName].execute(interaction);
     }
 
-    console.log('✅ COMMAND EXECUTED', reply);
+    console.log('✅ COMMAND EXECUTED');
 
     if (!reply) throw new Error();
 
