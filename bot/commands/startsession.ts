@@ -32,13 +32,15 @@ export const execute: ExecuteCommand = async (
     };
   }
 
-  const { data: threadId } = await viseryaApi.post('/assistants/threads');
+  const threads = await viseryaApi.post('/assistants/threads');
 
-  console.log('--- newSession:', threadId, interaction.channelId, userId);
+  console.log('--- threads:', threads);
+  console.log('--- newSession:', channelId);
+  console.log('--- userId:', userId);
 
   const newSession = await sql`
     INSERT INTO sessions (thread_id, channel_id, user_id)
-    VALUES (${threadId}, ${interaction.channelId}, ${userId})
+    VALUES (${threads.data.threadId}, ${channelId}, ${userId})
     RETURNING id
   `;
 
