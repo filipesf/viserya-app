@@ -60,13 +60,13 @@ a {
 
 /* Improved accessibility for focus states */
 :focus {
-  outline: 2px dashed var(--primary-background-color); /* Visible outline for focus */
+  outline: 2px dashed var(--color-blue-600); /* Visible outline for focus */
   outline-offset: 2px;
 }
 
 /* Accessible focus styles for interactive elements */
 a:focus, button:focus, input:focus, textarea:focus {
-  outline: 2px solid var(--primary-background-color);
+  outline: 2px solid var(--color-blue-600);
   outline-offset: 2px;
 }
 
@@ -118,7 +118,7 @@ body, input, button, textarea, select {
 
 /* Accessibility: Ensure a consistent focus style */
 :focus-visible {
-  outline: 2px dashed var(--primary-background-color);
+  outline: 2px dashed var(--color-blue-600);
   outline-offset: 2px;
 }
 

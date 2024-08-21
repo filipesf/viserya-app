@@ -16,7 +16,7 @@ export async function POST(
 
     const existingSession = await sql`
       SELECT * FROM sessions
-      WHERE channel_id = ${channelId} AND status = 'active'
+      WHERE channel_id = ${channelId} AND status = 'active';
     `;
 
     if (existingSession.rows.length > 0) {
@@ -41,7 +41,7 @@ export async function POST(
     await sql`
       INSERT INTO sessions (thread_id, channel_id, user_id)
       VALUES (${threadId}, ${channelId}, ${userId})
-      RETURNING id
+      RETURNING id;
     `;
 
     console.log('🎉 SESSION STARTED SUCCESSFULLY');

@@ -179,11 +179,6 @@ export const ButtonStyled = styled.button<ButtonProps<any>>`
     color: var(--button-text-color-hover);
   }
 
-  &:focus {
-    outline: 2px solid var(--primary-background-color);
-    outline-offset: 2px;
-  }
-
   &:disabled {
     cursor: not-allowed;
     opacity: 0.6;

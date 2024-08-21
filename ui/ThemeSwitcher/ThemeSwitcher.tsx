@@ -8,7 +8,7 @@ import { Icon } from '@viserya/ui/Icon';
 const ThemeSwitcherStyled = styled.button<{ $currentTheme: 'light' | 'dark' }>`
   position: fixed;
   right: var(--spacing-sm);
-  bottom: var(--spacing-sm);
+  top: var(--spacing-sm);
   display: flex;
   justify-content: center;
   align-items: center;

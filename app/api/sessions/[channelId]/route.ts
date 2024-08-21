@@ -11,19 +11,27 @@ export async function GET(
 
     const result = await sql`
       SELECT * FROM sessions
-      WHERE channel_id = ${channelId}
+      WHERE channel_id = ${channelId};
     `;
 
     console.log('✅ SESSIONS RETRIEVED');
 
-    const totalSessions = result.rows.length;
+    const sessionsInChannel = result.rows;
+    const activeSessionInChannel = result.rows.filter(
+      (session) => session.status === 'active',
+    );
+    const totalSessionsCount = result.rowCount;
 
     console.log(
-      `🧐 THERE'S A TOTAL OF ${totalSessions} IN ${channelId} CHANNEL`,
+      `🧐 THERE'S A TOTAL OF ${totalSessionsCount} IN ${channelId} CHANNEL`,
     );
 
     return NextResponse.json(
-      { ...result, sessions_in_channel: totalSessions },
+      {
+        sessionsInChannel,
+        totalSessionsCount,
+        activeSessionInChannel,
+      },
       { status: 200 },
     );
   } catch (error) {

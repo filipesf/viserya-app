@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { NEXT_PUBLIC_DISCORD_APP_ID } from '@viserya/config/constants';
 import { discordApi } from '@viserya/services/discordApi';
-import getCommands from '@viserya/utils/getCommands';
 import { handleMiddleware } from '@viserya/services/handleMiddleware';
+import getCommands from '@viserya/utils/getCommands';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   console.log('🤖 REGISTERING COMMANDS');

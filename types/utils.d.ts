@@ -19,3 +19,7 @@ export type ContentSelectorButtons = {
   emoji: string;
   label: ContentTypes;
 };
+
+export type CharacterAttributes = {
+  [key: string]: number;
+};
