@@ -38,7 +38,9 @@ export async function POST(request: NextRequest) {
     console.log('🕵️‍♂️ COMMAND FOUND');
 
     if (allCommands[commandName]) {
+      console.log('🚩🚩🚩');
       reply = await allCommands[commandName].execute(interaction);
+      console.log('🚩🚩🚩');
     }
 
     console.log('✅ COMMAND EXECUTED');
