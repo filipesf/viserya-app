@@ -17,8 +17,6 @@ export async function GET(
 
     console.log('✅ SESSIONS RETRIEVED');
 
-    console.log('🐞 /api/sessions/[channelId]', result);
-
     const sessionsInChannel = result.rows;
     const activeSessionInChannel = result.rows.filter(
       (session) => session.status === 'active',
