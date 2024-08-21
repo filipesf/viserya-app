@@ -1,5 +1,6 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { ExecuteCommand } from '@viserya/types';
+import { getCharacterAttributes } from '@viserya/utils/getCharacterAttributes';
 import {
   getRandomAdventure,
   getRandomCharacter,
@@ -39,7 +40,9 @@ export const execute: ExecuteCommand = async (interaction) => {
       console.log('📜 ADVENTURE GENERATED:', content);
       break;
     case 'character':
-      content = await getRandomCharacter();
+      const randomCharacter = await getRandomCharacter();
+      const abilityScores = getCharacterAttributes();
+      content = `${randomCharacter} ${Object.values(abilityScores)}`;
       console.log('🧙‍♂️ CHARACTER GENERATED:', content);
       break;
     case 'item':
