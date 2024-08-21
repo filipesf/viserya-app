@@ -13,7 +13,13 @@ export const register = new SlashCommandBuilder()
 
 export const execute: ExecuteCommand = async (interaction) => {
   const channelId = interaction.channel?.id;
-  const checkForAllChannels = interaction.data?.options[0]?.value;
+  const hasOptions = !!interaction.data?.options;
+  const checkForAllChannels = hasOptions && interaction.data?.options[0]?.value;
+
+  console.log({
+    hasOptions,
+    checkForAllChannels,
+  });
 
   console.log('🤖 EXECUTING CHECKSESSIONS COMMAND');
 
