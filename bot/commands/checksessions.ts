@@ -16,39 +16,32 @@ export const execute: ExecuteCommand = async (interaction) => {
   const hasOptions = !!interaction.data?.options;
   const checkForAllChannels = hasOptions && interaction.data?.options[0]?.value;
 
-  console.log({
-    hasOptions,
-    checkForAllChannels,
-  });
-
   console.log('🤖 EXECUTING CHECKSESSIONS COMMAND');
 
-  let response;
+  const endpoint = checkForAllChannels ? '/sessions' : `/sessions/${channelId}`;
+  const response = await viseryaApi.get(endpoint);
+  const { totalSessionsCount, activeSessionsInChannels } = response.data;
 
+  const plural = (count: number) => (count === 1 ? '' : 's');
+
+  let content;
   if (checkForAllChannels) {
-    response = await viseryaApi.get(`/sessions`);
-    const { totalSessionsCount, activeSessionsInChannels } = response.data;
-    const plural = totalSessionsCount > 1 ? 's' : '';
-    const pluralActive = activeSessionsInChannels.length > 1 ? 's' : '';
-
-    return {
-      type: 4,
-      data: {
-        content: `There's a total of ${totalSessionsCount} session${plural} accross all channels, and ${activeSessionsInChannels.length} active session${pluralActive}.`,
-      },
-    };
+    const activeSessionsCount = activeSessionsInChannels.length;
+    content =
+      totalSessionsCount === 0
+        ? 'There are no active sessions in this server.'
+        : `There's a total of ${totalSessionsCount} session${plural(totalSessionsCount)} across all channels, and ${activeSessionsCount} active session${plural(activeSessionsCount)}.`;
+  } else {
+    content =
+      totalSessionsCount === 0
+        ? 'There are no active sessions in this channel.'
+        : `There's a total of ${totalSessionsCount} session${plural(totalSessionsCount)} in this channel.`;
   }
-
-  response = await viseryaApi.get(`/sessions/${channelId}`);
-  const { totalSessionsCount } = response.data;
-  const plural = totalSessionsCount > 1 ? 's' : '';
 
   console.log('🎉 COMMAND EXECUTED SUCCESSFULLY!');
 
   return {
     type: 4,
-    data: {
-      content: `There's a total of ${totalSessionsCount} session${plural} accross all channels.`,
-    },
+    data: { content },
   };
 };
