@@ -12,10 +12,12 @@ export async function GET(
 
     const result = await sql`
       SELECT * FROM sessions
-      WHERE channel_id = ${channelId};
+      WHERE channel_id=${channelId};
     `;
 
     console.log('✅ SESSIONS RETRIEVED');
+
+    console.log('🐞 /api/sessions/[channelId]', result);
 
     const sessionsInChannel = result.rows;
     const activeSessionInChannel = result.rows.filter(

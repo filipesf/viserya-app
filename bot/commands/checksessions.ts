@@ -20,8 +20,6 @@ export const execute: ExecuteCommand = async (interaction) => {
   const channelId = interaction.channel?.id;
   const checkSessionsFrom = interaction.data?.options[0]?.value;
 
-  console.log('🐞', checkSessionsFrom);
-
   console.log('🤖 EXECUTING CHECKSESSIONS COMMAND');
 
   let endpoint;
