@@ -18,7 +18,7 @@ export const register = new SlashCommandBuilder()
 
 export const execute: ExecuteCommand = async (interaction) => {
   const channelId = interaction.channel?.id;
-  const checkSessionsFrom = interaction.options.getString('from');
+  const checkSessionsFrom = interaction.data?.options[0]?.value;
 
   console.log('🐞', checkSessionsFrom);
 
