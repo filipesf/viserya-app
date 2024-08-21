@@ -8,8 +8,7 @@ export const register = new SlashCommandBuilder()
   .addBooleanOption((option) =>
     option
       .setName('All Channels')
-      .setDescription('Check for active sessions in all channels')
-      .setRequired(false),
+      .setDescription('Check for active sessions in all channels'),
   );
 
 export const execute: ExecuteCommand = async (interaction) => {
