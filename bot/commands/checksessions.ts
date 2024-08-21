@@ -7,8 +7,8 @@ export const register = new SlashCommandBuilder()
   .setDescription('Check if there are any active D&D sessions')
   .addBooleanOption((option) =>
     option
-      .setName('All Channels')
-      .setDescription('Check for active sessions in all channels'),
+      .setName('all')
+      .setDescription('Check for active sessions in all channels.'),
   );
 
 export const execute: ExecuteCommand = async (interaction) => {
