@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ type: 1 });
     }
 
-    console.log('🤞 TRYING TO GET COMMANDS');
+    console.log('🤞 GETTING COMMANDS');
 
     const allCommands = await getCommands();
 
@@ -41,18 +41,13 @@ export async function POST(request: NextRequest) {
       reply = await allCommands[commandName].execute(interaction);
     }
 
-    console.log('✅ COMMAND EXECUTED');
-
     if (!reply) throw new Error();
 
     console.log('📨 INTERACTION RESPONSE SENT');
 
     return NextResponse.json(reply);
   } catch (error) {
-    console.error(
-      '💀 Error during command interaction:',
-      NextResponse.json(error),
-    );
+    console.error('💀 Error during  interaction:', NextResponse.json(error));
     return NextResponse.error();
   }
 }

@@ -19,8 +19,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       (command) => command.register.toJSON(),
     );
 
-    console.log({ allCommands });
-
     console.log('📦 COMMANDS RETRIEVED');
 
     console.log('🤞 TRYING TO REGISTER COMMANDS');
@@ -30,7 +28,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       arrayOfSlashCommandsRegisterJSON,
     );
 
-    console.log('🎉 COMMANDS REGISTERED');
+    console.log('🎉 COMMANDS REGISTERED', arrayOfSlashCommandsRegisterJSON);
 
     return NextResponse.json({ error: null });
   } catch (error) {
