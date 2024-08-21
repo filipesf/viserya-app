@@ -19,7 +19,7 @@ export const execute: ExecuteCommand = async (
     params: { userId },
   });
 
-  console.log('🎉 COMMAND EXECUTED SUCCESSFULLY!');
+  console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
 
   return result.data;
 };

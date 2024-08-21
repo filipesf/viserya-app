@@ -63,7 +63,7 @@ export const execute: ExecuteCommand = async (interaction) => {
       break;
   }
 
-  console.log('🎉 COMMAND EXECUTED SUCCESSFULLY!');
+  console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
 
   return {
     type: 4,

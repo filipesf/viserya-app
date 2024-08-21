@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import StyledComponentsRegistry from '@viserya/app/lib/registry';
-import { Providers } from './providers';
+import { Providers } from '@viserya/app/providers';
+import StyledSheets from '@viserya/ui/shared/StyledSheets';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,9 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en-GB">
       <body className={inter.className}>
-        <StyledComponentsRegistry>
+        <StyledSheets>
           <Providers>{children}</Providers>
-        </StyledComponentsRegistry>
+        </StyledSheets>
       </body>
     </html>
   );

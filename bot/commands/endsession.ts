@@ -16,7 +16,7 @@ export const execute: ExecuteCommand = async (
 
   const result = await viseryaApi.post(`/sessions/${channelId}/end`);
 
-  console.log('🎉 COMMAND EXECUTED SUCCESSFULLY!');
+  console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
 
   return result.data;
 };
