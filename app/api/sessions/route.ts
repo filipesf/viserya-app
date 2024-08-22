@@ -8,7 +8,7 @@ export async function GET(_request: NextRequest) {
 
     const result = await sql`SELECT * FROM sessions;`;
 
-    console.log('✅ SESSIONS RETRIEVED');
+    console.log('📦 SESSIONS RETRIEVED');
 
     const sessionsInChannels = result.rows;
     const activeSessionsInChannels = result.rows.filter(
@@ -21,7 +21,7 @@ export async function GET(_request: NextRequest) {
         ? 'There are no active sessions in this server.'
         : `There's a total of ${totalSessionsCount} session${plural(totalSessionsCount)} (${activeSessionsCount} active) across all channels in this server.`;
 
-    console.log(`🧐 ${replyToChannel}`);
+    console.log('✅ REQUEST COMPLETED');
 
     return NextResponse.json(
       {

@@ -15,7 +15,7 @@ export async function GET(
       WHERE channel_id=${channelId};
     `;
 
-    console.log('✅ SESSIONS RETRIEVED');
+    console.log('📦 SESSIONS RETRIEVED');
 
     const sessionsInChannel = result.rows;
     const activeSessionInChannel = result.rows.filter(
@@ -27,7 +27,7 @@ export async function GET(
         ? 'There are no active sessions in this channel.'
         : `There's a total of ${totalSessionsCount} session${plural(totalSessionsCount)} in this channel.`;
 
-    console.log(`🧐 ${replyToChannel}`);
+    console.log('✅ REQUEST COMPLETED');
 
     return NextResponse.json(
       {

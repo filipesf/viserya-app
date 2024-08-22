@@ -33,10 +33,8 @@ export default function Page() {
   const handleDatabase = async () => {
     try {
       setIsLoading(true);
-
-      await viseryaApi.get('/sessions/create-sessions-table');
-
-      setStatus('Database created successfully');
+      await viseryaApi.get('/db/create');
+      setStatus('Databases created successfully');
       setIsLoading(false);
     } catch (error: any) {
       console.log(error);

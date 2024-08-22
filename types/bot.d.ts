@@ -8,3 +8,8 @@ export type SessionsParams = {
     status?: string;
   };
 };
+
+export type ChatMessage = {
+  role: 'user' | 'assistant' | 'code';
+  text: string;
+};
