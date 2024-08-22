@@ -2,6 +2,29 @@ import { NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 import { ChatMessage, SessionsParams } from '@viserya/types';
 
+export async function GET(
+  _request: Request,
+  { params: { channelId } }: SessionsParams,
+) {
+  try {
+    console.log('🔎 CHECKING FOR EXISTING MESSAGES');
+
+    const result = await sql`
+      SELECT * FROM messages
+      WHERE channel_id=${channelId};
+    `;
+
+    console.log('📦 MESSAGES RETRIEVED');
+
+    return NextResponse.json(result.rows, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: '💀 Invalid message format' },
+      { status: 400 },
+    );
+  }
+}
+
 export async function POST(
   request: Request,
   { params: { channelId } }: SessionsParams,
