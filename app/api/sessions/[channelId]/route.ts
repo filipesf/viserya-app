@@ -20,7 +20,7 @@ export async function GET(
     const sessionsInChannel = result.rows;
     const activeSessionInChannel = result.rows.filter(
       (session) => session.status === 'active',
-    );
+    )[0];
     const totalSessionsCount = result.rowCount || 0;
     const replyToChannel: string =
       totalSessionsCount === 0
