@@ -36,28 +36,7 @@ export async function POST(
   const text = searchParams.get('text');
   const type = searchParams.get('type');
 
-  console.log('🐞 POST sessions/[channelId]/messages', request);
-
-  // let message: ChatMessage;
-
-  // try {
-  //   console.log('✍️ PARSING MESSAGE');
-
-  //   if (messageString) {
-  //     message = JSON.parse(messageString) as ChatMessage;
-  //     console.log('🆗 MESSAGE PARSED');
-  //   } else {
-  //     return NextResponse.json(
-  //       { error: '💀 Message parameter is missing.' },
-  //       { status: 400 },
-  //     );
-  //   }
-  // } catch (error) {
-  //   return NextResponse.json(
-  //     { error: '💀 Invalid message format' },
-  //     { status: 400 },
-  //   );
-  // }
+  console.log('🐞 POST sessions/[channelId]/messages', request.body);
 
   try {
     console.log('📝 STORING MESSAGE');
