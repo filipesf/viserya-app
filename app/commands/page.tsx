@@ -8,8 +8,8 @@ import { ButtonIcon } from '@viserya/ui/Button';
 import { CardsContainer } from '@viserya/ui/Card';
 import { Notify } from '@viserya/ui/Notify';
 
-const channelId = 'ch_07091988';
-const userId = 'id_07091988';
+const channelId = '1269072870605066270';
+const userId = '408373729358512128';
 
 export default function Page() {
   const [status, setStatus] = useState<string>('');
