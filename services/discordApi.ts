@@ -6,7 +6,6 @@ import {
 
 export const discordApi = axios.create({
   baseURL: 'https://discord.com/api/',
-  timeout: 10000,
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',

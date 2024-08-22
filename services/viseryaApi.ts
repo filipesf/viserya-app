@@ -13,7 +13,6 @@ const getBaseUrl = () => {
 // Create the axios instance with dynamic baseURL
 export const viseryaApi = axios.create({
   baseURL: getBaseUrl(),
-  timeout: 10000,
   headers: {
     AUTHORIZATION_KEY: AUTHORIZATION_KEY,
   },
