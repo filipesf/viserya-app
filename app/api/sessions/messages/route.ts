@@ -4,7 +4,11 @@ import { convertKeys } from '@viserya/utils/convertKeys';
 
 export async function GET(request: Request) {
   try {
-    const { channelId } = await request.json();
+    const data = await request.json();
+
+    console.log('🐞 /api/sessions/messages', data);
+
+    const { channelId } = data;
 
     console.log(
       channelId
