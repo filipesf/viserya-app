@@ -5,9 +5,9 @@ import { verifyInteractionRequest } from '@viserya/services/verifyDiscordRequest
 import getCommands from '@viserya/utils/getCommands';
 
 export async function POST(request: NextRequest) {
-  console.log('🤖 INTERACTION REQUEST');
-
   try {
+    console.log('🤖 INTERACTION REQUEST');
+
     const verifyRes = await verifyInteractionRequest(request, DISCORD_KEY);
 
     if (!verifyRes.isValid || !verifyRes.interaction) {
@@ -40,6 +40,8 @@ export async function POST(request: NextRequest) {
     if (allCommands[commandName]) {
       reply = await allCommands[commandName].execute(interaction);
     }
+
+    console.log('🐞 BEFORE REPLY THROW ERROR');
 
     if (!reply) throw new Error();
 

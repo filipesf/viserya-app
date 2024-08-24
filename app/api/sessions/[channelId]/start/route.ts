@@ -18,7 +18,11 @@ export async function POST(
       WHERE channel_id=${channelId} AND status='active';
     `;
 
+    console.log('🐞 BEFORE existingSession.rows.length > 0');
+
     if (existingSession.rows.length > 0) {
+      console.log('🐞 DURING existingSession.rows.length > 0');
+
       return NextResponse.json(
         {
           type: 4,
@@ -31,6 +35,8 @@ export async function POST(
         { status: 200 },
       );
     }
+
+    console.log('🐞 AFTER existingSession.rows.length > 0');
 
     const threads = await viseryaApi.post('/assistants/threads');
     const threadId = threads.data.threadId;
