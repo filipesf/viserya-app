@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
       VALUES (${channelId}, ${threadId}, ${userId}, ${role}, ${text}, ${type});
     `;
 
-    console.log('✅ MESSAGE STORED', result);
+    console.log('✅ MESSAGE STORED');
 
     return NextResponse.json({}, { status: 200 });
   } catch (error) {
@@ -86,6 +86,24 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({}, { status: 200 });
   } catch (error) {
     console.error('💀 Error while trying to update message type:', error);
+    return NextResponse.error();
+  }
+}
+
+export async function DELETE() {
+  try {
+    console.log('🤞 ATTEMPTING TO DELETE MESSAGES');
+
+    await sql`DELETE FROM messages;`;
+
+    console.log('🗑️ MESSAGES CLEARED');
+
+    return NextResponse.json({}, { status: 200 });
+  } catch (error) {
+    console.error(
+      '💀 Error while trying to delete the messages:',
+      NextResponse.json(error),
+    );
     return NextResponse.error();
   }
 }

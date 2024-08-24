@@ -82,8 +82,9 @@ export default function Page() {
   const handleClearDB = async () => {
     try {
       setIsLoading(true);
-      await viseryaApi.delete('/sessions/clear');
-      setStatus('Database cleared successfully');
+      await viseryaApi.delete('/sessions');
+      await viseryaApi.delete('/sessions/messages');
+      setStatus('Databases cleared successfully');
       setIsLoading(false);
     } catch (error: any) {
       console.log(error);
