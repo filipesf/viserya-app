@@ -3,7 +3,7 @@ import { sql } from '@vercel/postgres';
 import { convertKeys } from '@viserya/utils/convertKeys';
 import { plural } from '@viserya/utils/plural';
 
-export async function GET(_request: NextRequest) {
+export async function GET() {
   try {
     console.log(`🔎 CHECKING FOR EXISTING SESSIONS IN ALL CHANNELs`);
 

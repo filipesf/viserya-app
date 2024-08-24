@@ -68,7 +68,6 @@ export default function Page() {
 
       const responseAll = await viseryaApi.get(`/sessions`);
       const responseChannel = await viseryaApi.get(`/sessions/${channelId}`);
-
       console.log(responseAll.data, responseChannel.data);
 
       setStatus('Session checked!');

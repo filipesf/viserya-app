@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 
-export async function GET(_request: Request) {
+export async function GET() {
   try {
     console.log('🧑‍💻 CREATING DATABASES');
 
