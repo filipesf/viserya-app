@@ -19,7 +19,7 @@ export default function Page() {
     try {
       setIsLoading(true);
 
-      await viseryaApi.post('/bot/register-commands');
+      await viseryaApi.post('/bot/commands/register');
 
       setStatus('Commands registered!');
       setIsLoading(false);
