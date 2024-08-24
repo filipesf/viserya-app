@@ -4,6 +4,8 @@ import { convertKeys } from '@viserya/utils/convertKeys';
 
 export async function GET(request: NextRequest) {
   try {
+    console.log('🐞 /api/sessions/messages', request);
+
     const data = await request.json();
 
     console.log('🐞 /api/sessions/messages', data);
