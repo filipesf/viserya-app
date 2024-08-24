@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 import { convertKeys } from '@viserya/utils/convertKeys';
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
     const data = await request.json();
 
@@ -35,7 +35,7 @@ export async function GET(request: Request) {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const { channelId, threadId, userId, role, text, type } =
     await request.json();
 
@@ -56,7 +56,7 @@ export async function POST(request: Request) {
   }
 }
 
-export async function PUT(request: Request) {
+export async function PUT(request: NextRequest) {
   const { channelId, threadId, userId, type } = await request.json();
 
   if (!threadId || !userId || !type) {
