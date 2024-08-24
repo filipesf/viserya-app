@@ -29,7 +29,7 @@ export async function GET(_request: Request) {
         role VARCHAR(50) NOT NULL,
         text TEXT NOT NULL,
         created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-        edited_at TIMESTAMP NOT NULL
+        edited_at TIMESTAMP
       );
     `;
 

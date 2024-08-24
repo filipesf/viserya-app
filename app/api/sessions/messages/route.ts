@@ -1,36 +1,39 @@
 import { NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
-import { SessionRecordParams } from '@viserya/types';
 import { convertKeys } from '@viserya/utils/convertKeys';
 
-export async function GET(
-  _request: Request,
-  { params: { channelId } }: SessionRecordParams,
-) {
+export async function GET(request: Request) {
   try {
-    console.log('🔎 CHECKING FOR EXISTING MESSAGES');
+    const { channelId } = await request.json();
 
-    const result = await sql`
-      SELECT * FROM messages
-      WHERE channel_id=${channelId};
-    `;
+    console.log(
+      channelId
+        ? '🔎 CHECKING FOR EXISTING MESSAGES IN CHANNEL'
+        : '🔎 CHECKING FOR EXISTING MESSAGES IN ALL CHANNELS',
+    );
+
+    const query = channelId
+      ? sql`SELECT * FROM messages WHERE channel_id=${channelId};`
+      : sql`SELECT * FROM messages;`;
+
+    const result = await query;
 
     console.log('📦 MESSAGES RETRIEVED');
 
     return NextResponse.json(convertKeys(result.rows), { status: 200 });
   } catch (error) {
+    console.error('💀 Error while fetching messages:', error);
+
     return NextResponse.json(
-      { error: '💀 Invalid message format' },
+      { error: '💀 An error occurred while retrieving messages' },
       { status: 400 },
     );
   }
 }
 
-export async function POST(
-  request: Request,
-  { params: { channelId } }: SessionRecordParams,
-) {
-  const { threadId, userId, role, text, type } = await request.json();
+export async function POST(request: Request) {
+  const { channelId, threadId, userId, role, text, type } =
+    await request.json();
 
   try {
     console.log('📝 STORING MESSAGE');
@@ -49,11 +52,8 @@ export async function POST(
   }
 }
 
-export async function PUT(
-  request: Request,
-  { params: { channelId } }: SessionRecordParams,
-) {
-  const { threadId, userId, type } = await request.json();
+export async function PUT(request: Request) {
+  const { channelId, threadId, userId, type } = await request.json();
 
   if (!threadId || !userId || !type) {
     return NextResponse.json(
