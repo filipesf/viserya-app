@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
-import { ChatMessage, SessionsParams } from '@viserya/types';
+import { SessionRecordParams } from '@viserya/types';
+import { convertKeys } from '@viserya/utils/convertKeys';
 
 export async function GET(
   _request: Request,
-  { params: { channelId } }: SessionsParams,
+  { params: { channelId } }: SessionRecordParams,
 ) {
   try {
     console.log('🔎 CHECKING FOR EXISTING MESSAGES');
@@ -16,7 +17,7 @@ export async function GET(
 
     console.log('📦 MESSAGES RETRIEVED');
 
-    return NextResponse.json(result.rows, { status: 200 });
+    return NextResponse.json(convertKeys(result.rows), { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: '💀 Invalid message format' },
@@ -27,16 +28,9 @@ export async function GET(
 
 export async function POST(
   request: Request,
-  { params: { channelId } }: SessionsParams,
+  { params: { channelId } }: SessionRecordParams,
 ) {
-  const { searchParams } = new URL(request.url);
-  const threadId = searchParams.get('threadId');
-  const userId = searchParams.get('userId');
-  const role = searchParams.get('role');
-  const text = searchParams.get('text');
-  const type = searchParams.get('type');
-
-  console.log('🐞 POST sessions/[channelId]/messages', request.body);
+  const { threadId, userId, role, text, type } = await request.json();
 
   try {
     console.log('📝 STORING MESSAGE');
@@ -57,14 +51,11 @@ export async function POST(
 
 export async function PUT(
   request: Request,
-  { params: { channelId } }: SessionsParams,
+  { params: { channelId } }: SessionRecordParams,
 ) {
-  const { searchParams } = new URL(request.url);
-  const threadId = searchParams.get('threadId');
-  const userId = searchParams.get('userId');
-  const newType = searchParams.get('type');
+  const { threadId, userId, type } = await request.json();
 
-  if (!threadId || !userId || !newType) {
+  if (!threadId || !userId || !type) {
     return NextResponse.json(
       { error: '💀 `threadId`, `userId`, and `type` parameters are required.' },
       { status: 400 },
@@ -76,10 +67,10 @@ export async function PUT(
 
     const result = await sql`
       UPDATE messages
-      SET type=${newType}
       WHERE channel_id=${channelId}
         AND thread_id=${threadId}
-        AND user_id=${userId};
+        AND user_id=${userId}
+      SET type=${type};
     `;
 
     if (result.rowCount === 0) {

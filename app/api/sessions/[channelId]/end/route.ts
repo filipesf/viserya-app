@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
-import { SessionsParams } from '@viserya/types';
+import { SessionRecordParams } from '@viserya/types';
 
 export async function POST(
   _request: NextRequest,
-  { params: { channelId } }: SessionsParams,
+  { params: { channelId } }: SessionRecordParams,
 ) {
   try {
     console.log('🤖 EXECUTING ENDSESSION COMMAND');
@@ -32,8 +32,8 @@ export async function POST(
 
     await sql`
       UPDATE sessions
-      SET status='ended', end_time = NOW()
-      WHERE id=${existingSession.rows[0].id};
+      WHERE id=${existingSession.rows[0].id}
+      SET status='ended', end_time = NOW();
     `;
 
     console.log('🎉 SESSION ENDED SUCCESSFULLY');

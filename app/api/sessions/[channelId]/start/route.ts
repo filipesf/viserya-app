@@ -1,14 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 import { viseryaApi } from '@viserya/services/viseryaApi';
-import { SessionsParams } from '@viserya/types';
+import { SessionRecordParams } from '@viserya/types';
 
 export async function POST(
   request: NextRequest,
-  { params: { channelId } }: SessionsParams,
+  { params: { channelId } }: SessionRecordParams,
 ) {
-  const { searchParams } = new URL(request.url);
-  const userId = searchParams.get('userId');
+  const { userId } = await request.json();
 
   try {
     console.log('🤖 EXECUTING STARTSESSION COMMAND');

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
+import { convertKeys } from '@viserya/utils/convertKeys';
 import { plural } from '@viserya/utils/plural';
 
 export async function GET(_request: NextRequest) {
@@ -10,9 +11,9 @@ export async function GET(_request: NextRequest) {
 
     console.log('📦 SESSIONS RETRIEVED');
 
-    const sessionsInChannels = result.rows;
-    const activeSessionsInChannels = result.rows.filter(
-      (session) => session.status === 'active',
+    const sessionsInChannels = convertKeys(result.rows);
+    const activeSessionsInChannels = sessionsInChannels.filter(
+      (session: any) => session.status === 'active',
     );
     const totalSessionsCount = result.rowCount || 0;
     const activeSessionsCount = activeSessionsInChannels.length;

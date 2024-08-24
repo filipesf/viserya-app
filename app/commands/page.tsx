@@ -43,36 +43,13 @@ export default function Page() {
     }
   };
 
-  const handleNewSession = async () => {
-    try {
-      setIsLoading(true);
-
-      await viseryaApi.post('/sessions/start-new-session', {
-        threadId: 'threadId_003',
-        channelId: 'channelId_003',
-        userId: 'userId_003',
-      });
-
-      setStatus('Session created successfully');
-      setIsLoading(false);
-    } catch (error: any) {
-      console.log(error);
-      setStatus(error.message);
-      setIsLoading(false);
-    }
-  };
-
   const handleStartSession = async () => {
     try {
       setIsLoading(true);
 
-      const response = await viseryaApi.post(
-        `/sessions/${channelId}/start`,
-        null,
-        {
-          params: { userId: userId },
-        },
-      );
+      const response = await viseryaApi.post(`/sessions/${channelId}/start`, {
+        userId,
+      });
 
       console.log(response.data);
 
@@ -139,19 +116,11 @@ export default function Page() {
       />
 
       <ButtonIcon
-        $variant="secondary"
+        $variant="info"
         $isLoading={isLoading}
         disabled={isLoading}
         onClick={handleDatabase}
         icon="Database"
-      />
-
-      <ButtonIcon
-        $variant="info"
-        $isLoading={isLoading}
-        disabled={isLoading}
-        onClick={handleNewSession}
-        icon="Plus"
       />
 
       <ButtonIcon

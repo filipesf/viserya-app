@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
-import { SessionsParams } from '@viserya/types';
+import { SessionRecordParams } from '@viserya/types';
+import { convertKeys } from '@viserya/utils/convertKeys';
 import { plural } from '@viserya/utils/plural';
 
 export async function GET(
   _request: NextRequest,
-  { params: { channelId } }: SessionsParams,
+  { params: { channelId } }: SessionRecordParams,
 ) {
   try {
     console.log(`🔎 CHECKING FOR EXISTING SESSIONS IN ${channelId} CHANNEL`);
@@ -17,9 +18,9 @@ export async function GET(
 
     console.log('📦 SESSIONS RETRIEVED');
 
-    const sessionsInChannel = result.rows;
-    const activeSessionInChannel = result.rows.filter(
-      (session) => session.status === 'active',
+    const sessionsInChannel = convertKeys(result.rows);
+    const activeSessionInChannel = sessionsInChannel.filter(
+      (session: any) => session.status === 'active',
     )[0];
     const totalSessionsCount = result.rowCount || 0;
     const replyToChannel: string =
