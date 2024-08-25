@@ -68,7 +68,7 @@ export async function PUT(request: NextRequest) {
 
     const result = await sql`
       UPDATE messages
-      SET type=${type}
+      SET type=${type}, edited_at=NOW()
       WHERE id=${id};
     `;
 

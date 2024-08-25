@@ -33,7 +33,7 @@ export async function POST(
     await sql`
       UPDATE sessions
       WHERE id=${existingSession.rows[0].id}
-      SET status='ended', end_time = NOW();
+      SET status='ended', end_time=NOW();
     `;
 
     console.log('🎉 SESSION ENDED SUCCESSFULLY');
