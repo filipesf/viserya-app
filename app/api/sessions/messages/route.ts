@@ -54,11 +54,11 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-  const { channelId, threadId, userId, type } = await request.json();
+  const { id, type } = await request.json();
 
-  if (!threadId || !userId || !type) {
+  if (!id || !type) {
     return NextResponse.json(
-      { error: '💀 `threadId`, `userId`, and `type` parameters are required.' },
+      { error: '💀 `id` and `type` parameters are required.' },
       { status: 400 },
     );
   }
@@ -68,9 +68,7 @@ export async function PUT(request: NextRequest) {
 
     const result = await sql`
       UPDATE messages
-      WHERE channel_id=${channelId}
-        AND thread_id=${threadId}
-        AND user_id=${userId}
+      WHERE id=${id}
       SET type=${type};
     `;
 

@@ -41,8 +41,6 @@ export async function POST(request: NextRequest) {
       reply = await allCommands[commandName].execute(interaction);
     }
 
-    console.log('🐞 BEFORE REPLY THROW ERROR');
-
     if (!reply) throw new Error();
 
     console.log('📨 INTERACTION RESPONSE SENT');
