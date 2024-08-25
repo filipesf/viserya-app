@@ -42,6 +42,7 @@ export const execute: ExecuteCommand = async (interaction) => {
 
   return {
     type: 4,
+    ephemeral: true,
     data: { content },
   };
 };

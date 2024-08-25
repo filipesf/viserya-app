@@ -48,6 +48,7 @@ export async function POST(
     return NextResponse.json(
       {
         type: 4,
+        ephemeral: true,
         data: {
           content: 'Session started successfully!',
         },

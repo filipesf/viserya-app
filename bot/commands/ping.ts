@@ -8,6 +8,7 @@ export const register = new SlashCommandBuilder()
 export const execute: ExecuteCommand = async (interaction) => {
   return {
     type: 4,
+    ephemeral: true,
     data: {
       content: `pong! ${interaction.member?.user.username}`,
     },
