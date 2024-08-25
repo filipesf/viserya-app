@@ -25,7 +25,7 @@ export async function POST(
           ephemeral: true,
           data: {
             content:
-              'There is already an active session in this channel. Please end the current session before starting a new one.',
+              '🤖 There is already an active session in this channel. Please end the current session before starting a new one.',
           },
         },
         { status: 200 },
@@ -50,7 +50,7 @@ export async function POST(
         type: 4,
         ephemeral: true,
         data: {
-          content: 'Session started successfully!',
+          content: '🤖 Session started successfully!',
         },
       },
       { status: 200 },

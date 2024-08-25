@@ -10,7 +10,7 @@ export const execute: ExecuteCommand = async (interaction) => {
     type: 4,
     ephemeral: true,
     data: {
-      content: `pong! ${interaction.member?.user.username}`,
+      content: `🤖 pong! ${interaction.member?.user.username}`,
     },
   };
 };

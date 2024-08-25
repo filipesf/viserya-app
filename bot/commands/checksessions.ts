@@ -36,13 +36,13 @@ export const execute: ExecuteCommand = async (interaction) => {
   }
 
   const response = await viseryaApi.get(endpoint);
-  const { replyToChannel: content } = response.data;
+  const { replyToChannel } = response.data;
 
   console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
 
   return {
     type: 4,
     ephemeral: true,
-    data: { content },
+    data: { content: `🤖 ${replyToChannel}` },
   };
 };
