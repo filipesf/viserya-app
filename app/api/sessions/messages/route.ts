@@ -68,8 +68,8 @@ export async function PUT(request: NextRequest) {
 
     const result = await sql`
       UPDATE messages
-      WHERE id=${id}
-      SET type=${type};
+      SET type=${type}
+      WHERE id=${id};
     `;
 
     if (result.rowCount === 0) {
