@@ -80,9 +80,8 @@ export async function PUT(request: NextRequest) {
     }
 
     query += ` WHERE id=$${params.length + 1}`;
-    params.push(id);
 
-    console.log({ id, text, type, query, params });
+    params.push(id);
 
     const result = await sql.query(query, params);
 
