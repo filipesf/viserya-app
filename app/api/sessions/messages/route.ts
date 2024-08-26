@@ -33,15 +33,15 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const { channelId, threadId, userId, role, text, type } =
+  const { id, channelId, threadId, userId, role, text, type } =
     await request.json();
 
   try {
     console.log('📝 STORING MESSAGE');
 
-    const result = await sql`
-      INSERT INTO messages (channel_id, thread_id, user_id, role, text, type)
-      VALUES (${channelId}, ${threadId}, ${userId}, ${role}, ${text}, ${type});
+    await sql`
+      INSERT INTO messages (id, channel_id, thread_id, user_id, role, text, type)
+      VALUES (${id}, ${channelId}, ${threadId}, ${userId}, ${role}, ${text}, ${type});
     `;
 
     console.log('✅ MESSAGE STORED');
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-  const { id, type } = await request.json();
+  const { id, text, type } = await request.json();
 
   if (!id || !type) {
     return NextResponse.json(
@@ -66,11 +66,25 @@ export async function PUT(request: NextRequest) {
   try {
     console.log('🔄 UPDATING MESSAGE');
 
-    const result = await sql`
-      UPDATE messages
-      SET type=${type}, edited_at=NOW()
-      WHERE id=${id};
-    `;
+    let query = `UPDATE messages SET edited_at=NOW()`;
+    const params = [];
+
+    if (text !== undefined && text !== '') {
+      query += `, text=$${params.length + 1}`;
+      params.push(text);
+    }
+
+    if (type !== undefined && type !== '') {
+      query += `, type=$${params.length + 1}`;
+      params.push(type);
+    }
+
+    query += ` WHERE id=$${params.length + 1}`;
+    params.push(id);
+
+    console.log({ id, text, type, query, params });
+
+    const result = await sql.query(query, params);
 
     if (result.rowCount === 0) {
       return NextResponse.json(
@@ -88,20 +102,29 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-export async function DELETE() {
+export async function DELETE(request: NextRequest) {
+  const { id } = await request.json();
+
+  if (!id) {
+    return NextResponse.json(
+      { error: '💀 `id` parameter is required.' },
+      { status: 400 },
+    );
+  }
+
   try {
-    console.log('🤞 ATTEMPTING TO DELETE MESSAGES');
+    console.log('🤞 ATTEMPTING TO DELETE MESSAGE:', id);
 
-    await sql`DELETE FROM messages;`;
+    await sql`
+      DELETE FROM messages
+      WHERE id=${id};
+    `;
 
-    console.log('🗑️ MESSAGES CLEARED');
+    console.log('🗑️ MESSAGE DELETED');
 
     return NextResponse.json({}, { status: 200 });
   } catch (error) {
-    console.error(
-      '💀 Error while trying to delete the messages:',
-      NextResponse.json(error),
-    );
+    console.error('💀 Error while trying to delete the message:', error);
     return NextResponse.error();
   }
 }

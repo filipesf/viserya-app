@@ -21,7 +21,7 @@ export async function GET() {
 
     await sql`
       CREATE TABLE IF NOT EXISTS messages (
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        id VARCHAR(255) PRIMARY KEY,
         channel_id VARCHAR(255) NOT NULL,
         thread_id VARCHAR(255) NOT NULL,
         user_id VARCHAR(255) NOT NULL,
