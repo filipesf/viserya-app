@@ -4,6 +4,12 @@ export type SessionRecordParams = {
   params: Partial<TypeToCamelCase<SessionsRecord>>;
 };
 
+export type MessageRecordParams = {
+  params: {
+    messageId: string;
+  };
+};
+
 export type ChatMessageType = 'decision' | 'history';
 
 export type ChatMessageRole = 'user' | 'assistant' | 'code';
@@ -28,3 +34,5 @@ export type MessagesRecord = BaseRecord & {
   created_at: Date;
   edited_at: Date | null;
 };
+
+export type ChatMessage = Partial<TypeToCamelCase<MessagesRecord>>;

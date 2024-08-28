@@ -53,77 +53,20 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function PUT(request: NextRequest) {
-  const { id, text, type } = await request.json();
-
-  if (!id || !type) {
-    return NextResponse.json(
-      { error: '💀 `id` and `type` parameters are required.' },
-      { status: 400 },
-    );
-  }
-
+export async function DELETE() {
   try {
-    console.log('🔄 UPDATING MESSAGE');
+    console.log('🤞 ATTEMPTING TO DELETE MESSAGES');
 
-    let query = `UPDATE messages SET edited_at=NOW()`;
-    const params = [];
+    await sql`DELETE FROM messages;`;
 
-    if (text !== undefined && text !== '') {
-      query += `, text=$${params.length + 1}`;
-      params.push(text);
-    }
+    console.log('🗑️ MESSAGES CLEARED');
 
-    if (type !== undefined && type !== '') {
-      query += `, type=$${params.length + 1}`;
-      params.push(type);
-    }
-
-    query += ` WHERE id=$${params.length + 1}`;
-
-    params.push(id);
-
-    const result = await sql.query(query, params);
-
-    if (result.rowCount === 0) {
-      return NextResponse.json(
-        { error: '💀 No message found to update.' },
-        { status: 404 },
-      );
-    }
-
-    console.log('✅ MESSAGE UPDATED');
-
-    return NextResponse.json({}, { status: 200 });
+    return NextResponse.json(null, { status: 200 });
   } catch (error) {
-    console.error('💀 Error while trying to update message type:', error);
-    return NextResponse.error();
-  }
-}
-
-export async function DELETE(request: NextRequest) {
-  const { id } = await request.json();
-
-  if (!id) {
-    return NextResponse.json(
-      { error: '💀 `id` parameter is required.' },
-      { status: 400 },
+    console.error(
+      '💀 Error while trying to delete messages:',
+      NextResponse.json(error),
     );
-  }
-
-  try {
-    console.log('🤞 ATTEMPTING TO DELETE MESSAGE:', id);
-
-    await sql`
-      DELETE FROM messages
-      WHERE id=${id};
-    `;
-
-    console.log('🗑️ MESSAGE DELETED');
-
-    return NextResponse.json({}, { status: 200 });
-  } catch (error) {
-    console.error('💀 Error while trying to delete the message:', error);
     return NextResponse.error();
   }
 }
