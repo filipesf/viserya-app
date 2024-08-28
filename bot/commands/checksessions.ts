@@ -40,6 +40,16 @@ export const execute: ExecuteCommand = async (interaction) => {
 
   console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
 
+  await interaction.reply({
+    ephemeral: true,
+    embeds: [
+      {
+        title: `🤖 ${replyToChannel}`,
+        color: 0x68c814,
+      },
+    ],
+  });
+
   return {
     type: 4,
     ephemeral: true,
