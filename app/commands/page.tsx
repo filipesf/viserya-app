@@ -8,8 +8,8 @@ import { ButtonIcon } from '@viserya/ui/Button';
 import { CardsContainer } from '@viserya/ui/Card';
 import { Notify } from '@viserya/ui/Notify';
 
-const channelId = '1269072870605066270';
-const userId = '408373729358512128';
+const MOCK_CHANNEL_ID = '0000000000000000000';
+const MOCK_USE_ID = '000000000000000000';
 
 export default function Page() {
   const [status, setStatus] = useState<string>('');
@@ -33,7 +33,9 @@ export default function Page() {
   const handleDatabase = async () => {
     try {
       setIsLoading(true);
+
       await viseryaApi.get('/db/create');
+
       setStatus('Databases created successfully');
       setIsLoading(false);
     } catch (error: any) {
@@ -47,11 +49,11 @@ export default function Page() {
     try {
       setIsLoading(true);
 
-      const response = await viseryaApi.post(`/sessions/${channelId}/start`, {
-        userId,
+      const response = await viseryaApi.post(`/sessions/${MOCK_CHANNEL_ID}/start`, {
+        userId: MOCK_USE_ID,
       });
 
-      console.log(response.data);
+      console.log('🟢', response);
 
       setStatus('Session started successfully');
       setIsLoading(false);
@@ -67,10 +69,29 @@ export default function Page() {
       setIsLoading(true);
 
       const responseAll = await viseryaApi.get(`/sessions`);
-      const responseChannel = await viseryaApi.get(`/sessions/${channelId}`);
-      console.log(responseAll.data, responseChannel.data);
+      const responseChannel = await viseryaApi.get(`/sessions/${MOCK_CHANNEL_ID}`);
+
+      console.log('🔵', responseAll);
+      console.log('🔵', responseChannel);
 
       setStatus('Session checked!');
+      setIsLoading(false);
+    } catch (error: any) {
+      console.log(error);
+      setStatus(error.message);
+      setIsLoading(false);
+    }
+  };
+
+  const handleEndSession = async () => {
+    try {
+      setIsLoading(true);
+
+      const response = await viseryaApi.post(`/sessions/${MOCK_CHANNEL_ID}/end`);
+
+      console.log('🔴', response);
+
+      setStatus('Session ended successfully');
       setIsLoading(false);
     } catch (error: any) {
       console.log(error);
@@ -82,8 +103,10 @@ export default function Page() {
   const handleClearDB = async () => {
     try {
       setIsLoading(true);
-      // await viseryaApi.delete('/sessions');
+
+      await viseryaApi.delete('/sessions');
       await viseryaApi.delete('/sessions/messages');
+
       setStatus('Databases cleared successfully');
       setIsLoading(false);
     } catch (error: any) {
@@ -108,7 +131,7 @@ export default function Page() {
       {status && <Notify>{status}</Notify>}
 
       <ButtonIcon
-        $variant="primary"
+        $variant="secondary"
         $isLoading={isLoading}
         disabled={isLoading}
         onClick={handleRegisterCommand}
@@ -116,11 +139,19 @@ export default function Page() {
       />
 
       <ButtonIcon
-        $variant="info"
+        $variant="primary"
         $isLoading={isLoading}
         disabled={isLoading}
         onClick={handleDatabase}
         icon="Database"
+      />
+
+      <ButtonIcon
+        $variant="info"
+        $isLoading={isLoading}
+        disabled={isLoading}
+        onClick={checkSessions}
+        icon="Check"
       />
 
       <ButtonIcon
@@ -135,8 +166,8 @@ export default function Page() {
         $variant="warning"
         $isLoading={isLoading}
         disabled={isLoading}
-        onClick={checkSessions}
-        icon="Check"
+        onClick={handleEndSession}
+        icon="Stop"
       />
 
       <ButtonIcon

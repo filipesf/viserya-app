@@ -32,8 +32,8 @@ export async function POST(
 
     await sql`
       UPDATE sessions
-      WHERE id=${existingSession.rows[0].id}
-      SET status='ended', end_time=NOW();
+      SET status='ended', end_time=NOW()
+      WHERE id=${existingSession.rows[0].id};
     `;
 
     console.log('🎉 SESSION ENDED SUCCESSFULLY');
@@ -51,7 +51,7 @@ export async function POST(
   } catch (error) {
     console.error(
       '💀 Error while trying to execute the endsession command:',
-      NextResponse.json(error),
+      error,
     );
     return NextResponse.error();
   }
