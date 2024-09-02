@@ -19,9 +19,9 @@ export async function POST(
       return NextResponse.json(
         {
           type: 4,
-          ephemeral: true,
           data: {
             content: '🤖 There is no active session in this channel.',
+            ephemeral: true,
           },
         },
         { status: 200 },
@@ -41,9 +41,9 @@ export async function POST(
     return NextResponse.json(
       {
         type: 4,
-        ephemeral: true,
         data: {
           content: '🤖 Session ended successfully!',
+          ephemeral: true,
         },
       },
       { status: 200 },

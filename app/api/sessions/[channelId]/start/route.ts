@@ -22,10 +22,10 @@ export async function POST(
       return NextResponse.json(
         {
           type: 4,
-          ephemeral: true,
           data: {
             content:
               '🤖 There is already an active session in this channel. Please end the current session before starting a new one.',
+            ephemeral: true,
           },
         },
         { status: 200 },
@@ -48,9 +48,9 @@ export async function POST(
     return NextResponse.json(
       {
         type: 4,
-        ephemeral: true,
         data: {
           content: '🤖 Session started successfully!',
+          ephemeral: true,
         },
       },
       { status: 200 },

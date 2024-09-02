@@ -42,9 +42,18 @@ export const execute: ExecuteCommand = async (interaction) => {
 
   console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
 
-  return {
-    type: 4,
+  console.log({ ...response });
+
+  interaction.reply({
+    content: `🤖 ${replyToChannel}`,
     ephemeral: true,
-    data: { content: `🤖 ${replyToChannel}` },
-  };
+  });
+
+  // return {
+  //   type: 4,
+  //   data: {
+  //     content: `🤖 ${replyToChannel}`,
+  //     ephemeral: true,
+  //   },
+  // };
 };

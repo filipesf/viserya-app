@@ -19,7 +19,14 @@ export const execute: ExecuteCommand = async (
     userId,
   });
 
+  console.log({ ...result });
+
+  interaction.reply({
+    content: result.data.content,
+    ephemeral: true,
+  });
+
   console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
 
-  return result.data;
+  // return result.data;
 };
