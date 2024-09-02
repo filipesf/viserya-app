@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
 
     console.log('📦 COMMANDS RETRIEVED');
 
-    let reply: APIInteractionResponse | null = null;
+    let reply: APIInteractionResponse | null | void = null;
     const commandName = interaction.data.name + '.ts';
 
     console.log('🕵️‍♂️ COMMAND FOUND');
