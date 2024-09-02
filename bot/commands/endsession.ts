@@ -20,10 +20,5 @@ export const execute: ExecuteCommand = async (
 
   console.log({ ...response });
 
-  interaction.reply({
-    content: `🤖 ${response.data.content}`,
-    ephemeral: true,
-  });
-
-  // return response.data;
+  return response.data;
 };

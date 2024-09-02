@@ -17,8 +17,6 @@ export const register = new SlashCommandBuilder()
   );
 
 export const execute: ExecuteCommand = async (interaction) => {
-  interaction && console.log('🐞', interaction);
-
   const channelId = interaction.channel?.id;
   const checkSessionsFrom = interaction.data?.options[0]?.value;
 
@@ -44,16 +42,11 @@ export const execute: ExecuteCommand = async (interaction) => {
 
   console.log({ ...response });
 
-  interaction.reply({
-    content: `🤖 ${replyToChannel}`,
-    ephemeral: true,
-  });
-
-  // return {
-  //   type: 4,
-  //   data: {
-  //     content: `🤖 ${replyToChannel}`,
-  //     ephemeral: true,
-  //   },
-  // };
+  return {
+    type: 4,
+    data: {
+      content: `🤖 ${replyToChannel}`,
+      ephemeral: true,
+    },
+  };
 };

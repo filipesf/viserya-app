@@ -8,4 +8,4 @@ export type ExecuteCommand = (
   interaction:
     | APIApplicationCommandInteraction
     | APIChatInputApplicationCommandInteraction,
-) => Promise<APIInteractionResponse> | Promise<void> | void;
+) => Promise<APIInteractionResponse>;
