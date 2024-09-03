@@ -15,8 +15,13 @@ export async function GET() {
     const activeSessionsInChannels = sessionsInChannels.filter(
       (session: any) => session.status === 'active',
     );
+    const endedSessionsInChannels = sessionsInChannels.filter(
+      (session: any) => session.status === 'ended',
+    );
     const totalSessionsCount = result.rowCount || 0;
     const activeSessionsCount = activeSessionsInChannels.length;
+    const endedSessionsCount = endedSessionsInChannels.length;
+
     const replyToChannel: string =
       totalSessionsCount === 0
         ? 'There are no active sessions in this server.'
@@ -30,6 +35,8 @@ export async function GET() {
         totalSessionsCount,
         activeSessionsInChannels,
         activeSessionsCount,
+        endedSessionsInChannels,
+        endedSessionsCount,
         replyToChannel,
       },
       { status: 200 },

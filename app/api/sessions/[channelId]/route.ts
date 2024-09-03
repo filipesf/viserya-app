@@ -22,6 +22,9 @@ export async function GET(
     const activeSessionInChannel = sessionsInChannel.filter(
       (session: any) => session.status === 'active',
     )[0];
+    const endedSessionsInChannel = sessionsInChannel.filter(
+      (session: any) => session.status === 'ended',
+    );
     const totalSessionsCount = result.rowCount || 0;
     const replyToChannel: string =
       totalSessionsCount === 0
@@ -35,6 +38,7 @@ export async function GET(
         sessionsInChannel,
         totalSessionsCount,
         activeSessionInChannel,
+        endedSessionsInChannel,
         replyToChannel,
       },
       { status: 200 },
@@ -42,7 +46,7 @@ export async function GET(
   } catch (error) {
     console.error(
       '💀 Error while trying to retrieve sessions from channel:',
-      NextResponse.json(error),
+      error,
     );
     return NextResponse.error();
   }

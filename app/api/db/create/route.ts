@@ -39,10 +39,7 @@ export async function GET() {
 
     return NextResponse.json({}, { status: 200 });
   } catch (error) {
-    console.error(
-      '💀 Error while trying to create databases:',
-      NextResponse.json(error),
-    );
+    console.error('💀 Error while trying to create databases:', error);
     return NextResponse.error();
   }
 }
