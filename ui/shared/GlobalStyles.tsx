@@ -2,6 +2,8 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
 :root {
+  color-scheme: light dark;
+
   /* Primitive Colours */
   --color-red-50: #fff0ef;
   --color-red-100: #ffdedb;
@@ -47,24 +49,24 @@ export const GlobalStyles = createGlobalStyle`
   --color-blue-800: #0f55b9;
   --color-blue-900: #12488c;
   --color-blue-950: #13335f;
-  --color-neutral-50: #f2f5f6;
-  --color-neutral-100: #dfe3e7;
-  --color-neutral-200: #c3cdd1;
-  --color-neutral-300: #9babb3;
-  --color-neutral-400: #6d818d;
-  --color-neutral-500: #536672;
-  --color-neutral-600: #46545f;
-  --color-neutral-700: #3c464f;
-  --color-neutral-800: #363d43;
-  --color-neutral-900: #31363c;
-  --color-neutral-950: #1e2226;
+  --color-neutral-50: #f2f5f6;  // light-dark(#f2f5f6,#1e2226);
+  --color-neutral-100: #dfe3e7; // light-dark(#dfe3e7,#31363c);
+  --color-neutral-200: #c3cdd1; // light-dark(#c3cdd1,#363d43);
+  --color-neutral-300: #9babb3; // light-dark(#9babb3,#3c464f);
+  --color-neutral-400: #6d818d; // light-dark(#6d818d,#46545f);
+  --color-neutral-500: #536672; // light-dark(#536672,#536672);
+  --color-neutral-600: #46545f; // light-dark(#46545f,#6d818d);
+  --color-neutral-700: #3c464f; // light-dark(#3c464f,#9babb3);
+  --color-neutral-800: #363d43; // light-dark(#363d43,#c3cdd1);
+  --color-neutral-900: #31363c; // light-dark(#31363c,#dfe3e7);
+  --color-neutral-950: #1e2226; // light-dark(#1e2226,#f2f5f6);
 
   --background-color: var(--color-neutral-950);
   --background-reverse-color: var(--color-neutral-50);
   --text-color: var(--color-neutral-50);
   --text-reverse-color: var(--color-neutral-950);
-  --link-text-color: var(--text-color);
-  --link-text-color-hover: var(--text-reverse-color);
+  --link-text-color: var(--color-blue-500);
+  --link-text-color-hover: var(--color-blue-700);
 
   --primary-background-color: var(--color-neutral-500);
   --primary-background-color-hover: var(--color-neutral-700);
@@ -222,8 +224,24 @@ body {
   min-height: 100svh;
 }
 
+h1, h2, h3, h4, h5, h6, strong {
+  font-weight: 600;
+}
+
+h1 { font-size: var(--font-size-xl); }
+h2 { font-size: var(--font-size-lg); }
+h3 { font-size: var(--font-size-md); }
+h4 { font-size: var(--font-size-sm); }
+h5 { font-size: var(--font-size-xs); }
+h6 { font-size: var(--font-size-xs); }
+
 a {
-  color: var(--primary-background-color);
+  color: var(--link-text-color);
   text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: var(--link-text-color-hover);
+  }
 }
 `;

@@ -18,8 +18,10 @@ time, mark, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
+  font-family: inherit;
+  font-style: inherit;
+  font-weight: inherit;
   font-size: 100%;
-  font: inherit;
   vertical-align: baseline;
 }
 
