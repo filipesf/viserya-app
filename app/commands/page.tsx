@@ -104,7 +104,7 @@ export default function Page() {
     try {
       setIsLoading(true);
 
-      await viseryaApi.delete('/sessions');
+      // await viseryaApi.delete('/sessions');
       await viseryaApi.delete('/sessions/messages');
 
       setStatus('Databases cleared successfully');

@@ -14,6 +14,8 @@ export const execute: ExecuteCommand = async (
 
   console.log('🤖 EXECUTING ENDSESSION COMMAND');
 
+  await interaction.deferReply();
+
   const response = await viseryaApi.post(`/sessions/${channelId}/end`);
 
   console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');

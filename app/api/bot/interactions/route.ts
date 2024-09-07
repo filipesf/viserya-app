@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(reply);
   } catch (error) {
-    console.error('💀 Error during  interaction:', NextResponse.json(error));
+    console.error('💀 Error during  interaction:', error);
     return NextResponse.error();
   }
 }

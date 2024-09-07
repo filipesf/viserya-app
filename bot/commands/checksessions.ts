@@ -35,6 +35,8 @@ export const execute: ExecuteCommand = async (interaction) => {
       break;
   }
 
+  await interaction.deferReply();
+
   const response = await viseryaApi.get(endpoint);
   const { replyToChannel } = response.data;
 
