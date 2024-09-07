@@ -15,7 +15,7 @@ export const execute: ExecuteCommand = async (
 
   console.log('🤖 EXECUTING STARTSESSION COMMAND');
 
-  await interaction.deferReply();
+  console.log(interaction);
 
   const result = await viseryaApi.post(`/sessions/${channelId}/start`, {
     userId,
