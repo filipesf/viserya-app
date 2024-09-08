@@ -49,9 +49,12 @@ export default function Page() {
     try {
       setIsLoading(true);
 
-      const response = await viseryaApi.post(`/sessions/${MOCK_CHANNEL_ID}/start`, {
-        userId: MOCK_USE_ID,
-      });
+      const response = await viseryaApi.post(
+        `/sessions/${MOCK_CHANNEL_ID}/start`,
+        {
+          userId: MOCK_USE_ID,
+        },
+      );
 
       console.log('🟢', response);
 
@@ -69,7 +72,9 @@ export default function Page() {
       setIsLoading(true);
 
       const responseAll = await viseryaApi.get(`/sessions`);
-      const responseChannel = await viseryaApi.get(`/sessions/${MOCK_CHANNEL_ID}`);
+      const responseChannel = await viseryaApi.get(
+        `/sessions/${MOCK_CHANNEL_ID}`,
+      );
 
       console.log('🔵', responseAll);
       console.log('🔵', responseChannel);
@@ -87,7 +92,9 @@ export default function Page() {
     try {
       setIsLoading(true);
 
-      const response = await viseryaApi.post(`/sessions/${MOCK_CHANNEL_ID}/end`);
+      const response = await viseryaApi.post(
+        `/sessions/${MOCK_CHANNEL_ID}/end`,
+      );
 
       console.log('🔴', response);
 
@@ -100,11 +107,33 @@ export default function Page() {
     }
   };
 
+  const handleCharacter = async () => {
+    const characterSheetId = '127555805'; // Kragmir
+    // const characterSheetId = '131689409'; // Drakonis
+
+    try {
+      setIsLoading(true);
+
+      const response = await viseryaApi.get(`/characters`, {
+        params: { characterSheetId },
+      });
+
+      console.log('🟣', response);
+
+      setStatus('Character data retrieved!');
+      setIsLoading(false);
+    } catch (error: any) {
+      console.log(error);
+      setStatus(error.message);
+      setIsLoading(false);
+    }
+  };
+
   const handleClearDB = async () => {
     try {
       setIsLoading(true);
 
-      // await viseryaApi.delete('/sessions');
+      await viseryaApi.delete('/sessions');
       await viseryaApi.delete('/sessions/messages');
 
       setStatus('Databases cleared successfully');
@@ -144,6 +173,14 @@ export default function Page() {
         disabled={isLoading}
         onClick={handleDatabase}
         icon="Database"
+      />
+
+      <ButtonIcon
+        $variant="info"
+        $isLoading={isLoading}
+        disabled={isLoading}
+        onClick={handleCharacter}
+        icon="User"
       />
 
       <ButtonIcon
