@@ -10,35 +10,24 @@ export const execute: ExecuteCommand = async (
   interaction: CommandInteraction,
 ) => {
   try {
-    if (!interaction || !interaction.member || !interaction.isCommand()) {
-      throw new Error('Invalid interaction or member data.');
-    }
-
     const member = interaction.member;
-    const user = member.user;
-
-    if (!user || !user.username) {
-      throw new Error('User data is not available.');
-    }
-
-    const responseMessage = `🤖 pong! @${user.username}`;
+    const user = member?.user;
 
     return {
       type: 4,
-      ephemeral: true,
       data: {
-        content: responseMessage,
+        content: `🤖 pong! @${user?.username}`,
+        flags: 64,
       },
     };
-  } catch (error: any) {
-    console.error('💀 Error executing /ping command:', error.message);
+  } catch (error) {
+    console.error('💀 ERROR EXECUTING /PING COMMAND:', error);
 
     return {
       type: 4,
-      ephemeral: true,
       data: {
-        content:
-          '🤖 Sorry, there was an error processing your ping request. Please try again later.',
+        content: '🤖 Sorry, there was an error processing your ping request.',
+        flags: 64,
       },
     };
   }
