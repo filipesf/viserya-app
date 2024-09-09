@@ -8,28 +8,21 @@ export const register = new SlashCommandBuilder()
   .setDescription('Start a new D&D session in this channel.');
 
 export const execute: ExecuteCommand = async (interaction: APIInteraction) => {
-  const { id, application_id, token } = interaction;
   const channelId = interaction.channel?.id;
   const userId = interaction.member?.user.id;
 
   console.log('🤖 EXECUTING STARTSESSION COMMAND');
 
-  console.log('🪲', interaction);
-
   try {
-    console.log('🔍 Checking for active session in channel:', channelId);
+    console.log('🔍 CHECKING FOR ACTIVE SESSION IN CHANNEL:', channelId);
 
-    const result = await viseryaApi.post(`/sessions/${channelId}/start`, {
+    const response = await viseryaApi.post(`/sessions/${channelId}/start`, {
       userId,
-      id,
-      application_id,
-      token,
+      ...interaction,
     });
 
-    console.log('🎉 Session started successfully for channel:', channelId);
-
-    return result.data;
+    return response.data;
   } catch (error) {
-    console.error('💥 Error starting session:', error);
+    console.error('💥 ERROR STARTING SESSION:', error);
   }
 };

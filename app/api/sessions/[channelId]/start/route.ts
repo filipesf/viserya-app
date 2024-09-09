@@ -1,17 +1,20 @@
+import { APIInteraction } from 'discord.js';
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 import { discordApi } from '@viserya/services/discordApi';
 import { viseryaApi } from '@viserya/services/viseryaApi';
 import { SessionRecordParams } from '@viserya/types';
 
+type RequestJSON = APIInteraction & {
+  userId: string;
+};
+
 export async function POST(
   request: NextRequest,
   { params: { channelId } }: SessionRecordParams,
 ) {
   const requestJson = await request.json();
-  const { id, application_id, token, userId } = requestJson;
-
-  console.log('🪲 requestJson', { requestJson });
+  const { id, application_id, token, userId } = requestJson as RequestJSON;
 
   try {
     console.log('🤖 EXECUTING STARTSESSION COMMAND');

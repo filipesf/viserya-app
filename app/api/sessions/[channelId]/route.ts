@@ -1,15 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
+import { discordApi } from '@viserya/services/discordApi';
 import { SessionRecordParams } from '@viserya/types';
 import { convertKeys } from '@viserya/utils/convertKeys';
 import { plural } from '@viserya/utils/plural';
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params: { channelId } }: SessionRecordParams,
 ) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
+  const application_id = searchParams.get('application_id');
+  const token = searchParams.get('token');
+
+  console.log('🦄', searchParams);
+
   try {
     console.log(`🔎 CHECKING FOR EXISTING SESSIONS IN ${channelId} CHANNEL`);
+
+    await discordApi.post(`/interactions/${id}/${token}/callback`, {
+      type: 5,
+      data: {
+        content: '🤖 Processing your request... This might take a few seconds.',
+        flags: 64,
+      },
+    });
 
     const result = await sql`
       SELECT * FROM sessions
@@ -26,10 +42,15 @@ export async function GET(
       (session: any) => session.status === 'ended',
     );
     const totalSessionsCount = result.rowCount || 0;
-    const replyToChannel: string =
+    const messageContent: string =
       totalSessionsCount === 0
         ? 'There are no active sessions in this channel.'
         : `There's a total of ${totalSessionsCount} session${plural(totalSessionsCount)} in this channel.`;
+
+    await discordApi.patch(
+      `/webhooks/${application_id}/${token}/messages/@original`,
+      { content: `🤖 ${messageContent}` },
+    );
 
     console.log('✅ REQUEST COMPLETED');
 
@@ -39,7 +60,6 @@ export async function GET(
         totalSessionsCount,
         activeSessionInChannel,
         endedSessionsInChannel,
-        replyToChannel,
       },
       { status: 200 },
     );
@@ -47,6 +67,14 @@ export async function GET(
     console.error(
       '💀 Error while trying to retrieve sessions from channel:',
       error,
+    );
+
+    await discordApi.patch(
+      `/webhooks/${application_id}/${token}/messages/@original`,
+      {
+        content:
+          '💥 An error occurred while trying to start the session. Please try again later.',
+      },
     );
     return NextResponse.error();
   }

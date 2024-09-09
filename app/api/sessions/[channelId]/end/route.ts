@@ -1,14 +1,27 @@
+import { APIInteraction } from 'discord.js';
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
+import { discordApi } from '@viserya/services/discordApi';
 import { SessionRecordParams } from '@viserya/types';
 
 export async function POST(
-  _request: NextRequest,
+  request: NextRequest,
   { params: { channelId } }: SessionRecordParams,
 ) {
+  const requestJson = await request.json();
+  const { id, application_id, token } = requestJson as APIInteraction;
+
   try {
     console.log('🤖 EXECUTING ENDSESSION COMMAND');
     console.log('🔎 CHECKING FOR EXISTING SESSION');
+
+    await discordApi.post(`/interactions/${id}/${token}/callback`, {
+      type: 5,
+      data: {
+        content: '🤖 Processing your request... This might take a few seconds.',
+        flags: 64,
+      },
+    });
 
     const existingSession = await sql`
       SELECT * FROM sessions
@@ -16,16 +29,14 @@ export async function POST(
     `;
 
     if (existingSession.rows.length === 0) {
-      return NextResponse.json(
+      await discordApi.patch(
+        `/webhooks/${application_id}/${token}/messages/@original`,
         {
-          type: 4,
-          data: {
-            content: '🤖 There is no active session in this channel.',
-            ephemeral: true,
-          },
+          content: '🤖 There is no active session in this channel.',
         },
-        { status: 200 },
       );
+
+      return NextResponse.json({ status: 200 });
     }
 
     console.log('💬 ATTEMPTING TO END ACTIVE SESSION');
@@ -38,21 +49,28 @@ export async function POST(
 
     console.log('🎉 SESSION ENDED SUCCESSFULLY');
 
-    return NextResponse.json(
+    await discordApi.patch(
+      `/webhooks/${application_id}/${token}/messages/@original`,
       {
-        type: 4,
-        data: {
-          content: '🤖 Session ended successfully!',
-          ephemeral: true,
-        },
+        content: '🤖 Session ended successfully!',
       },
-      { status: 200 },
     );
+
+    return NextResponse.json({ status: 200 });
   } catch (error) {
     console.error(
       '💀 Error while trying to execute the endsession command:',
       error,
     );
+
+    await discordApi.patch(
+      `/webhooks/${application_id}/${token}/messages/@original`,
+      {
+        content:
+          '💥 An error occurred while trying to end the session. Please try again later.',
+      },
+    );
+
     return NextResponse.error();
   }
 }

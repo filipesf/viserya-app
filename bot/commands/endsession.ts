@@ -12,9 +12,15 @@ export const execute: ExecuteCommand = async (interaction: APIInteraction) => {
 
   console.log('🤖 EXECUTING ENDSESSION COMMAND');
 
-  const response = await viseryaApi.post(`/sessions/${channelId}/end`);
+  try {
+    const response = await viseryaApi.post(`/sessions/${channelId}/end`, {
+      ...interaction,
+    });
 
-  console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
+    console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
 
-  return response.data;
+    return response.data;
+  } catch (error) {
+    console.error('💥 ERROR STARTING SESSION:', error);
+  }
 };

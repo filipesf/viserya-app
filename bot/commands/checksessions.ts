@@ -37,18 +37,17 @@ export const execute: ExecuteCommand = async (interaction) => {
 
   console.log(interaction);
 
-  const response = await viseryaApi.get(endpoint);
-  const { replyToChannel } = response.data;
+  try {
+    const response = await viseryaApi.get(endpoint, {
+      params: { ...interaction },
+    });
 
-  console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
+    console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
 
-  console.log({ ...response });
+    console.log({ ...response });
 
-  return {
-    type: 4,
-    data: {
-      content: `🤖 ${replyToChannel}`,
-      ephemeral: true,
-    },
-  };
+    return response.data;
+  } catch (error) {
+    console.error('💥 ERROR CHECKING SESSION:', error);
+  }
 };
