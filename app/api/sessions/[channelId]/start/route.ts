@@ -8,7 +8,10 @@ export async function POST(
   request: NextRequest,
   { params: { channelId } }: SessionRecordParams,
 ) {
-  const { id, application_id, token, userId } = await request.json(); // Extract userId and token from the request body
+  const requestJson = await request.json();
+  const { id, application_id, token, userId } = requestJson;
+
+  console.log('🪲 requestJson', { requestJson });
 
   try {
     console.log('🤖 EXECUTING STARTSESSION COMMAND');
