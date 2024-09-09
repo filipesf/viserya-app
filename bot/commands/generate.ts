@@ -1,3 +1,4 @@
+import { CommandInteraction } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { ExecuteCommand } from '@viserya/types';
 import { getCharacterAttributes } from '@viserya/utils/getCharacterAttributes';
@@ -26,7 +27,8 @@ export const register = new SlashCommandBuilder()
         { name: 'Monster', value: 'monster' },
         { name: 'Organisation', value: 'organisation' },
       ),
-  );
+  )
+  .setDMPermission(true);
 
 export const execute: ExecuteCommand = async (interaction) => {
   let content = '';
@@ -67,6 +69,10 @@ export const execute: ExecuteCommand = async (interaction) => {
   }
 
   console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
+
+  console.log('🪲', interaction);
+
+  interaction.user.send(content);
 
   return {
     type: 4,
