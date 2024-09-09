@@ -70,10 +70,6 @@ export const execute: ExecuteCommand = async (interaction) => {
 
   console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
 
-  console.log('🪲', interaction);
-
-  interaction.user.send(content);
-
   return {
     type: 4,
     data: {
