@@ -1,5 +1,5 @@
-import { CommandInteraction } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
+import { discordApi } from '@viserya/services/discordApi';
 import { ExecuteCommand } from '@viserya/types';
 import { getCharacterAttributes } from '@viserya/utils/getCharacterAttributes';
 import {
@@ -27,53 +27,74 @@ export const register = new SlashCommandBuilder()
         { name: 'Monster', value: 'monster' },
         { name: 'Organisation', value: 'organisation' },
       ),
-  )
-  .setDMPermission(true);
+  );
 
 export const execute: ExecuteCommand = async (interaction) => {
-  let content = '';
-  const type = interaction.data?.options[0]?.value;
+  const { id, token, application_id, data } = interaction;
 
-  console.log('🤖 EXECUTING GENERATE COMMAND');
+  try {
+    await discordApi.post(`/interactions/${id}/${token}/callback`, {
+      type: 5,
+      data: {
+        content: '🤖 Processing your request... This might take a few seconds.',
+        flags: 64,
+      },
+    });
 
-  switch (type) {
-    case 'adventure':
-      content = await getRandomAdventure();
-      console.log('📜 ADVENTURE GENERATED:', content);
-      break;
-    case 'character':
-      const randomCharacter = await getRandomCharacter();
-      const abilityScores = getCharacterAttributes();
-      content = `${randomCharacter} ${Object.values(abilityScores)}`;
-      console.log('🧙‍♂️ CHARACTER GENERATED:', content);
-      break;
-    case 'item':
-      content = await getRandomItem();
-      console.log('🪄 ITEM GENERATED:', content);
-      break;
-    case 'location':
-      content = await getRandomLocation();
-      console.log('🏰 LOCATION GENERATED:', content);
-      break;
-    case 'monster':
-      content = await getRandomMonster();
-      console.log('👹 MONSTER GENERATED:', content);
-      break;
-    case 'organisation':
-      content = await getRandomOrganisation();
-      console.log('⚒️ ORGANISATION GENERATED:', content);
-      break;
-    default:
-      content = 'Invalid type selected.';
-      break;
+    let messageContent = '';
+    const type = data?.options[0]?.value;
+
+    console.log('🤖 EXECUTING GENERATE COMMAND');
+
+    switch (type) {
+      case 'adventure':
+        messageContent = await getRandomAdventure();
+        console.log('📜 ADVENTURE GENERATED:', messageContent);
+        break;
+      case 'character':
+        const randomCharacter = await getRandomCharacter();
+        const abilityScores = getCharacterAttributes();
+        messageContent = `${randomCharacter} ${Object.values(abilityScores)}`;
+        console.log('🧙‍♂️ CHARACTER GENERATED:', messageContent);
+        break;
+      case 'item':
+        messageContent = await getRandomItem();
+        console.log('🪄 ITEM GENERATED:', messageContent);
+        break;
+      case 'location':
+        messageContent = await getRandomLocation();
+        console.log('🏰 LOCATION GENERATED:', messageContent);
+        break;
+      case 'monster':
+        messageContent = await getRandomMonster();
+        console.log('👹 MONSTER GENERATED:', messageContent);
+        break;
+      case 'organisation':
+        messageContent = await getRandomOrganisation();
+        console.log('⚒️ ORGANISATION GENERATED:', messageContent);
+        break;
+      default:
+        messageContent = 'Invalid type selected.';
+        break;
+    }
+
+    const response = await discordApi.patch(
+      `/webhooks/${application_id}/${token}/messages/@original`,
+      { content: messageContent },
+    );
+
+    console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
+
+    return response.data;
+  } catch (error) {
+    console.error('💀 ERROR EXECUTING /GENERATE COMMAND:', error);
+
+    await discordApi.patch(
+      `/webhooks/${application_id}/${token}/messages/@original`,
+      {
+        content:
+          '🤖 An error occurred while generating your content. Please try again later.',
+      },
+    );
   }
-
-  console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
-
-  return {
-    type: 4,
-    data: {
-      content,
-    },
-  };
 };
