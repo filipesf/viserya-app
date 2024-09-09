@@ -21,6 +21,6 @@ export const execute: ExecuteCommand = async (interaction: APIInteraction) => {
 
     return response.data;
   } catch (error) {
-    console.error('💥 ERROR STARTING SESSION:', error);
+    console.error('💀 ERROR STARTING SESSION:', error);
   }
 };

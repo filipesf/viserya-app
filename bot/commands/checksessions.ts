@@ -35,8 +35,6 @@ export const execute: ExecuteCommand = async (interaction) => {
       break;
   }
 
-  console.log(interaction);
-
   try {
     const response = await viseryaApi.get(endpoint, {
       params: { ...interaction },
@@ -44,10 +42,8 @@ export const execute: ExecuteCommand = async (interaction) => {
 
     console.log('🎉 COMMAND EXECUTED SUCCESSFULLY');
 
-    console.log({ ...response });
-
     return response.data;
   } catch (error) {
-    console.error('💥 ERROR CHECKING SESSION:', error);
+    console.error('💀 ERROR CHECKING SESSION:', error);
   }
 };

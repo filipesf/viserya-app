@@ -10,8 +10,6 @@ export async function GET(request: NextRequest) {
   const application_id = searchParams.get('application_id');
   const token = searchParams.get('token');
 
-  console.log('🦄', searchParams);
-
   try {
     console.log(`🔎 CHECKING FOR EXISTING SESSIONS IN ALL CHANNELs`);
 
@@ -71,7 +69,7 @@ export async function GET(request: NextRequest) {
       `/webhooks/${application_id}/${token}/messages/@original`,
       {
         content:
-          '💥 An error occurred while trying to retrieve the session. Please try again later.',
+          '💀 An error occurred while trying to retrieve the session. Please try again later.',
       },
     );
     return NextResponse.error();

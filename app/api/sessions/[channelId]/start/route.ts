@@ -77,7 +77,7 @@ export async function POST(
       `/webhooks/${application_id}/${token}/messages/@original`,
       {
         content:
-          '💥 An error occurred while trying to start the session. Please try again later.',
+          '💀 An error occurred while trying to start the session. Please try again later.',
       },
     );
 

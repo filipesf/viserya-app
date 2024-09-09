@@ -31,7 +31,7 @@ export const execute: ExecuteCommand = async (
       },
     };
   } catch (error: any) {
-    console.error('💥 Error executing /ping command:', error.message);
+    console.error('💀 Error executing /ping command:', error.message);
 
     return {
       type: 4,
