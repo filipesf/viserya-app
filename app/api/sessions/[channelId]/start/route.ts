@@ -9,6 +9,8 @@ export async function POST(
 ) {
   const { userId } = await request.json();
 
+  console.log('🪲', request);
+
   try {
     console.log('🤖 EXECUTING STARTSESSION COMMAND');
     console.log('🔎 CHECKING FOR EXISTING SESSION');
