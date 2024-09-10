@@ -1,11 +1,13 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { NEXT_PUBLIC_DISCORD_APP_ID } from '@viserya/config/constants';
 import { viseryaApi } from '@viserya/services/viseryaApi';
+import { CharacterProfile } from '@viserya/types/sheet';
 import { ButtonIcon } from '@viserya/ui/Button';
-import { CardsContainer } from '@viserya/ui/Card';
+import { Card, CardHeader, CardsContainer, CardTitle } from '@viserya/ui/Card';
 import { Notify } from '@viserya/ui/Notify';
 
 const MOCK_CHANNEL_ID = '0000000000000000000';
@@ -14,6 +16,7 @@ const MOCK_USE_ID = '000000000000000000';
 export default function Page() {
   const [status, setStatus] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [charProfile, setCharProfile] = useState<CharacterProfile | null>(null);
 
   const handleRegisterCommand = async () => {
     try {
@@ -108,8 +111,8 @@ export default function Page() {
   };
 
   const handleCharacter = async () => {
-    const characterSheetId = '127555805'; // Kragmir
-    // const characterSheetId = '131689409'; // Drakonis
+    // const characterSheetId = '127555805'; // Kragmir
+    const characterSheetId = '131689409'; // Drakonis
 
     try {
       setIsLoading(true);
@@ -118,7 +121,7 @@ export default function Page() {
         params: { characterSheetId },
       });
 
-      console.log('🟣', response);
+      setCharProfile(response.data as CharacterProfile);
 
       setStatus('Character data retrieved!');
       setIsLoading(false);
@@ -155,73 +158,135 @@ export default function Page() {
     }
   }, [status]);
 
+  const {
+    avatar,
+    name,
+    race,
+    classes,
+    background,
+    details,
+    traits,
+    backstory,
+    organizations,
+    allies,
+    enemies,
+    notes,
+  } = charProfile || {};
+
+  const { age, hair, eyes, skin, height, weight, appearance } = details || {};
+  const { personality, ideals, bonds, flaws } = traits || {};
+
   return (
-    <CardsContainer>
-      {status && <Notify>{status}</Notify>}
+    <>
+      <CardsContainer>
+        {status && <Notify>{status}</Notify>}
 
-      <ButtonIcon
-        $variant="secondary"
-        $isLoading={isLoading}
-        disabled={isLoading}
-        onClick={handleRegisterCommand}
-        icon="Command"
-      />
+        <ButtonIcon
+          $variant="secondary"
+          $isLoading={isLoading}
+          disabled={isLoading}
+          onClick={handleRegisterCommand}
+          icon="Command"
+        />
 
-      <ButtonIcon
-        $variant="primary"
-        $isLoading={isLoading}
-        disabled={isLoading}
-        onClick={handleDatabase}
-        icon="Database"
-      />
+        <ButtonIcon
+          $variant="primary"
+          $isLoading={isLoading}
+          disabled={isLoading}
+          onClick={handleDatabase}
+          icon="Database"
+        />
 
-      <ButtonIcon
-        $variant="info"
-        $isLoading={isLoading}
-        disabled={isLoading}
-        onClick={handleCharacter}
-        icon="User"
-      />
+        <ButtonIcon
+          $variant="info"
+          $isLoading={isLoading}
+          disabled={isLoading}
+          onClick={handleCharacter}
+          icon="User"
+        />
 
-      <ButtonIcon
-        $variant="info"
-        $isLoading={isLoading}
-        disabled={isLoading}
-        onClick={checkSessions}
-        icon="Check"
-      />
+        <ButtonIcon
+          $variant="info"
+          $isLoading={isLoading}
+          disabled={isLoading}
+          onClick={checkSessions}
+          icon="Check"
+        />
 
-      <ButtonIcon
-        $variant="success"
-        $isLoading={isLoading}
-        disabled={isLoading}
-        onClick={handleStartSession}
-        icon="Play"
-      />
+        <ButtonIcon
+          $variant="success"
+          $isLoading={isLoading}
+          disabled={isLoading}
+          onClick={handleStartSession}
+          icon="Play"
+        />
 
-      <ButtonIcon
-        $variant="warning"
-        $isLoading={isLoading}
-        disabled={isLoading}
-        onClick={handleEndSession}
-        icon="Stop"
-      />
+        <ButtonIcon
+          $variant="warning"
+          $isLoading={isLoading}
+          disabled={isLoading}
+          onClick={handleEndSession}
+          icon="Stop"
+        />
 
-      <ButtonIcon
-        $variant="danger"
-        $isLoading={isLoading}
-        disabled={isLoading}
-        onClick={handleClearDB}
-        icon="Trash"
-      />
+        <ButtonIcon
+          $variant="danger"
+          $isLoading={isLoading}
+          disabled={isLoading}
+          onClick={handleClearDB}
+          icon="Trash"
+        />
 
-      <ButtonIcon
-        href={`https://discord.com/api/oauth2/authorize?client_id=${NEXT_PUBLIC_DISCORD_APP_ID}&permissions=2147483648&scope=bot`}
-        rel="noreferrer noopener"
-        target="_blank"
-        icon="SignIn"
-        as={Link}
-      />
-    </CardsContainer>
+        <ButtonIcon
+          href={`https://discord.com/api/oauth2/authorize?client_id=${NEXT_PUBLIC_DISCORD_APP_ID}&permissions=2147483648&scope=bot`}
+          rel="noreferrer noopener"
+          target="_blank"
+          icon="SignIn"
+          as={Link}
+        />
+      </CardsContainer>
+
+      {charProfile && (
+        <CardsContainer>
+          <Card>
+            {avatar && (
+              <Image
+                src={avatar ?? ''}
+                alt={name ?? ''}
+                width={100}
+                height={100}
+                loading="lazy"
+              />
+            )}
+
+            <CardHeader>
+              <CardTitle>
+                {name}, {race}, {classes}
+              </CardTitle>
+            </CardHeader>
+
+            <div>
+              <span>Age: {age} / </span>
+              <span>Hair: {hair} / </span>
+              <span>Eyes: {eyes} / </span>
+              <br />
+              <span>Skin: {skin} / </span>
+              <span>Height: {height} / </span>
+              <span>Weight: {weight}lbs.</span>
+            </div>
+
+            <>
+              <CardTitle>Backstory</CardTitle>
+              <p>{backstory}</p>
+            </>
+
+            <>
+              <CardTitle>Appearance</CardTitle>
+              <p>{appearance}</p>
+            </>
+          </Card>
+        </CardsContainer>
+      )}
+    </>
   );
 }

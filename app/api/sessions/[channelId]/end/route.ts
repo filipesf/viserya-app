@@ -10,25 +10,29 @@ export async function POST(
 ) {
   const requestJson = await request.json();
   const { id, application_id, token } = requestJson as APIInteraction;
+  const shouldCallDiscord = (id || application_id) && token;
 
   try {
     console.log('🤖 EXECUTING ENDSESSION COMMAND');
     console.log('🔎 CHECKING FOR EXISTING SESSION');
 
-    await discordApi.post(`/interactions/${id}/${token}/callback`, {
-      type: 5,
-      data: {
-        content: '🤖 Processing your request... This might take a few seconds.',
-        flags: 64,
-      },
-    });
+    if (shouldCallDiscord) {
+      await discordApi.post(`/interactions/${id}/${token}/callback`, {
+        type: 5,
+        data: {
+          content:
+            '🤖 Processing your request... This might take a few seconds.',
+          flags: 64,
+        },
+      });
+    }
 
     const existingSession = await sql`
       SELECT * FROM sessions
       WHERE channel_id=${channelId} AND status='active';
     `;
 
-    if (existingSession.rows.length === 0) {
+    if (shouldCallDiscord && existingSession.rows.length === 0) {
       await discordApi.patch(
         `/webhooks/${application_id}/${token}/messages/@original`,
         {
@@ -49,12 +53,14 @@ export async function POST(
 
     console.log('🎉 SESSION ENDED SUCCESSFULLY');
 
-    await discordApi.patch(
-      `/webhooks/${application_id}/${token}/messages/@original`,
-      {
-        content: '🤖 Session ended successfully!',
-      },
-    );
+    if (shouldCallDiscord) {
+      await discordApi.patch(
+        `/webhooks/${application_id}/${token}/messages/@original`,
+        {
+          content: '🤖 Session ended successfully!',
+        },
+      );
+    }
 
     return NextResponse.json({ status: 200 });
   } catch (error) {
@@ -63,13 +69,15 @@ export async function POST(
       error,
     );
 
-    await discordApi.patch(
-      `/webhooks/${application_id}/${token}/messages/@original`,
-      {
-        content:
-          '💀 An error occurred while trying to end the session. Please try again later.',
-      },
-    );
+    if (shouldCallDiscord) {
+      await discordApi.patch(
+        `/webhooks/${application_id}/${token}/messages/@original`,
+        {
+          content:
+            '💀 An error occurred while trying to end the session. Please try again later.',
+        },
+      );
+    }
 
     return NextResponse.error();
   }

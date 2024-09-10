@@ -14,18 +14,23 @@ export async function POST(
   { params: { channelId } }: SessionRecordParams,
 ) {
   const requestJson = await request.json();
-  const { id, application_id, token, userId } = requestJson as RequestJSON;
+  const { id, application_id, token, userId, member } =
+    requestJson as RequestJSON;
+  const shouldCallDiscord = (id || application_id || userId || member) && token;
 
   try {
     console.log('🤖 EXECUTING STARTSESSION COMMAND');
 
-    await discordApi.post(`/interactions/${id}/${token}/callback`, {
-      type: 5,
-      data: {
-        content: '🤖 Processing your request... This might take a few seconds.',
-        flags: 64,
-      },
-    });
+    if (shouldCallDiscord) {
+      await discordApi.post(`/interactions/${id}/${token}/callback`, {
+        type: 5,
+        data: {
+          content:
+            '🤖 Processing your request... This might take a few seconds.',
+          flags: 64,
+        },
+      });
+    }
 
     console.log('🔎 CHECKING FOR EXISTING SESSION');
 
@@ -34,7 +39,7 @@ export async function POST(
       WHERE channel_id=${channelId} AND status='active';
     `;
 
-    if (existingSession.rows.length > 0) {
+    if (shouldCallDiscord && existingSession.rows.length > 0) {
       await discordApi.patch(
         `/webhooks/${application_id}/${token}/messages/@original`,
         {
@@ -59,12 +64,14 @@ export async function POST(
 
     console.log('🎉 SESSION STARTED SUCCESSFULLY');
 
-    await discordApi.patch(
-      `/webhooks/${application_id}/${token}/messages/@original`,
-      {
-        content: '🤖 Session started successfully!',
-      },
-    );
+    if (shouldCallDiscord) {
+      await discordApi.patch(
+        `/webhooks/${application_id}/${token}/messages/@original`,
+        {
+          content: '🤖 Session started successfully!',
+        },
+      );
+    }
 
     return NextResponse.json({ status: 200 });
   } catch (error) {
@@ -73,13 +80,15 @@ export async function POST(
       error,
     );
 
-    await discordApi.patch(
-      `/webhooks/${application_id}/${token}/messages/@original`,
-      {
-        content:
-          '💀 An error occurred while trying to start the session. Please try again later.',
-      },
-    );
+    if (shouldCallDiscord) {
+      await discordApi.patch(
+        `/webhooks/${application_id}/${token}/messages/@original`,
+        {
+          content:
+            '💀 An error occurred while trying to start the session. Please try again later.',
+        },
+      );
+    }
 
     return NextResponse.error();
   }

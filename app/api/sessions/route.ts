@@ -9,17 +9,21 @@ export async function GET(request: NextRequest) {
   const id = searchParams.get('id');
   const application_id = searchParams.get('application_id');
   const token = searchParams.get('token');
+  const shouldCallDiscord = (id || application_id) && token;
 
   try {
     console.log(`🔎 CHECKING FOR EXISTING SESSIONS IN ALL CHANNELs`);
 
-    await discordApi.post(`/interactions/${id}/${token}/callback`, {
-      type: 5,
-      data: {
-        content: '🤖 Processing your request... This might take a few seconds.',
-        flags: 64,
-      },
-    });
+    if (shouldCallDiscord) {
+      await discordApi.post(`/interactions/${id}/${token}/callback`, {
+        type: 5,
+        data: {
+          content:
+            '🤖 Processing your request... This might take a few seconds.',
+          flags: 64,
+        },
+      });
+    }
 
     const result = await sql`SELECT * FROM sessions;`;
 
@@ -41,10 +45,12 @@ export async function GET(request: NextRequest) {
         ? 'There are no active sessions in this server.'
         : `There's a total of ${totalSessionsCount} session${plural(totalSessionsCount)} (${activeSessionsCount} active) across all channels in this server.`;
 
-    await discordApi.patch(
-      `/webhooks/${application_id}/${token}/messages/@original`,
-      { content: `🤖 ${messageContent}` },
-    );
+    if (shouldCallDiscord) {
+      await discordApi.patch(
+        `/webhooks/${application_id}/${token}/messages/@original`,
+        { content: `🤖 ${messageContent}` },
+      );
+    }
 
     console.log('✅ REQUEST COMPLETED');
 
@@ -65,13 +71,15 @@ export async function GET(request: NextRequest) {
       NextResponse.json(error),
     );
 
-    await discordApi.patch(
-      `/webhooks/${application_id}/${token}/messages/@original`,
-      {
-        content:
-          '💀 An error occurred while trying to retrieve the session. Please try again later.',
-      },
-    );
+    if (shouldCallDiscord) {
+      await discordApi.patch(
+        `/webhooks/${application_id}/${token}/messages/@original`,
+        {
+          content:
+            '💀 An error occurred while trying to retrieve the session. Please try again later.',
+        },
+      );
+    }
     return NextResponse.error();
   }
 }

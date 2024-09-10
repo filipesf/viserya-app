@@ -30,5 +30,5 @@ export type ContentSelectorButtons = {
 };
 
 export type CharacterAttributes = {
-  [key: string]: number;
+  [key: string]: any;
 };

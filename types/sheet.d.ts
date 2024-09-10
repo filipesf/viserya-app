@@ -1155,3 +1155,43 @@ export type UserCharacter = {
   campaignId: any;
   isAssigned: boolean;
 };
+
+export type CharacterProfile = {
+  avatar: string;
+  name: string;
+  race: string;
+  classes: string;
+  background: string;
+  details: CharDetails;
+  traits: CharTraits;
+  backstory: string;
+  organizations: string;
+  allies: any;
+  enemies: string;
+  notes: CharNotes;
+};
+
+export type CharDetails = {
+  age: number;
+  gender: string;
+  hair: string;
+  eyes: string;
+  skin: string;
+  height: string;
+  weight: number;
+  faith: any;
+  appearance: string;
+};
+
+export type CharTraits = {
+  bonds: string;
+  flaws: string;
+  ideals: string;
+  personality: string;
+};
+
+export type CharNotes = {
+  possessions: string;
+  otherHoldings: any;
+  otherNotes: string;
+};

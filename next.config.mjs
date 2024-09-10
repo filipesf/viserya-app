@@ -13,6 +13,16 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.dndbeyond.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
   webpack: (config, options) => {
     config.module.rules.push({
       test: /\.node/,

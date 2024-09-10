@@ -25,10 +25,12 @@ export async function GET(request: NextRequest) {
       skin,
       traits,
       weight,
+      decorations,
     } = response.data.data as CharacterSheet;
 
     return NextResponse.json(
       {
+        avatar: decorations.avatarUrl,
         name: name,
 
         race: race.fullName,
