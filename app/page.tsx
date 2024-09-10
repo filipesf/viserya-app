@@ -35,7 +35,6 @@ export default function Home() {
       setIsLoading(true);
 
       const content = await fetchContent(endpoint);
-      const tavernName = await fetchContent('tavernName');
 
       setContextValue({ generatedContent: content });
       setContentType(endpoint);
@@ -47,6 +46,8 @@ export default function Home() {
           setClipboardContent(`${content} ${attributeRolls}`);
           break;
         case 'tavern':
+          const tavernName = await fetchContent('tavernName');
+
           setContentTitle(tavernName);
           setAbilityScores(undefined);
           setClipboardContent(`${tavernName}. ${content}`);
