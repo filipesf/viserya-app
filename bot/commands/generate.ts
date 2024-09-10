@@ -9,6 +9,8 @@ import {
   getRandomLocation,
   getRandomMonster,
   getRandomOrganisation,
+  getRandomTavern,
+  getRandomTavernName,
 } from '@viserya/utils/getRandomElement';
 
 export const register = new SlashCommandBuilder()
@@ -26,6 +28,7 @@ export const register = new SlashCommandBuilder()
         { name: 'Location', value: 'location' },
         { name: 'Monster', value: 'monster' },
         { name: 'Organisation', value: 'organisation' },
+        { name: 'Tavern', value: 'tavern' },
       ),
   );
 
@@ -72,6 +75,10 @@ export const execute: ExecuteCommand = async (interaction) => {
       case 'organisation':
         messageContent = await getRandomOrganisation();
         console.log('⚒️ ORGANISATION GENERATED:', messageContent);
+        break;
+      case 'tavern':
+        messageContent = `${await getRandomTavernName()}: ${await getRandomTavern()}`;
+        console.log('🍻 TAVERN GENERATED:', messageContent);
         break;
       default:
         messageContent = 'Invalid type selected.';
