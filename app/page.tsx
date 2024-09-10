@@ -18,7 +18,6 @@ import { ContentSelector } from '@viserya/ui/ContentSelector';
 import { CopyTopClipboard } from '@viserya/ui/CopyToClipboard';
 import { Emoji } from '@viserya/ui/Emoji';
 import { getCharacterAttributes } from '@viserya/utils/getCharacterAttributes';
-import { getRandomTavernName } from '@viserya/utils/getRandomElement';
 
 export default function Home() {
   const [contentType, setContentType] = useState<ContentTypes>();
@@ -36,7 +35,7 @@ export default function Home() {
       setIsLoading(true);
 
       const content = await fetchContent(endpoint);
-      const tavernName = await getRandomTavernName();
+      const tavernName = await fetchContent('tavernName');
 
       setContextValue({ generatedContent: content });
       setContentType(endpoint);

@@ -38,3 +38,15 @@ export const createRandomTavern = async (): Promise<PromptAndTemplate> => {
     template,
   };
 };
+
+/**
+ * Creates a random tavern name.
+ * @returns The random tavern name string.
+ */
+export const createRandomTavernName = async (): Promise<{ prompt: string }> => {
+  const prompt = await getRandomTavernName();
+
+  console.log(`Random tavern name created: ${prompt}`);
+
+  return { prompt };
+};

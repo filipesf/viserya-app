@@ -5,4 +5,5 @@ export type ContentTypes =
   | 'location'
   | 'monster'
   | 'organisation'
-  | 'tavern';
+  | 'tavern'
+  | 'tavernName';
