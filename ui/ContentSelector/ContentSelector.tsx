@@ -5,11 +5,11 @@ import { Emoji } from '@viserya/ui/Emoji';
 
 const ContentSelectorStyled = styled.section`
   display: grid;
-  grid-template-columns: repeat(6, minmax(var(--spacing-24), 1fr));
+  grid-template-columns: repeat(4, minmax(var(--spacing-24), 1fr));
   gap: var(--spacing-xs);
   padding: 0 var(--spacing-md);
   margin: 0 auto;
-  max-width: 800px;
+  max-width: 688px;
 
   @media screen and (max-width: 768px) {
     grid-template-columns: repeat(3, minmax(var(--spacing-24), 1fr));
@@ -27,6 +27,7 @@ const ContentSelectorLabel = styled.span`
 
 type ContentSelectorProps = {
   getContent: (endpoint: ContentTypes) => Promise<void>;
+  isLoading: boolean;
 };
 
 const contentSelectorButtons: ContentSelectorButtons[] = [
@@ -36,13 +37,19 @@ const contentSelectorButtons: ContentSelectorButtons[] = [
   { emoji: '🪄', label: 'item' },
   { emoji: '⚒️', label: 'organisation' },
   { emoji: '📜', label: 'adventure' },
+  { emoji: '🍻', label: 'tavern' },
 ];
 
-export function ContentSelector({ getContent }: ContentSelectorProps) {
+export function ContentSelector({
+  getContent,
+  isLoading = false,
+}: ContentSelectorProps) {
   return (
     <ContentSelectorStyled>
       {contentSelectorButtons.map(({ emoji, label }) => (
         <Button
+          $isLoading={isLoading}
+          disabled={isLoading}
           $variant="secondary"
           $vertical
           key={label}

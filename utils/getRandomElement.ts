@@ -4,8 +4,10 @@ import {
   LocationData,
   MonsterData,
   OrganisationData,
+  TavernData,
 } from '@viserya/types';
 import { readDataFile } from './readFiles';
+import { toTitleCase } from './toTitleCase';
 
 type CombinedData = {
   character: CharacterData;
@@ -13,6 +15,7 @@ type CombinedData = {
   location: LocationData;
   monster: MonsterData;
   organisation: OrganisationData;
+  tavern: TavernData;
 };
 
 const loadData = async (): Promise<CombinedData> => {
@@ -23,6 +26,7 @@ const loadData = async (): Promise<CombinedData> => {
       'locations',
       'monsters',
       'organisations',
+      'taverns',
     ];
 
     const dataArray = await Promise.all(
@@ -35,6 +39,7 @@ const loadData = async (): Promise<CombinedData> => {
       location: dataArray[2],
       monster: dataArray[3],
       organisation: dataArray[4],
+      tavern: dataArray[5],
     };
 
     return combinedData;
@@ -180,4 +185,39 @@ export const getRandomAdventure = async (): Promise<string> => {
   const organisation = await getRandomOrganisation();
 
   return `This adventure is set in ${location} The players will encounter ${monster} The main plot centres around the activities of ${organisation}`;
+};
+
+export const getRandomTavernName = async (): Promise<string> => {
+  const data = await loadData();
+
+  const TAVERN_DATA = data.tavern;
+
+  if (!TAVERN_DATA) throw new Error('Tavern data not loaded.');
+
+  const { adjective, noun, place } = TAVERN_DATA;
+
+  const nameOptions = [
+    `${getRandomElement(adjective)} ${getRandomElement(noun)}`,
+    `${getRandomElement(adjective)} ${getRandomElement(noun)} ${getRandomElement(place)}`,
+    `${getRandomElement(adjective)} ${getRandomElement(noun)} ${getRandomElement(adjective)} ${getRandomElement(place)}`,
+  ];
+
+  return toTitleCase(getRandomElement(nameOptions));
+};
+
+export const getRandomTavern = async (): Promise<string> => {
+  const data = await loadData();
+
+  const TAVERN_DATA = data.tavern;
+  const LOCATION_DATA = data.location;
+
+  if (!TAVERN_DATA) throw new Error('Tavern data not loaded.');
+  if (!LOCATION_DATA) throw new Error('Location data not loaded.');
+
+  const tavernAbout = getRandomElement(TAVERN_DATA.about);
+  const tavernLocation = getRandomElement(TAVERN_DATA.location);
+  const tavernRumor = getRandomElement(TAVERN_DATA.rumor);
+  const locationReference = getRandomElement(LOCATION_DATA.reference);
+
+  return `${tavernAbout} ${tavernLocation} Located near ${locationReference}. ${tavernRumor}`;
 };

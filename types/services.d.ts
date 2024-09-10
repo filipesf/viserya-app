@@ -1,7 +1,8 @@
 export type ContentTypes =
+  | 'adventure'
   | 'character'
+  | 'item'
   | 'location'
   | 'monster'
-  | 'item'
   | 'organisation'
-  | 'adventure';
+  | 'tavern';

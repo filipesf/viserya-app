@@ -7,6 +7,7 @@ const contentEmojis: Record<ContentTypes, string> = {
   item: '🪄',
   organisation: '⚒️',
   adventure: '📜',
+  tavern: '🍻',
 };
 
 export function getEmoji(type: ContentTypes): string {

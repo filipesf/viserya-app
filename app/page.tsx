@@ -18,9 +18,12 @@ import { ContentSelector } from '@viserya/ui/ContentSelector';
 import { CopyTopClipboard } from '@viserya/ui/CopyToClipboard';
 import { Emoji } from '@viserya/ui/Emoji';
 import { getCharacterAttributes } from '@viserya/utils/getCharacterAttributes';
+import { getRandomTavernName } from '@viserya/utils/getRandomElement';
 
 export default function Home() {
-  const [contentTitle, setContentTitle] = useState<ContentTypes>();
+  const [contentType, setContentType] = useState<ContentTypes>();
+  const [contentTitle, setContentTitle] = useState<string>();
+  const [clipboardContent, setClipboardContent] = useState<string>('');
   const [abilityScores, setAbilityScores] = useState<CharacterAttributes>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { contextValue, setContextValue } = useAppContext();
@@ -33,16 +36,28 @@ export default function Home() {
       setIsLoading(true);
 
       const content = await fetchContent(endpoint);
+      const tavernName = await getRandomTavernName();
 
       setContextValue({ generatedContent: content });
+      setContentType(endpoint);
 
-      if (endpoint === 'character') {
-        setAbilityScores(getCharacterAttributes());
-      } else {
-        setAbilityScores(undefined);
+      switch (endpoint) {
+        case 'character':
+          setContentTitle(endpoint);
+          setAbilityScores(getCharacterAttributes());
+          setClipboardContent(`${content} ${attributeRolls}`);
+          break;
+        case 'tavern':
+          setContentTitle(tavernName);
+          setAbilityScores(undefined);
+          setClipboardContent(`${tavernName}. ${content}`);
+          break;
+        default:
+          setContentTitle(endpoint);
+          setAbilityScores(undefined);
+          setClipboardContent(content);
+          break;
       }
-
-      setContentTitle(endpoint);
 
       setIsLoading(false);
     } catch (error) {
@@ -55,13 +70,13 @@ export default function Home() {
 
   return (
     <>
-      <ContentSelector getContent={getContent} />
+      <ContentSelector getContent={getContent} isLoading={isLoading} />
 
       {generatedContent && (
         <CardsContainer>
           <Card>
             <CardHeader>
-              <Emoji name={contentTitle} size="xl" />
+              <Emoji name={contentType} size="xl" />
               <CardTitle>{contentTitle}</CardTitle>
             </CardHeader>
 
@@ -72,18 +87,17 @@ export default function Home() {
             <CardActions>
               <ButtonIcon
                 $isLoading={isLoading}
+                disabled={isLoading}
                 $variant="secondary"
                 $size="md"
                 icon="ArrowsClockwise"
-                title={`Generate new ${contentTitle}`}
+                title={`Generate new ${contentType}`}
                 onClick={() => {
-                  getContent(contentTitle as ContentTypes);
+                  getContent(contentType as ContentTypes);
                 }}
               />
 
-              <CopyTopClipboard
-                content={`${generatedContent} ${attributeRolls}`}
-              />
+              <CopyTopClipboard content={clipboardContent} />
             </CardActions>
           </Card>
         </CardsContainer>

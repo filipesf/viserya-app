@@ -42,3 +42,13 @@ export interface OrganisationData {
   activities: string[];
   objective: string[];
 }
+
+export interface TavernData {
+  adjective: string[];
+  article: string[];
+  noun: string[];
+  place: string[];
+  about: string[];
+  location: string[];
+  rumor: string[];
+}
