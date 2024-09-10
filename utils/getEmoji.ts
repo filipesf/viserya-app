@@ -1,6 +1,6 @@
 import { ContentTypes } from '@viserya/types';
 
-const contentEmojis: Record<ContentTypes, string> = {
+const contentEmojis: Partial<Record<ContentTypes, string>> = {
   character: '🧙‍♂️',
   location: '🏰',
   monster: '👹',
@@ -11,5 +11,5 @@ const contentEmojis: Record<ContentTypes, string> = {
 };
 
 export function getEmoji(type: ContentTypes): string {
-  return contentEmojis[type];
+  return contentEmojis[type] ?? '';
 }
