@@ -28,36 +28,37 @@ export default function Home() {
   const { contextValue, setContextValue } = useAppContext();
   const { generatedContent } = contextValue;
 
-  let attributeRolls: number[];
-
   const getContent = async (endpoint: ContentTypes) => {
     try {
       setIsLoading(true);
 
-      const content = await fetchContent(endpoint);
+      // Combine content fetching with additional data like tavern name if necessary
+      const [content, tavernName] = await Promise.all([
+        fetchContent(endpoint),
+        endpoint === 'tavern'
+          ? fetchContent('tavern/name')
+          : Promise.resolve(''),
+      ]);
 
+      // Dynamically set context and other related state
       setContextValue({ generatedContent: content });
       setContentType(endpoint);
 
-      switch (endpoint) {
-        case 'character':
-          setContentTitle(endpoint);
-          setAbilityScores(getCharacterAttributes());
-          setClipboardContent(`${content} ${attributeRolls}`);
-          break;
-        case 'tavern':
-          const tavernName = await fetchContent('tavernName');
+      // Dynamically determine content title and ability scores
+      const contentTitle = endpoint === 'tavern' ? tavernName : endpoint;
+      const scores =
+        endpoint === 'character' ? getCharacterAttributes() : undefined;
 
-          setContentTitle(tavernName);
-          setAbilityScores(undefined);
-          setClipboardContent(`${tavernName}. ${content}`);
-          break;
-        default:
-          setContentTitle(endpoint);
-          setAbilityScores(undefined);
-          setClipboardContent(content);
-          break;
-      }
+      // Update the state accordingly
+      setContentTitle(contentTitle);
+      setAbilityScores(scores);
+
+      // Prepare clipboard content dynamically
+      const clipboardContent = scores
+        ? `${content} ${Object.values(scores).join(', ')}`
+        : `${contentTitle}. ${content}`;
+
+      setClipboardContent(clipboardContent);
 
       setIsLoading(false);
     } catch (error) {
@@ -65,8 +66,6 @@ export default function Home() {
       console.error('Error fetching content:', error);
     }
   };
-
-  attributeRolls = abilityScores ? Object.values(abilityScores) : [];
 
   return (
     <>
@@ -76,7 +75,7 @@ export default function Home() {
         <CardsContainer>
           <Card>
             <CardHeader>
-              <Emoji name={contentType} size="xl" />
+              <Emoji name={contentType} size="3xl" />
               <CardTitle>{contentTitle}</CardTitle>
             </CardHeader>
 

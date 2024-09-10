@@ -6,4 +6,5 @@ export const CardHeader = styled.header`
   justify-content: center;
   align-items: center;
   gap: var(--spacing-rg);
+  margin-top: calc(var(--spacing-xl) * -1);
 `;

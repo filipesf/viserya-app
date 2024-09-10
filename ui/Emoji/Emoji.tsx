@@ -4,7 +4,7 @@ import { ContentTypes } from '@viserya/types';
 import { getEmoji } from '@viserya/utils/getEmoji';
 
 interface EmojiProps extends PropsWithChildren {
-  size?: 'xs' | 'sm' | 'rg' | 'md' | 'lg' | 'xl';
+  size?: 'xs' | 'sm' | 'rg' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
   name?: ContentTypes;
 }
 

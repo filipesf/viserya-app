@@ -137,6 +137,8 @@ export const GlobalStyles = createGlobalStyle`
   --font-size-md: 18px;
   --font-size-lg: 24px;
   --font-size-xl: 32px;
+  --font-size-2xl: calc(var(--font-size-xl) * 1.5);
+  --font-size-3xl: calc(var(--font-size-xl) * 2);
 
   /* Border Radius */
   --border-radius-sm: 4px;
