@@ -66,6 +66,7 @@ yarn-error.log*
 .eslintcache
 *.tgz
 .npm
+.mp3
 
 # IDE directories
 .idea/
