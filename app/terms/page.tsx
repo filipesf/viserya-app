@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { MainContainer } from '@viserya/ui';
 
 export const metadata: Metadata = {
   title: 'Terms of Service - ViseryaApp',
@@ -7,7 +6,7 @@ export const metadata: Metadata = {
 
 export default function Terms() {
   return (
-    <MainContainer>
+    <>
       <h1 id="terms-of-service-viseryaapp">Terms of Service</h1>
       <p>
         Welcome to ViseryaApp. By using our API services, you agree to be bound
@@ -101,6 +100,6 @@ export default function Terms() {
         For questions about these Terms, please contact us at{' '}
         <a href="mailto:support@viserya.app">support@viserya.app</a>.
       </p>
-    </MainContainer>
+    </>
   );
 }

@@ -63,10 +63,8 @@ export const GlobalStyles = createGlobalStyle`
 
   --background-color: var(--color-neutral-950);
   --background-reverse-color: var(--color-neutral-50);
-  --text-color: var(--color-neutral-50);
-  --text-reverse-color: var(--color-neutral-950);
-  --link-text-color: var(--color-blue-500);
-  --link-text-color-hover: var(--color-blue-700);
+  --text-color: var(--color-neutral-200);
+  --text-reverse-color: var(--color-neutral-800);
 
   --primary-background-color: var(--color-neutral-500);
   --primary-background-color-hover: var(--color-neutral-700);
@@ -141,6 +139,7 @@ export const GlobalStyles = createGlobalStyle`
   --font-size-3xl: calc(var(--font-size-xl) * 2);
 
   /* Border Radius */
+  --border-radius-xs: 2px;
   --border-radius-sm: 4px;
   --border-radius-md: 8px;
   --border-radius-lg: 12px;
@@ -170,8 +169,11 @@ export const GlobalStyles = createGlobalStyle`
   --background-color: var(--color-neutral-50);
   --background-reverse-color: var(--color-neutral-900);
 
-  --text-color: var(--color-neutral-900);
-  --text-reverse-color: var(--color-neutral-50);
+  --text-color: var(--color-neutral-800);
+  --text-reverse-color: var(--color-neutral-200);
+
+  --heading-text-color: var(--color-neutral-950);
+  --heading-text-reverse-color: var(--color-neutral-50);
 
   --secondary-background-color: var(--color-neutral-200);
   --secondary-background-color-hover: var(--color-neutral-300);
@@ -182,6 +184,17 @@ export const GlobalStyles = createGlobalStyle`
 
   --border-color: var(--color-neutral-300);
   --border-color-hover: var(--color-neutral-400);
+
+  --link-text-color: var(--color-blue-700);
+  --link-text-color-hover: var(--color-blue-500);
+
+  --quote-background-color: var(--color-neutral-100);
+  --quote-border-color: var(--color-neutral-200);
+  --quote-text-color: var(--color-neutral-600);
+
+  --code-background-color: var(--color-neutral-100);
+  --code-border-color: var(--color-neutral-200);
+  --code-text-color: var(--color-red-600);
 
   /* Shadows */
   --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -198,8 +211,11 @@ export const GlobalStyles = createGlobalStyle`
   --background-color: var(--color-neutral-950);
   --background-reverse-color: var(--color-neutral-50);
 
-  --text-color: var(--color-neutral-50);
-  --text-reverse-color: var(--color-neutral-950);
+  --text-color: var(--color-neutral-200);
+  --text-reverse-color: var(--color-neutral-800);
+
+  --heading-text-color: var(--color-neutral-50);
+  --heading-text-reverse-color: var(--color-neutral-950);
 
   --secondary-background-color: var(--color-neutral-900);
   --secondary-background-color-hover: var(--color-neutral-600);
@@ -211,6 +227,17 @@ export const GlobalStyles = createGlobalStyle`
   --border-color: var(--color-neutral-600);
   --border-color-hover: var(--color-neutral-700);
 
+  --link-text-color: var(--color-blue-500);
+  --link-text-color-hover: var(--color-blue-700);
+
+  --quote-background-color: var(--color-neutral-900);
+  --quote-border-color: var(--color-neutral-500);
+  --quote-text-color: var(--color-neutral-300);
+
+  --code-background-color: var(--color-neutral-900);
+  --code-border-color: var(--color-neutral-600);
+  --code-text-color: var(--color-red-400);
+
   /* Shadows adjusted for dark mode */
   --box-shadow: 0 2px 4px rgba(255, 255, 255, 0.05);
 
@@ -220,30 +247,14 @@ export const GlobalStyles = createGlobalStyle`
     border-color  var(--transition-speed);
 }
 
+::selection {
+  background-color: var(--background-reverse-color);
+  color: var(--text-reverse-color);
+}
+
 body {
   background-color: var(--background-color);
   color: var(--text-color);
   min-height: 100svh;
-}
-
-h1, h2, h3, h4, h5, h6, strong {
-  font-weight: 600;
-}
-
-h1 { font-size: var(--font-size-xl); }
-h2 { font-size: var(--font-size-lg); }
-h3 { font-size: var(--font-size-md); }
-h4 { font-size: var(--font-size-sm); }
-h5 { font-size: var(--font-size-xs); }
-h6 { font-size: var(--font-size-xs); }
-
-a {
-  color: var(--link-text-color);
-  text-decoration: none;
-
-  &:hover,
-  &:focus {
-    color: var(--link-text-color-hover);
-  }
 }
 `;

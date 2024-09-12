@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { MainContainer } from '@viserya/ui';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy - ViseryaApp',
@@ -7,7 +6,7 @@ export const metadata: Metadata = {
 
 export default function Privacy() {
   return (
-    <MainContainer>
+    <>
       <h1 id="privacy-policy">Privacy Policy</h1>
       <h2 id="introduction">Introduction</h2>
       <p>
@@ -137,6 +136,6 @@ export default function Privacy() {
         committed to protecting your privacy and providing a secure and reliable
         service.
       </p>
-    </MainContainer>
+    </>
   );
 }

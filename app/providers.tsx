@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { AppProvider, ThemeProvider } from '@viserya/contexts';
+import { GlobalStyles, ResetStyles, MainContainer } from '@viserya/ui';
 import { PageHeader } from '@viserya/ui/PageHeader';
-import { GlobalStyles, ResetStyles } from '@viserya/ui/shared';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -12,7 +12,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <ResetStyles />
         <GlobalStyles />
         <PageHeader />
-        {children}
+        <MainContainer>{children}</MainContainer>
       </ThemeProvider>
     </AppProvider>
   );

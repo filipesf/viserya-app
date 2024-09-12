@@ -148,6 +148,25 @@ export default function Page() {
     }
   };
 
+  const handleTextToSpeech = async () => {
+    try {
+      setIsLoading(true);
+
+      const response = await viseryaApi.post('assistants/tts', {
+        text: 'Greetings, brave adventurers! I am Voryn, the Guardian of the Deep, guiding you through the enchanting mysteries of the Realm of Viserya. Together, we shall weave tales of wonder and heroism!',
+      });
+
+      console.log('🟢', response.data);
+
+      setStatus('Text-to-speech created successfully');
+      setIsLoading(false);
+    } catch (error: any) {
+      console.log(error);
+      setStatus(error.message);
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (status) {
       const timer = setTimeout(() => {
@@ -198,6 +217,14 @@ export default function Page() {
         />
 
         <ButtonIcon
+          $variant="danger"
+          $isLoading={isLoading}
+          disabled={isLoading}
+          onClick={handleTextToSpeech}
+          icon="CassetteTape"
+        />
+
+        <ButtonIcon
           $variant="info"
           $isLoading={isLoading}
           disabled={isLoading}
@@ -238,7 +265,7 @@ export default function Page() {
         />
 
         <ButtonIcon
-          href={`https://discord.com/api/oauth2/authorize?client_id=${NEXT_PUBLIC_DISCORD_APP_ID}&permissions=2147483648&scope=bot`}
+          href={`https://discord.com/api/oauth2/authorize?client_id=${NEXT_PUBLIC_DISCORD_APP_ID}&permissions=1755919536880977&scope=bot`}
           rel="noreferrer noopener"
           target="_blank"
           icon="SignIn"

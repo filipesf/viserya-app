@@ -14,7 +14,7 @@ const LogoLabel = styled.figcaption`
   font-weight: 700;
   line-height: 1;
   letter-spacing: -1px;
-  color: var(--text-color);
+  color: var(--heading-text-color);
 `;
 
 export function Logo() {
