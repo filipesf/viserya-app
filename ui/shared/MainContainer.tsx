@@ -72,7 +72,6 @@ export const MainContainer = styled.main`
     border: 1px solid var(--code-border-color);
     border-radius: var(--border-radius-sm);
     font-family: monospace;
-    font-size: var(--font-size-rg);
     font-weight: 500;
     background-color: var(--code-background-color);
     color: var(--code-text-color);
@@ -85,13 +84,13 @@ export const MainContainer = styled.main`
     width: 100%;
     padding: var(--spacing-rg);
     margin: var(--spacing-sm) 0;
+    font-size: var(--font-size-rg);
 
     > code {
       border: none;
       padding: 0;
       width: 100%;
       font-family: inherit;
-      font-size: inherit;
       font-weight: inherit;
       white-space: pre-line;
       overflow-x: visible;
@@ -103,11 +102,13 @@ export const MainContainer = styled.main`
   code {
     display: inline-flex;
     padding: 0 var(--spacing-xs);
+    font-size: 90%;
   }
 
   blockquote {
     position: relative;
     padding: var(--spacing-rg);
+    margin: var(--spacing-sm) 0;
     border-radius: var(--border-radius-xs) var(--border-radius-md)
       var(--border-radius-md) var(--border-radius-xs);
     border-left: var(--spacing-xs) solid var(--quote-border-color);
@@ -125,12 +126,20 @@ export const MainContainer = styled.main`
     }
   }
 
-  ul {
-    padding-left: var(--spacing-md);
-    list-style-type: disc;
-    margin: var(--spacing-rg) 0;
+  ul,
+  ol {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-3);
+    gap: var(--spacing-md);
+    padding-left: var(--spacing-md);
+    margin: var(--spacing-rg) 0;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
   }
 `;

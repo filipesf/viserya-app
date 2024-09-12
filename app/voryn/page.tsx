@@ -202,7 +202,7 @@ export default function Voryn() {
           <small>
             Visit{' '}
             <a href="https://avrae.io/commands#campaign">Avrae&#39;s website</a>{' '}
-            for more details.
+            for more details on the <code>!campaign</code> command.
           </small>
         </li>
         <li>
@@ -214,7 +214,7 @@ export default function Voryn() {
           <small>
             Visit{' '}
             <a href="https://avrae.io/commands#import">Avrae&#39;s website</a>{' '}
-            for more details.
+            for more details on the <code>!import</code> command.
           </small>
         </li>
         <li>
@@ -226,7 +226,37 @@ export default function Voryn() {
           <small>
             Visit{' '}
             <a href="https://avrae.io/commands#sheet">Avrae&#39;s website</a>{' '}
-            for more details.
+            for more details on the <code>!sheet</code> command.
+          </small>
+        </li>
+        <li>
+          <p>
+            Whenever you want to use a spell or item that does not require a
+            roll, you can levarage Avrae lookup command to send the description
+            of the item or spell. Here&apos;s an example of how you can do this:
+          </p>
+
+          <blockquote>
+            <p>
+              <strong>@Voryn</strong> I&apos;m going to cast Mage Hand, to try
+              to close the door.
+            </p>
+          </blockquote>
+        </li>
+        <li>
+          <p>
+            Once you submit and Voryn as received your message (📬), you run the
+            following command:
+          </p>
+
+          <pre>
+            <code>/lookup spell name:Mage Hand</code>
+          </pre>
+
+          <small>
+            Visit{' '}
+            <a href="https://avrae.io/commands#lookup">Avrae&#39;s website</a>{' '}
+            for more details on the <code>/lookup</code> command.
           </small>
         </li>
       </ul>
