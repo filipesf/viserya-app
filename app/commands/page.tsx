@@ -13,6 +13,9 @@ import { Notify } from '@viserya/ui/Notify';
 const MOCK_CHANNEL_ID = '0000000000000000000';
 const MOCK_USE_ID = '000000000000000000';
 
+const CHARACTER_SHEET_ID = '127555805'; // Kragmir
+// const CHARACTER_SHEET_ID = '131689409'; // Drakonis
+
 export default function Page() {
   const [status, setStatus] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -111,14 +114,11 @@ export default function Page() {
   };
 
   const handleCharacter = async () => {
-    // const characterSheetId = '127555805'; // Kragmir
-    const characterSheetId = '131689409'; // Drakonis
-
     try {
       setIsLoading(true);
 
       const response = await viseryaApi.get(`/characters`, {
-        params: { characterSheetId },
+        params: { characterSheetId: CHARACTER_SHEET_ID },
       });
 
       setCharProfile(response.data as CharacterProfile);

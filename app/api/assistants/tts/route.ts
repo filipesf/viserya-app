@@ -40,14 +40,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log('🤞 SAVING GENERATED SPEECH:', speechFile);
-
     const buffer = Buffer.from(await mp3.arrayBuffer());
-    await fs.promises.writeFile(speechFile, buffer);
 
     console.log('🛟 SPEECH FILE SAVED');
 
-    return NextResponse.json({ mp3 });
+    return NextResponse.json(buffer, { status: 200 });
   } catch (error) {
     console.error('Error generating speech:', error);
     return NextResponse.json(
