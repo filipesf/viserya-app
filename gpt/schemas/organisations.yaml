@@ -3,10 +3,10 @@ info:
   title: ViseryaApp Organisations Actions
   version: 1.0.0
 servers:
-  - url: https://gpt-viserya-actions.vercel.app
+  - url: https://viserya.app
     description: Actions definition for creating organisations in Viserya
 paths:
-  /api/create/organisation:
+  /api/actions/create/organisation:
     post:
       operationId: createOrganisation
       tags:
@@ -46,7 +46,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/random/organisation:
+  /api/actions/random/organisation:
     post:
       operationId: createRandomOrganisation
       tags:

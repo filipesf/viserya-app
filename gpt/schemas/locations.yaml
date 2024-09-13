@@ -3,10 +3,10 @@ info:
   title: ViseryaApp Location Actions
   version: 1.0.0
 servers:
-  - url: https://gpt-viserya-actions.vercel.app
+  - url: https://viserya.app
     description: Actions definition for creating locations in Viserya
 paths:
-  /api/create/location:
+  /api/actions/create/location:
     post:
       operationId: createLocation
       tags:
@@ -47,7 +47,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/random/location:
+  /api/actions/random/location:
     post:
       operationId: createRandomLocation
       tags:

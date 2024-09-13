@@ -3,10 +3,10 @@ info:
   title: ViseryaApp Lore Actions
   version: 1.0.0
 servers:
-  - url: https://gpt-viserya-actions.vercel.app
+  - url: https://viserya.app
     description: Actions definition for documenting lore in Viserya
 paths:
-  /api/write/lore:
+  /api/actions/write/lore:
     post:
       operationId: writeLore
       tags:

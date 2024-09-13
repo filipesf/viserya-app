@@ -3,10 +3,10 @@ info:
   title: ViseryaApp Actions
   version: 1.0.0
 servers:
-  - url: https://gpt-viserya-actions.vercel.app
+  - url: https://viserya.app
     description: Actions definition for Mitrâzgar, The Geomancer
 paths:
-  /api/template:
+  /api/actions/template:
     get:
       operationId: getTemplate
       description: This endpoint retrieves the specific markdown template.
@@ -33,7 +33,7 @@ paths:
                 properties:
                   error:
                     type: string
-  /api/write/story:
+  /api/actions/write/story:
     post:
       operationId: writeStory
       tags:
@@ -76,7 +76,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/write/lore:
+  /api/actions/write/lore:
     post:
       operationId: writeLore
       tags:
@@ -119,7 +119,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/create/adventure:
+  /api/actions/create/adventure:
     post:
       operationId: createAdventure
       tags:
@@ -162,7 +162,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/create/character:
+  /api/actions/create/character:
     post:
       operationId: createCharacter
       tags:
@@ -205,7 +205,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/create/item:
+  /api/actions/create/item:
     post:
       operationId: createItem
       tags:
@@ -245,7 +245,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/create/location:
+  /api/actions/create/location:
     post:
       operationId: createLocation
       tags:
@@ -288,7 +288,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/create/monster:
+  /api/actions/create/monster:
     post:
       operationId: createMonster
       tags:
@@ -331,7 +331,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/create/organisation:
+  /api/actions/create/organisation:
     post:
       operationId: createOrganisation
       tags:
@@ -371,7 +371,47 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/random/adventure:
+  /api/actions/create/tavern:
+    post:
+      operationId: createTavern
+      tags:
+        - Tavern Creation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  description: The prompt for generating the tavern
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+              required:
+                - prompt
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/actions/random/adventure:
     post:
       operationId: createRandomAdventure
       tags:
@@ -410,7 +450,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/random/character:
+  /api/actions/random/character:
     post:
       operationId: createRandomCharacter
       tags:
@@ -449,7 +489,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/random/item:
+  /api/actions/random/item:
     post:
       operationId: createRandomItem
       tags:
@@ -485,7 +525,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/random/location:
+  /api/actions/random/location:
     post:
       operationId: createRandomLocation
       tags:
@@ -524,7 +564,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/random/monster:
+  /api/actions/random/monster:
     post:
       operationId: createRandomMonster
       tags:
@@ -563,12 +603,84 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/random/organisation:
+  /api/actions/random/organisation:
     post:
       operationId: createRandomOrganisation
       tags:
         - Random Generation
         - Organisation Creation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/actions/random/tavern:
+    post:
+      operationId: createRandomTavern
+      tags:
+        - Random Generation
+        - Tavern Creation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startPosition:
+                  type: integer
+                  description: The position in the template to start generating from.
+                previousContent:
+                  type: string
+                  description: The content generated so far.
+      responses:
+        '200':
+          description: Partial content generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: The newly generated content.
+                  nextPosition:
+                    type: integer
+                    description: The next position to continue generating from.
+                  complete:
+                    type: boolean
+                    description: Indicates if the generation is complete.
+  /api/actions/random/tavern/name:
+    post:
+      operationId: createRandomTavernName
+      tags:
+        - Random Generation
+        - Tavern Name Creation
       requestBody:
         required: true
         content:

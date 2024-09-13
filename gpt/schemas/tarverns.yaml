@@ -1,19 +1,16 @@
 openapi: 3.1.0
 info:
-  title: ViseryaApp Actions
+  title: ViseryaApp Taverns Actions
   version: 1.0.0
 servers:
   - url: https://viserya.app
-    description: Actions definition for Golwenor, The Storyweaver
+    description: Actions definition for creating taverns in Viserya
 paths:
-  /api/actions/create/adventure:
+  /api/actions/create/tavern:
     post:
-      operationId: createAdventure
+      operationId: createTavern
       tags:
-        - Adventure Creation
-      summary:
-        Generate an adventure with a formatted markdown template and populate all placeholders. Proper names should be
-        given using the Viselar language. Non-relevant or unpopulated sections should be removed.
+        - Tavern Creation
       requestBody:
         required: true
         content:
@@ -23,7 +20,7 @@ paths:
               properties:
                 prompt:
                   type: string
-                  description: The prompt for generating the adventure
+                  description: The prompt for generating the tavern
                 startPosition:
                   type: integer
                   description: The position in the template to start generating from.
@@ -49,58 +46,12 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/actions/create/character:
+  /api/actions/random/tavern:
     post:
-      operationId: createCharacter
-      tags:
-        - Character Creation
-      summary:
-        Generate a character with a formatted markdown template and populate all placeholders. Proper names should be
-        given using the Viselar language. Non-relevant or unpopulated sections should be removed.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                prompt:
-                  type: string
-                  description: The prompt for generating the character
-                startPosition:
-                  type: integer
-                  description: The position in the template to start generating from.
-                previousContent:
-                  type: string
-                  description: The content generated so far.
-              required:
-                - prompt
-      responses:
-        '200':
-          description: Partial content generated.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  content:
-                    type: string
-                    description: The newly generated content.
-                  nextPosition:
-                    type: integer
-                    description: The next position to continue generating from.
-                  complete:
-                    type: boolean
-                    description: Indicates if the generation is complete.
-  /api/actions/random/adventure:
-    post:
-      operationId: createRandomAdventure
+      operationId: createRandomTavern
       tags:
         - Random Generation
-        - Adventure Creation
-      summary:
-        Generate a random adventure with a formatted markdown template and populate all placeholders. Proper names
-        should be given using the Viselar language. Non-relevant or unpopulated sections should be removed.
+        - Tavern Creation
       requestBody:
         required: true
         content:
@@ -131,15 +82,12 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/actions/random/character:
+  /api/actions/random/tavern/name:
     post:
-      operationId: createRandomCharacter
+      operationId: createRandomTavernName
       tags:
         - Random Generation
-        - Character Creation
-      summary:
-        Generate a random character with a formatted markdown template and populate all placeholders. Proper names
-        should be given using the Viselar language. Non-relevant or unpopulated sections should be removed.
+        - Tavern Name Creation
       requestBody:
         required: true
         content:

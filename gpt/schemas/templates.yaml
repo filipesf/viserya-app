@@ -3,10 +3,10 @@ info:
   title: ViseryaApp Template Actions
   version: 1.0.0
 servers:
-  - url: https://gpt-viserya-actions.vercel.app
+  - url: https://viserya.app
     description: Actions definition for retrieving markdown templates
 paths:
-  /api/template:
+  /api/actions/template:
     get:
       operationId: getTemplate
       description: This endpoint retrieves the specific markdown template.

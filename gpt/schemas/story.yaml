@@ -3,10 +3,10 @@ info:
   title: ViseryaApp Story Actions
   version: 1.0.0
 servers:
-  - url: https://gpt-viserya-actions.vercel.app
+  - url: https://viserya.app
     description: Actions definition for writing stories in Viserya
 paths:
-  /api/write/story:
+  /api/actions/write/story:
     post:
       operationId: writeStory
       tags:

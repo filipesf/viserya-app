@@ -3,10 +3,10 @@ info:
   title: ViseryaApp Items Actions
   version: 1.0.0
 servers:
-  - url: https://gpt-viserya-actions.vercel.app
+  - url: https://viserya.app
     description: Actions definition for creating items in Viserya
 paths:
-  /api/create/item:
+  /api/actions/create/item:
     post:
       operationId: createItem
       tags:
@@ -46,7 +46,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/random/item:
+  /api/actions/random/item:
     post:
       operationId: createRandomItem
       tags:
