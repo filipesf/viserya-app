@@ -14,14 +14,14 @@ let SeenCommands: {
 
 const getCommands = async () => {
   if (SeenCommands) return SeenCommands;
-  const commandDir = resolve(process.cwd(), 'bot/commands');
+  const commandDir = resolve(process.cwd(), 'services/bot/commands');
   const commandFiles = getTsFiles(commandDir);
   const commands: { [key: string]: CommandModule } = {};
 
   for (const file of commandFiles) {
     try {
       const fileContents = (await import(
-        '../bot/commands/' + file
+        '../services/bot/commands/' + file
       )) as CommandModule;
       if (fileContents) commands[file] = fileContents;
     } catch (error) {
