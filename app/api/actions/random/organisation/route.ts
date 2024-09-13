@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { createRandomOrganisation } from '@viserya/gpt/actions';
+import { createRandomOrganisation } from '@viserya/services/gpt/actions';
 import { handleAction } from '@viserya/services/handleAction';
 
 export const dynamic = 'force-dynamic';
