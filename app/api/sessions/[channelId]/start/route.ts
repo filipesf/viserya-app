@@ -77,7 +77,7 @@ export async function POST(
   } catch (error) {
     console.error(
       '💀 Error while trying to execute the startsession command:',
-      error,
+      NextResponse.json(error),
     );
 
     if (shouldCallDiscord) {
