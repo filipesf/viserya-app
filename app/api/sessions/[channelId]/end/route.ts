@@ -1,7 +1,7 @@
 import { APIInteraction } from 'discord.js';
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
-import { discordApi } from '@viserya/services/discordApi';
+import { discordApi } from '@viserya/services/bot/discordApi';
 import { SessionRecordParams } from '@viserya/types';
 
 export async function POST(

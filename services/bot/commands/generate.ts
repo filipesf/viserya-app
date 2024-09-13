@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { discordApi } from '@viserya/services/discordApi';
+import { discordApi } from '@viserya/services/bot/discordApi';
 import { ExecuteCommand } from '@viserya/types';
 import { getCharacterAttributes } from '@viserya/utils/getCharacterAttributes';
 import {

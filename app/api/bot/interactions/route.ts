@@ -1,7 +1,7 @@
 import { InteractionType, APIInteractionResponse } from 'discord.js';
 import { NextRequest, NextResponse } from 'next/server';
 import { DISCORD_KEY } from '@viserya/config/constants';
-import { verifyInteractionRequest } from '@viserya/services/verifyDiscordRequest';
+import { verifyInteractionRequest } from '@viserya/services/bot';
 import getCommands from '@viserya/utils/getCommands';
 
 export async function POST(request: NextRequest) {

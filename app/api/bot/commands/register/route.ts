@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { NEXT_PUBLIC_DISCORD_APP_ID } from '@viserya/config/constants';
-import { discordApi } from '@viserya/services/discordApi';
+import { discordApi } from '@viserya/services/bot';
 import { handleMiddleware } from '@viserya/services/handleMiddleware';
 import getCommands from '@viserya/utils/getCommands';
 
