@@ -51,7 +51,7 @@ export async function GET(
     if (shouldCallDiscord) {
       await discordApi.patch(
         `/webhooks/${application_id}/${token}/messages/@original`,
-        { content: `🤖 ${messageContent}` },
+        { content: messageContent },
       );
     }
 
