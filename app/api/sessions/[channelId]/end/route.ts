@@ -20,8 +20,7 @@ export async function POST(
       await discordApi.post(`/interactions/${id}/${token}/callback`, {
         type: 5,
         data: {
-          content:
-            '🤖 Processing your request... This might take a few seconds.',
+          content: 'Weaving the threads of your request...',
           flags: 64,
         },
       });
@@ -36,7 +35,7 @@ export async function POST(
       await discordApi.patch(
         `/webhooks/${application_id}/${token}/messages/@original`,
         {
-          content: '🤖 There is no active session in this channel.',
+          content: `No vibrant session exists within this channel's reach.`,
         },
       );
 
@@ -57,7 +56,7 @@ export async function POST(
       await discordApi.patch(
         `/webhooks/${application_id}/${token}/messages/@original`,
         {
-          content: '🤖 Session ended successfully!',
+          content: 'The session has been laid to rest successfully!',
         },
       );
     }
@@ -74,7 +73,7 @@ export async function POST(
         `/webhooks/${application_id}/${token}/messages/@original`,
         {
           content:
-            '💀 An error occurred while trying to end the session. Please try again later.',
+            'A misstep has occurred while attempting to seal the session. Please try again later.',
         },
       );
     }

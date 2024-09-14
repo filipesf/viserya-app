@@ -22,8 +22,7 @@ export async function GET(
       await discordApi.post(`/interactions/${id}/${token}/callback`, {
         type: 5,
         data: {
-          content:
-            '🤖 Processing your request... This might take a few seconds.',
+          content: 'Weaving the threads of your request...',
           flags: 64,
         },
       });
@@ -45,9 +44,9 @@ export async function GET(
     );
     const totalSessionsCount = result.rowCount || 0;
     const messageContent: string =
-      totalSessionsCount === 0
-        ? 'There are no active sessions in this channel.'
-        : `There's a total of ${totalSessionsCount} session${plural(totalSessionsCount)} in this channel.`;
+      activeSessionInChannel === undefined
+        ? 'No active sessions pulse within this channel.'
+        : 'One daring session stands in the spotlight of this channel.';
 
     if (shouldCallDiscord) {
       await discordApi.patch(
@@ -78,7 +77,7 @@ export async function GET(
         `/webhooks/${application_id}/${token}/messages/@original`,
         {
           content:
-            '💀 An error occurred while trying to retrieve the session. Please try again later.',
+            'A misfortune has struck while fetching session details. Please try again later.',
         },
       );
     }

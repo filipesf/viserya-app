@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
         type: 5,
         data: {
           content:
-            '🤖 Processing your request... This might take a few seconds.',
+            'Weaving the threads of your request...',
           flags: 64,
         },
       });

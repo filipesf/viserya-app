@@ -5,7 +5,7 @@ import { ExecuteCommand } from '@viserya/types';
 
 export const register = new SlashCommandBuilder()
   .setName('startsession')
-  .setDescription('Start a new D&D session in this channel.');
+  .setDescription('Start a new session in this channel.');
 
 export const execute: ExecuteCommand = async (interaction: APIInteraction) => {
   const channelId = interaction.channel?.id;

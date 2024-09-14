@@ -39,7 +39,7 @@ export const execute: ExecuteCommand = async (interaction) => {
     await discordApi.post(`/interactions/${id}/${token}/callback`, {
       type: 5,
       data: {
-        content: '🤖 Processing your request... This might take a few seconds.',
+        content: 'Weaving the threads of your request...',
         flags: 64,
       },
     });

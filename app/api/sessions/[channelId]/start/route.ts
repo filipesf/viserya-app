@@ -25,8 +25,7 @@ export async function POST(
       await discordApi.post(`/interactions/${id}/${token}/callback`, {
         type: 5,
         data: {
-          content:
-            '🤖 Processing your request... This might take a few seconds.',
+          content: 'Weaving the threads of your request...',
           flags: 64,
         },
       });
@@ -44,7 +43,7 @@ export async function POST(
         `/webhooks/${application_id}/${token}/messages/@original`,
         {
           content:
-            '🤖 There is already an active session in this channel. Please end the current session before starting a new one.',
+            'A session currently breathes in this channel. Please conclude the ongoing tale before commencing a new one.',
         },
       );
 
@@ -68,7 +67,7 @@ export async function POST(
       await discordApi.patch(
         `/webhooks/${application_id}/${token}/messages/@original`,
         {
-          content: '🤖 Session started successfully!',
+          content: 'The session has been summoned successfully!',
         },
       );
     }
@@ -85,7 +84,7 @@ export async function POST(
         `/webhooks/${application_id}/${token}/messages/@original`,
         {
           content:
-            '💀 An error occurred while trying to start the session. Please try again later.',
+            'A shadow has fallen; an error disrupts the initiation of the session. Ponder and try again later.',
         },
       );
     }
