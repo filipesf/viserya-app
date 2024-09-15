@@ -4,6 +4,7 @@ import { sql } from '@vercel/postgres';
 import { discordApi } from '@viserya/services/bot/discordApi';
 import { viseryaApi } from '@viserya/services/viseryaApi';
 import { SessionRecordParams } from '@viserya/types';
+import { getRandomTavernName } from '@viserya/utils/getRandomElement';
 
 type RequestJSON = APIInteraction & {
   userId: string;
@@ -38,30 +39,70 @@ export async function POST(
       WHERE channel_id=${channelId} AND status='active';
     `;
 
-    if (shouldCallDiscord && existingSession.rows.length > 0) {
-      await discordApi.patch(
-        `/webhooks/${application_id}/${token}/messages/@original`,
-        {
-          content:
-            'A session currently breathes in this channel. Please conclude the ongoing tale before commencing a new one.',
-        },
-      );
+    if (existingSession.rows.length > 0) {
+      if (shouldCallDiscord) {
+        await discordApi.patch(
+          `/webhooks/${application_id}/${token}/messages/@original`,
+          {
+            content:
+              'A session currently breathes in this channel. Please conclude the ongoing tale before commencing a new one.',
+          },
+        );
+      }
 
       return NextResponse.json({ status: 200 });
     }
 
-    const threads = await viseryaApi.post('/assistants/threads');
-    const threadId = threads.data.threadId;
+    const channelResponse = await discordApi.get(`/channels/${channelId}`);
+    const channel = channelResponse.data;
+
+    let channelThreadId;
+    let channelThreadName;
+
+    if ([10, 11, 12].includes(channel.type)) {
+      channelThreadId = channel.id;
+      channelThreadName = channel.name;
+    } else {
+      console.log(`📜 CREATING A NEW THREAD IN CHANNEL ${channelId}`);
+
+      channelThreadName = await getRandomTavernName();
+
+      const newThreadResponse = await discordApi.post(
+        `/channels/${channelId}/threads`,
+        {
+          name: channelThreadName,
+          type: 11, // Public thread
+        },
+      );
+
+      channelThreadId = newThreadResponse.data.id;
+      channelThreadName = newThreadResponse.data.name;
+
+      console.log(
+        `📋 NEW THREAD CREATED: ${channelThreadName} (${channelThreadId})`,
+      );
+
+      await discordApi.put(
+        `/channels/${channelThreadId}/thread-members/${userId}`,
+      );
+
+      console.log(`👤 USER ${userId} ADDED TO THE THREAD ${channelThreadId}`);
+    }
+
+    const assistantThreads = await viseryaApi.post('/assistants/threads');
+    const assistantThreadId = assistantThreads.data.threadId;
 
     console.log(`📋 NEW GPT THREAD CREATED FOR ${channelId} CHANNEL`);
 
     await sql`
       INSERT INTO sessions (thread_id, channel_id, user_id)
-      VALUES (${threadId}, ${channelId}, ${userId})
+      VALUES (${assistantThreadId}, ${channelThreadId}, ${userId})
       RETURNING id;
     `;
 
-    console.log('🎉 SESSION STARTED SUCCESSFULLY');
+    console.log(
+      `🎉 SESSION STARTED SUCCESSFULLY IN THREAD: ${channelThreadName}`,
+    );
 
     if (shouldCallDiscord) {
       await discordApi.patch(
@@ -76,7 +117,7 @@ export async function POST(
   } catch (error) {
     console.error(
       '💀 Error while trying to execute the startsession command:',
-      NextResponse.json(error),
+      error,
     );
 
     if (shouldCallDiscord) {

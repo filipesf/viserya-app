@@ -59,6 +59,10 @@ export async function POST(
           content: 'The session has been laid to rest successfully!',
         },
       );
+
+      await discordApi.patch(`/channels/${channelId}`, {
+        locked: true,
+      });
     }
 
     return NextResponse.json({ status: 200 });
