@@ -25,6 +25,7 @@ export type SessionsRecord = BaseRecord & {
   start_time: Date;
   end_time: Date | null;
   status: string;
+  language: string;
 };
 
 export type MessagesRecord = BaseRecord & {

@@ -30,126 +30,126 @@ export async function POST(
   { params: { channelId } }: SessionRecordParams,
 ) {
   const requestJson = (await request.json()) as RequestJSON;
-  const { id, application_id, token, userId, member } =
+  const { id, application_id, token, userId, member, data } =
     requestJson as RequestJSON;
+
+  const lang =
+    data?.options.find((option) => option.name === 'language')?.value ??
+    'en-gb';
+
   const shouldCallDiscord = (id || application_id || userId || member) && token;
 
-  console.log('🦄', requestJson);
-  console.log('🧚‍♀️', requestJson.data?.options[0].value);
+  try {
+    console.log('🤖 EXECUTING STARTSESSION COMMAND');
 
-  return NextResponse.json({ status: 200 }); // to be removed
+    if (shouldCallDiscord) {
+      await discordApi.post(`/interactions/${id}/${token}/callback`, {
+        type: 5,
+        data: {
+          content: 'Weaving the threads of your request...',
+          flags: 64,
+        },
+      });
+    }
 
-  // try {
-  //   console.log('🤖 EXECUTING STARTSESSION COMMAND');
+    console.log('🔎 CHECKING FOR EXISTING SESSION');
 
-  //   if (shouldCallDiscord) {
-  //     await discordApi.post(`/interactions/${id}/${token}/callback`, {
-  //       type: 5,
-  //       data: {
-  //         content: 'Weaving the threads of your request...',
-  //         flags: 64,
-  //       },
-  //     });
-  //   }
+    const existingSession = await sql`
+      SELECT * FROM sessions
+      WHERE channel_id=${channelId} AND status='active';
+    `;
 
-  //   console.log('🔎 CHECKING FOR EXISTING SESSION');
+    if (existingSession.rows.length > 0) {
+      if (shouldCallDiscord) {
+        await discordApi.patch(
+          `/webhooks/${application_id}/${token}/messages/@original`,
+          {
+            content:
+              'A session currently breathes in this channel. Please conclude the ongoing tale before commencing a new one.',
+          },
+        );
+      }
 
-  //   const existingSession = await sql`
-  //     SELECT * FROM sessions
-  //     WHERE channel_id=${channelId} AND status='active';
-  //   `;
+      return NextResponse.json({ status: 200 });
+    }
 
-  //   if (existingSession.rows.length > 0) {
-  //     if (shouldCallDiscord) {
-  //       await discordApi.patch(
-  //         `/webhooks/${application_id}/${token}/messages/@original`,
-  //         {
-  //           content:
-  //             'A session currently breathes in this channel. Please conclude the ongoing tale before commencing a new one.',
-  //         },
-  //       );
-  //     }
+    const channelResponse = await discordApi.get(`/channels/${channelId}`);
+    const channel = channelResponse.data;
 
-  //     return NextResponse.json({ status: 200 });
-  //   }
+    let channelThreadId;
+    let channelThreadName;
 
-  //   const channelResponse = await discordApi.get(`/channels/${channelId}`);
-  //   const channel = channelResponse.data;
+    if ([10, 11, 12].includes(channel.type)) {
+      channelThreadId = channel.id;
+      channelThreadName = channel.name;
+    } else {
+      console.log(`📜 CREATING A NEW THREAD IN CHANNEL ${channelId}`);
 
-  //   let channelThreadId;
-  //   let channelThreadName;
+      channelThreadName = await getRandomTavernName();
 
-  //   if ([10, 11, 12].includes(channel.type)) {
-  //     channelThreadId = channel.id;
-  //     channelThreadName = channel.name;
-  //   } else {
-  //     console.log(`📜 CREATING A NEW THREAD IN CHANNEL ${channelId}`);
+      const newThreadResponse = await discordApi.post(
+        `/channels/${channelId}/threads`,
+        {
+          name: channelThreadName,
+          type: 11, // Public thread
+        },
+      );
 
-  //     channelThreadName = await getRandomTavernName();
+      channelThreadId = newThreadResponse.data.id;
+      channelThreadName = newThreadResponse.data.name;
 
-  //     const newThreadResponse = await discordApi.post(
-  //       `/channels/${channelId}/threads`,
-  //       {
-  //         name: channelThreadName,
-  //         type: 11, // Public thread
-  //       },
-  //     );
+      console.log(
+        `📋 NEW THREAD CREATED: ${channelThreadName} (${channelThreadId})`,
+      );
 
-  //     channelThreadId = newThreadResponse.data.id;
-  //     channelThreadName = newThreadResponse.data.name;
+      await discordApi.put(
+        `/channels/${channelThreadId}/thread-members/${userId}`,
+      );
 
-  //     console.log(
-  //       `📋 NEW THREAD CREATED: ${channelThreadName} (${channelThreadId})`,
-  //     );
+      console.log(`👤 USER ${userId} ADDED TO THE THREAD ${channelThreadId}`);
+    }
 
-  //     await discordApi.put(
-  //       `/channels/${channelThreadId}/thread-members/${userId}`,
-  //     );
+    const assistantThreads = await viseryaApi.post('/assistants/threads');
+    const assistantThreadId = assistantThreads.data.threadId;
 
-  //     console.log(`👤 USER ${userId} ADDED TO THE THREAD ${channelThreadId}`);
-  //   }
+    console.log(`📋 NEW GPT THREAD CREATED FOR ${channelId} CHANNEL`);
 
-  //   const assistantThreads = await viseryaApi.post('/assistants/threads');
-  //   const assistantThreadId = assistantThreads.data.threadId;
+    await sql`
+      INSERT INTO sessions (thread_id, channel_id, user_id, language)
+      VALUES (${assistantThreadId}, ${channelThreadId}, ${userId}, ${lang})
+      RETURNING id;
+    `;
 
-  //   console.log(`📋 NEW GPT THREAD CREATED FOR ${channelId} CHANNEL`);
+    console.log(
+      `🎉 SESSION STARTED SUCCESSFULLY IN THREAD: ${channelThreadName}`,
+    );
 
-  //   await sql`
-  //     INSERT INTO sessions (thread_id, channel_id, user_id)
-  //     VALUES (${assistantThreadId}, ${channelThreadId}, ${userId})
-  //     RETURNING id;
-  //   `;
+    if (shouldCallDiscord) {
+      await discordApi.patch(
+        `/webhooks/${application_id}/${token}/messages/@original`,
+        {
+          content: 'The session has been summoned successfully!',
+        },
+      );
+    }
 
-  //   console.log(
-  //     `🎉 SESSION STARTED SUCCESSFULLY IN THREAD: ${channelThreadName}`,
-  //   );
+    return NextResponse.json({ status: 200 });
+  } catch (error) {
+    console.error(
+      '💀 Error while trying to execute the startsession command:',
+      error,
+    );
 
-  //   if (shouldCallDiscord) {
-  //     await discordApi.patch(
-  //       `/webhooks/${application_id}/${token}/messages/@original`,
-  //       {
-  //         content: 'The session has been summoned successfully!',
-  //       },
-  //     );
-  //   }
+    if (shouldCallDiscord) {
+      await discordApi.patch(
+        `/webhooks/${application_id}/${token}/messages/@original`,
+        {
+          content:
+            'A shadow has fallen; an error disrupts the initiation of the session. Ponder and try again later.',
+        },
+      );
+    }
 
-  //   return NextResponse.json({ status: 200 });
-  // } catch (error) {
-  //   console.error(
-  //     '💀 Error while trying to execute the startsession command:',
-  //     error,
-  //   );
-
-  //   if (shouldCallDiscord) {
-  //     await discordApi.patch(
-  //       `/webhooks/${application_id}/${token}/messages/@original`,
-  //       {
-  //         content:
-  //           'A shadow has fallen; an error disrupts the initiation of the session. Ponder and try again later.',
-  //       },
-  //     );
-  //   }
-
-  //   return NextResponse.error();
-  // }
+    return NextResponse.error();
+  }
 }
