@@ -34,7 +34,7 @@ export async function POST(
     requestJson as RequestJSON;
 
   const lang =
-    data?.options.find((option) => option.name === 'language')?.value ??
+    data?.options?.find((option) => option?.name === 'language')?.value ??
     'en-gb';
 
   const shouldCallDiscord = (id || application_id || userId || member) && token;
