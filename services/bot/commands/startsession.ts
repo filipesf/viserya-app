@@ -5,7 +5,17 @@ import { ExecuteCommand } from '@viserya/types';
 
 export const register = new SlashCommandBuilder()
   .setName('startsession')
-  .setDescription('Start a new session in this channel.');
+  .setDescription('Start a new session in this channel.')
+  .addStringOption((option) =>
+    option
+      .setName('language')
+      .setDescription('In which language should the session be in. Default: English')
+      .setRequired(false)
+      .addChoices(
+        { name: 'English', value: 'en-gb' },
+        { name: 'Português', value: 'pt-br' },
+      ),
+  );
 
 export const execute: ExecuteCommand = async (interaction: APIInteraction) => {
   const channelId = interaction.channel?.id;
