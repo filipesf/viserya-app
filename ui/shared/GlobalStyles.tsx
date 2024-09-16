@@ -138,6 +138,13 @@ export const GlobalStyles = createGlobalStyle`
   --font-size-2xl: calc(var(--font-size-xl) * 1.5);
   --font-size-3xl: calc(var(--font-size-xl) * 2);
 
+  --font-siez-h1: var(--font-size-2xl);
+  --font-siez-h2: var(--font-size-xl);
+  --font-siez-h3: var(--font-size-lg);
+  --font-siez-h4: var(--font-size-md);
+  --font-siez-h5: var(--font-size-rg);
+  --font-siez-h6: var(--font-size-sm);
+
   /* Border Radius */
   --border-radius-xs: 2px;
   --border-radius-sm: 4px;

@@ -32,22 +32,22 @@ export const MainContainer = styled.main`
   }
 
   h1 {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-siez-h1);
   }
   h2 {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-siez-h2);
   }
   h3 {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-siez-h3);
   }
   h4 {
-    font-size: var(--font-size-md);
+    font-size: var(--font-siez-h4);
   }
   h5 {
-    font-size: var(--font-size-rg);
+    font-size: var(--font-siez-h5);
   }
   h6 {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-siez-h6);
   }
 
   a {

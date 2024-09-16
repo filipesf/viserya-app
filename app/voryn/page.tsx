@@ -23,6 +23,35 @@ export default function Voryn() {
 
       <hr />
 
+      <h2 id="why-voryn-was-created">Why Voryn was created</h2>
+
+      <p>
+        Voryn was designed to enable players to engage in asynchronous gameplay
+        over text, utilizing AI as their Dungeon Master. While it may not fully
+        replicate the in-person experience of playing Dungeons &amp; Dragons, it
+        offers a unique and enjoyable alternative.
+      </p>
+
+      <p>
+        Harnessing the combined power of Discord, Avrae, D&amp;D Beyond, and
+        ChatGPT, Voryn allows multiple players to interact with the AI
+        simultaneously.
+      </p>
+
+      <p>
+        Currently, Voryn creates immersive stories primarily set in the
+        homebrewed D&amp;D campaign world of Viserya. However, exciting
+        developments are on the horizon, with plans to allow customization for
+        your own scenarios.
+      </p>
+
+      <p>
+        Below, you’ll find a comprehensive guide to maximize your experience
+        with Voryn.
+      </p>
+
+      <hr />
+
       <h2 id="part-1-getting-started-with-voryn">
         Part 1: Getting started with Voryn
       </h2>
@@ -51,17 +80,39 @@ export default function Voryn() {
           guide.
         </li>
         <li>
-          Each channel or thread can only host one active session at a time, so
-          make sure you’re in the right place!
+          Each thread can only host one active session at a time, so make sure
+          you’re in the right place!
         </li>
       </ul>
+
+      <p>
+        By default, Voryn initiates new sessions in English. However, it also
+        has the capability to converse with you in Brazilian Portuguese,
+        offering a more inclusive experience. At any point during your session
+        you can ask Voryn to change the language. Those are just shortcuts to
+        set it up.
+      </p>
+
+      <pre>
+        <code>/startsession language:Português</code>
+      </pre>
+
+      <h4>
+        <em>So it begins...</em>
+      </h4>
+
+      <p>
+        Once the session begins, Voryn will create a new thread, add the user
+        who triggered the command to it, and send a welcome message with
+        instructions.
+      </p>
 
       <h3 id="step-2-check-active-sessions">Step 2: Check Active Sessions</h3>
 
       <p>
         If you’re unsure whether there’s already an active session running,{' '}
         <strong>Voryn</strong> will let you know if there’s an ongoing session
-        in the current channel or thread. Simply type:
+        in the current thread. Simply type:
       </p>
 
       <pre>
@@ -79,6 +130,13 @@ export default function Voryn() {
       <pre>
         <code>/endsession</code>
       </pre>
+
+      <p>
+        Once the session ends, Voryn will lock the thread, and send a summary of
+        the outcomes, loot, and rewards. Once the session ends, you will not be
+        able to interact with Voryn in the same conversation context and a new
+        session will be required.
+      </p>
 
       <hr />
 
@@ -147,6 +205,12 @@ export default function Voryn() {
         <li>
           📜 <strong>Decision Submitted</strong>: Your decision has been read
           and processed by <strong>Voryn</strong>.
+        </li>
+        <li>
+          🔊 <strong>Text-To-Speak - TTS</strong>: React to any of Voryn’s
+          messages with this emoji, and Voryn will convert the response into
+          audio, sending it directly to the channel for you to listen to.
+          Experience the adventure in a whole new way!
         </li>
       </ul>
 
@@ -272,6 +336,10 @@ export default function Voryn() {
           Make sure to always provide this information when asked by{' '}
           <strong>Voryn</strong> or your fellow players.
         </li>
+        <li>
+          Alternatively, you can use the <code>!roll</code> command provided by
+          Avrae for your rolls as well.
+        </li>
       </ul>
 
       <hr />
@@ -322,8 +390,8 @@ export default function Voryn() {
 
       <ul>
         <li>
-          <strong>Always mention or reply to Voryn</strong> for every decision
-          to ensure it’s processed.
+          <strong>Always remember to mention or reply to Voryn</strong> for
+          every decision to ensure it’s processed.
         </li>
         <li>
           <strong>Use Avrae and D&amp;D Beyond</strong> to manage your character
