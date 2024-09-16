@@ -82,6 +82,14 @@ export async function POST(
     if ([10, 11, 12].includes(channel.type)) {
       channelThreadId = channel.id;
       channelThreadName = channel.name;
+
+      const shouldReopenThread = channel.thread_metadata?.locked === true;
+
+      if (shouldReopenThread) {
+        await discordApi.patch(`/channels/${channelId}`, {
+          locked: false,
+        });
+      }
     } else {
       console.log(`📜 CREATING A NEW THREAD IN CHANNEL ${channelId}`);
 
