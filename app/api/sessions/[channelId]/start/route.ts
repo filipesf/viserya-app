@@ -6,21 +6,36 @@ import { viseryaApi } from '@viserya/services/viseryaApi';
 import { SessionRecordParams } from '@viserya/types';
 import { getRandomTavernName } from '@viserya/utils/getRandomElement';
 
-type RequestJSON = APIInteraction & {
-  userId: string;
+type Option = {
+  name: string;
+  type: number;
+  value: string;
 };
+
+type Data = {
+  id: string;
+  name: string;
+  options: Option[];
+  type: number;
+};
+
+type RequestJSON = APIInteraction &
+  Partial<{
+    userId: string;
+    data: Data;
+  }>;
 
 export async function POST(
   request: NextRequest,
   { params: { channelId } }: SessionRecordParams,
 ) {
-  const requestJson = await request.json();
+  const requestJson = (await request.json()) as RequestJSON;
   const { id, application_id, token, userId, member } =
     requestJson as RequestJSON;
   const shouldCallDiscord = (id || application_id || userId || member) && token;
 
   console.log('🦄', requestJson);
-  console.log('🧚‍♀️', requestJson.data);
+  console.log('🧚‍♀️', requestJson.data?.options[0].value);
 
   return NextResponse.json({ status: 200 }); // to be removed
 

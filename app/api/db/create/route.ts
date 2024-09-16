@@ -8,12 +8,13 @@ export async function GET() {
     await sql`
       CREATE TABLE IF NOT EXISTS sessions (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        status VARCHAR(50) NOT NULL DEFAULT 'active',
         channel_id VARCHAR(255) NOT NULL,
         thread_id VARCHAR(255) NOT NULL,
         user_id VARCHAR(255) NOT NULL,
+        language VARCHAR(255) NOT NULL,
         start_time TIMESTAMP NOT NULL DEFAULT NOW(),
-        end_time TIMESTAMP,
-        status VARCHAR(50) NOT NULL DEFAULT 'active'
+        end_time TIMESTAMP
       );
     `;
 
