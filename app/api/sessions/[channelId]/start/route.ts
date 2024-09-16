@@ -20,6 +20,7 @@ export async function POST(
   const shouldCallDiscord = (id || application_id || userId || member) && token;
 
   console.log('🦄', requestJson);
+  console.log('🧚‍♀️', requestJson.data);
 
   return NextResponse.json({ status: 200 }); // to be removed
 
