@@ -5,6 +5,7 @@ import { openai } from '@viserya/config/openai';
 import { getUUID } from '@viserya/utils/getUUID';
 
 export const runtime = 'nodejs';
+export const maxDuration = 12000;
 
 const speechFile = path.resolve(
   process.cwd(),

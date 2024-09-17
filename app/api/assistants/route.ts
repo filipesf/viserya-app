@@ -1,6 +1,7 @@
 import { openai } from '@viserya/config/openai';
 
 export const runtime = 'nodejs';
+export const maxDuration = 12000;
 
 // Create a new assistant
 export async function POST() {

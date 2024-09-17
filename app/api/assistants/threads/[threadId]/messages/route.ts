@@ -4,6 +4,7 @@ import { openai } from '@viserya/config/openai';
 import { AssistantMessageParams } from '@viserya/types/openai';
 
 export const runtime = 'nodejs';
+export const maxDuration = 12000;
 
 // Send a new message to a thread
 export async function POST(

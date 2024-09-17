@@ -265,7 +265,7 @@ export default function Page() {
         />
 
         <ButtonIcon
-          href={`https://discord.com/api/oauth2/authorize?client_id=${NEXT_PUBLIC_DISCORD_APP_ID}&permissions=1755919855124465&scope=bot`}
+          href={`https://discord.com/api/oauth2/authorize?client_id=${NEXT_PUBLIC_DISCORD_APP_ID}&permissions=268550432&scope=bot`}
           rel="noreferrer noopener"
           target="_blank"
           icon="SignIn"
