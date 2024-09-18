@@ -22,13 +22,12 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const authKey = request.headers.get('AUTHORIZATION_KEY');
+  const authKey =
+    request.headers.get('AUTHORIZATION_KEY') ||
+    request.headers.get('authorization_key') ||
+    request.headers.get('Authorization-Key');
 
   console.log(`🐞 Auth key: ${authKey}`);
-
-  console.log('🐞 AUTHORIZATION_KEY:', request.headers.get('AUTHORIZATION_KEY'));
-  console.log('🐞 authorization_key:', request.headers.get('authorization_key'));
-  console.log('🐞 Authorization-Key:', request.headers.get('Authorization-Key'));
 
   if (!authKey || authKey !== AUTHORIZATION_KEY) {
     return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
