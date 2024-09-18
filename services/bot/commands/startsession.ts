@@ -9,11 +9,11 @@ export const register = new SlashCommandBuilder()
   .addStringOption((option) =>
     option
       .setName('language')
-      .setDescription('In which language should the session be in. Default: English')
+      .setDescription('In which language should the session be in. Default: Português')
       .setRequired(false)
       .addChoices(
-        { name: 'English', value: 'en-gb' },
         { name: 'Português', value: 'pt-br' },
+        { name: 'English', value: 'en-gb' },
       ),
   );
 
