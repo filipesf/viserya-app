@@ -17,7 +17,6 @@ export async function POST(
   if (typeof content === 'string') {
     try {
       content = JSON.parse(content);
-      console.log('🐞 Parsed content:', content);
     } catch (error) {
       console.error('Error parsing content:', error);
       return new Response(JSON.stringify({ error: 'Invalid JSON content' }), {
@@ -25,6 +24,13 @@ export async function POST(
       });
     }
   }
+
+  content = content.map((message: any) => {
+    if (message.type === 'history' || message.type === 'decision') {
+      message.type = 'text';
+    }
+    return message;
+  });
 
   await openai.beta.threads.messages.create(threadId, {
     role: 'user',
