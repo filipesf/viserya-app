@@ -12,9 +12,19 @@ export async function POST(
   { params: { threadId } }: AssistantMessageParams,
 ) {
   const requestJson = await request.json();
-  const { content } = requestJson;
+  let { content } = requestJson;
 
-  console.log('🐞 REQUEST JSON:', requestJson);
+  if (typeof content === 'string') {
+    try {
+      content = JSON.parse(content);
+      console.log('🐞 Parsed content:', content);
+    } catch (error) {
+      console.error('Error parsing content:', error);
+      return new Response(JSON.stringify({ error: 'Invalid JSON content' }), {
+        status: 400,
+      });
+    }
+  }
 
   await openai.beta.threads.messages.create(threadId, {
     role: 'user',
