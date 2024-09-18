@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { AUTHORIZATION_KEY } from '@viserya/config/constants';
 
 export default async function middleware(request: NextRequest) {
+  console.log('👹', request);
+
   if (request.method === 'OPTIONS') {
     return new NextResponse(null, {
       status: 204,
