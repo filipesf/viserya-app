@@ -29,22 +29,33 @@ export async function POST(
     return { text, type: 'text' };
   });
 
-  console.log('🪲 Filtered content:', content);
-
-  const concatenatedContent = content
-    .map((message: MessagesRecord) => message.text)
-    .join('\n\n');
-
-  console.log('🐛 Concatenated content:', concatenatedContent);
+  console.log('🐛 Filtered content:', content);
 
   await openai.beta.threads.messages.create(threadId, {
     role: 'user',
-    content: [{ text: concatenatedContent, type: 'text' }],
+    content: content,
   });
 
-  const stream = openai.beta.threads.runs.stream(threadId, {
+  let run = await openai.beta.threads.runs.createAndPoll(threadId, {
     assistant_id: assistantIds.dm,
   });
 
-  return new Response(stream.toReadableStream());
+  if (run.status === 'completed') {
+    const messages = await openai.beta.threads.messages.list(run.thread_id);
+    for (const message of messages.data.reverse()) {
+      console.log('🪲', run.status, message);
+    }
+  } else {
+    console.log('🐞', run.status);
+  }
+
+  // const stream = openai.beta.threads.runs.stream(threadId, {
+  //   assistant_id: assistantIds.dm,
+  // });
+
+  return new Response(null, {
+    status: 200,
+  });
+
+  // return new Response(stream.toReadableStream());
 }
