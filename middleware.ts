@@ -27,8 +27,6 @@ export default async function middleware(request: NextRequest) {
     request.headers.get('authorization_key') ||
     request.headers.get('Authorization-Key');
 
-  console.log(`🐞 Auth key: ${authKey}`);
-
   if (!authKey || authKey !== AUTHORIZATION_KEY) {
     return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
       status: 401,
