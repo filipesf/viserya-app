@@ -3,6 +3,7 @@ import { assistantIds } from '@viserya/config/assistants';
 import { openai } from '@viserya/config/openai';
 import { MessagesRecord } from '@viserya/types';
 import { AssistantMessageParams } from '@viserya/types/openai';
+import { formatThreadMessage } from '@viserya/utils/formatThreadMessage';
 import { isJsonString } from '@viserya/utils/isJsonString';
 
 export const runtime = 'nodejs';
@@ -19,19 +20,12 @@ export async function POST(
 
   if (typeof content === 'string') {
     if (isJsonString(content)) {
-      content = JSON.parse(content);
-      console.log('🐛 JSON STRING', { content });
+      content = formatThreadMessage(JSON.parse(content));
     } else {
       content = content;
-      console.log('🐛 NOT JSON STRING', { content });
     }
   } else {
-    content = content.map((message: MessagesRecord) => {
-      const { text } = message;
-      return { text, type: 'text' };
-    });
-
-    console.log('🐛 NOT STRING', { content });
+    content = formatThreadMessage(JSON.parse(content));
   }
 
   await openai.beta.threads.messages.create(threadId, {
