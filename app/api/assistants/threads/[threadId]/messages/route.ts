@@ -30,6 +30,7 @@ export async function POST(
   });
 
   console.log('🐛 Filtered content:', content);
+  console.log('🐛 ASSISTANT IDS', assistantIds.dm);
 
   await openai.beta.threads.messages.create(threadId, {
     role: 'user',
