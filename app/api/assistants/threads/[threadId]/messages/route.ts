@@ -3,6 +3,7 @@ import { assistantIds } from '@viserya/config/assistants';
 import { openai } from '@viserya/config/openai';
 import { MessagesRecord } from '@viserya/types';
 import { AssistantMessageParams } from '@viserya/types/openai';
+import { isJsonString } from '@viserya/utils/isJsonString';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -15,19 +16,17 @@ export async function POST(
   let { content } = requestJson;
 
   if (typeof content === 'string') {
-    try {
+    if (isJsonString(content)) {
       content = JSON.parse(content);
-    } catch (error) {
-      return new Response(JSON.stringify({ error: 'Invalid JSON content' }), {
-        status: 400,
-      });
+    } else {
+      content = content;
     }
+  } else {
+    content = content.map((message: MessagesRecord) => {
+      const { text } = message;
+      return { text, type: 'text' };
+    });
   }
-
-  content = content.map((message: MessagesRecord) => {
-    const { text } = message;
-    return { text, type: 'text' };
-  });
 
   await openai.beta.threads.messages.create(threadId, {
     role: 'user',
