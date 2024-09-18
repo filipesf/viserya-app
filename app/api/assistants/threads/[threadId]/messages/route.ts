@@ -32,6 +32,8 @@ export async function POST(
     return message;
   });
 
+  console.log('🪲', content);
+
   await openai.beta.threads.messages.create(threadId, {
     role: 'user',
     content: content,
