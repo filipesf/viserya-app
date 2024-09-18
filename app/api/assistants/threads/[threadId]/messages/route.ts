@@ -26,7 +26,7 @@ export async function POST(
 
   content = content.map((message: MessagesRecord) => {
     const { text: content, role } = message;
-    return { content, role };
+    return { content, role, type: 'text' };
   });
 
   console.log('🪲 Filtered content:', content);
