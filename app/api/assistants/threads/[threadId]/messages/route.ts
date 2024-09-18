@@ -15,17 +15,23 @@ export async function POST(
   const requestJson = await request.json();
   let { content } = requestJson;
 
+  console.log('🪲 REQUEST JSON', { content });
+
   if (typeof content === 'string') {
     if (isJsonString(content)) {
       content = JSON.parse(content);
+      console.log('🐛 JSON STRING', { content });
     } else {
       content = content;
+      console.log('🐛 NOT JSON STRING', { content });
     }
   } else {
     content = content.map((message: MessagesRecord) => {
       const { text } = message;
       return { text, type: 'text' };
     });
+
+    console.log('🐛 NOT STRING', { content });
   }
 
   await openai.beta.threads.messages.create(threadId, {
