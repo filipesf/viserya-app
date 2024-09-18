@@ -31,9 +31,15 @@ export async function POST(
 
   console.log('🪲 Filtered content:', content);
 
+  const concatenatedContent = content
+    .map((message: MessagesRecord) => message.text)
+    .join('\n\n');
+
+  console.log('🐛 Concatenated content:', concatenatedContent);
+
   await openai.beta.threads.messages.create(threadId, {
     role: 'user',
-    content: content,
+    content: [{ text: concatenatedContent, type: 'text' }],
   });
 
   const stream = openai.beta.threads.runs.stream(threadId, {
