@@ -11,7 +11,10 @@ export async function POST(
   request: NextRequest,
   { params: { threadId } }: AssistantMessageParams,
 ) {
-  const { content } = await request.json();
+  const requestJson = await request.json();
+  const { content } = requestJson;
+
+  console.log('🐞 REQUEST JSON:', requestJson);
 
   await openai.beta.threads.messages.create(threadId, {
     role: 'user',
