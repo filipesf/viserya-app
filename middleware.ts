@@ -2,13 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { AUTHORIZATION_KEY } from '@viserya/config/constants';
 
 export default async function middleware(request: NextRequest) {
-  console.log('🐞', request);
-  console.log('--------------------------------');
-  console.log(`🐞 Request method: ${request.method}`);
-  console.log('--------------------------------');
-  console.log(`🐞 Request path: ${request.nextUrl.pathname}`);
-  console.log('--------------------------------');
-
   if (request.method === 'OPTIONS') {
     return new NextResponse(null, {
       status: 204,
@@ -32,7 +25,10 @@ export default async function middleware(request: NextRequest) {
   const authKey = request.headers.get('AUTHORIZATION_KEY');
 
   console.log(`🐞 Auth key: ${authKey}`);
-  console.log('--------------------------------');
+
+  console.log('🐞 AUTHORIZATION_KEY:', request.headers.get('AUTHORIZATION_KEY'));
+  console.log('🐞 authorization_key:', request.headers.get('authorization_key'));
+  console.log('🐞 Authorization-Key:', request.headers.get('Authorization-Key'));
 
   if (!authKey || authKey !== AUTHORIZATION_KEY) {
     return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
