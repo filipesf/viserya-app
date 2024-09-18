@@ -1,12 +1,12 @@
 import { NextRequest } from 'next/server';
 import { assistantIds } from '@viserya/config/assistants';
 import { openai } from '@viserya/config/openai';
+import { MessagesRecord } from '@viserya/types';
 import { AssistantMessageParams } from '@viserya/types/openai';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
 
-// Send a new message to a thread
 export async function POST(
   request: NextRequest,
   { params: { threadId } }: AssistantMessageParams,
@@ -18,21 +18,18 @@ export async function POST(
     try {
       content = JSON.parse(content);
     } catch (error) {
-      console.error('Error parsing content:', error);
       return new Response(JSON.stringify({ error: 'Invalid JSON content' }), {
         status: 400,
       });
     }
   }
 
-  content = content.map((message: any) => {
-    if (message.type === 'history' || message.type === 'decision') {
-      message.type = 'text';
-    }
-    return message;
+  content = content.map((message: MessagesRecord) => {
+    const { text: content, role } = message;
+    return { content, role };
   });
 
-  console.log('🪲', content);
+  console.log('🪲 Filtered content:', content);
 
   await openai.beta.threads.messages.create(threadId, {
     role: 'user',
