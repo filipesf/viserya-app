@@ -3,6 +3,7 @@ import { assistantIds } from '@viserya/config/assistants';
 import { openai } from '@viserya/config/openai';
 import { MessagesRecord } from '@viserya/types';
 import { AssistantMessageParams } from '@viserya/types/openai';
+import { ASSISTANT_ID } from '@viserya/config/constants';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -30,7 +31,8 @@ export async function POST(
   });
 
   console.log('🐛 Filtered content:', content);
-  console.log('🐛 ASSISTANT IDS', assistantIds.dm);
+  console.log('🐛 assistantIds', assistantIds);
+  console.log('🐛 ASSISTANT_ID', ASSISTANT_ID);
 
   await openai.beta.threads.messages.create(threadId, {
     role: 'user',
