@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { assistantIds } from '@viserya/config/assistants';
+import { ASSISTANT_ID } from '@viserya/config/constants';
 import { openai } from '@viserya/config/openai';
 
 // upload file to assistant's vector store
@@ -57,7 +57,7 @@ export async function DELETE(request: NextRequest) {
 /* Helper functions */
 
 const getOrCreateVectorStore = async () => {
-  const assistant = await openai.beta.assistants.retrieve(assistantIds.dm);
+  const assistant = await openai.beta.assistants.retrieve(ASSISTANT_ID);
 
   // if the assistant already has a vector store, return it
   if (
@@ -70,7 +70,7 @@ const getOrCreateVectorStore = async () => {
   const vectorStore = await openai.beta.vectorStores.create({
     name: 'sample-assistant-vector-store',
   });
-  await openai.beta.assistants.update(assistantIds.dm, {
+  await openai.beta.assistants.update(ASSISTANT_ID, {
     tool_resources: {
       file_search: {
         vector_store_ids: [vectorStore.id],

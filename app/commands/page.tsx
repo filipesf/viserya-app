@@ -3,15 +3,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { mithrazgar, voryn } from '@viserya/config/assistants';
 import { NEXT_PUBLIC_DISCORD_APP_ID } from '@viserya/config/constants';
 import { viseryaApi } from '@viserya/services/viseryaApi';
 import { CharacterProfile } from '@viserya/types/sheet';
-import { ButtonIcon } from '@viserya/ui/Button';
-import { Card, CardHeader, CardsContainer, CardTitle } from '@viserya/ui/Card';
+import { Button, SectionContainer } from '@viserya/ui';
+import { Card, CardTitle } from '@viserya/ui/Card';
 import { Notify } from '@viserya/ui/Notify';
-
-const MOCK_CHANNEL_ID = '0000000000000000000';
-const MOCK_USE_ID = '000000000000000000';
 
 const CHARACTER_SHEET_ID = '127555805'; // Kragmir
 // const CHARACTER_SHEET_ID = '131689409'; // Drakonis
@@ -26,6 +24,7 @@ export default function Page() {
       setIsLoading(true);
 
       await viseryaApi.post('/bot/commands/register');
+      // await viseryaApi.post('/assistants', mithrazgar);
 
       setStatus('Commands registered!');
       setIsLoading(false);
@@ -40,71 +39,18 @@ export default function Page() {
     try {
       setIsLoading(true);
 
-      await viseryaApi.get('/db/create');
+      // await Promise.all([
+      //   viseryaApi.get('/db/create'),
+      //   viseryaApi.delete('/sessions'),
+      //   viseryaApi.delete('/sessions/messages'),
+      //   viseryaApi.delete('/sessions/messages/1286412614020370484'),
+      //   viseryaApi.delete('/sessions/messages/1286432911666446552'),
+      //   viseryaApi.delete('/sessions/messages/1286579465207414816'),
+      //   viseryaApi.delete('/sessions/messages/1285978202485030953'),
+      //   viseryaApi.delete('/sessions/messages/1286005104771596409'),
+      // ]);
 
-      setStatus('Databases created successfully');
-      setIsLoading(false);
-    } catch (error: any) {
-      console.log(error);
-      setStatus(error.message);
-      setIsLoading(false);
-    }
-  };
-
-  const handleStartSession = async () => {
-    try {
-      setIsLoading(true);
-
-      const response = await viseryaApi.post(
-        `/sessions/${MOCK_CHANNEL_ID}/start`,
-        {
-          userId: MOCK_USE_ID,
-        },
-      );
-
-      console.log('🟢', response);
-
-      setStatus('Session started successfully');
-      setIsLoading(false);
-    } catch (error: any) {
-      console.log(error);
-      setStatus(error.message);
-      setIsLoading(false);
-    }
-  };
-
-  const checkSessions = async () => {
-    try {
-      setIsLoading(true);
-
-      const responseAll = await viseryaApi.get(`/sessions`);
-      const responseChannel = await viseryaApi.get(
-        `/sessions/${MOCK_CHANNEL_ID}`,
-      );
-
-      console.log('🔵', responseAll);
-      console.log('🔵', responseChannel);
-
-      setStatus('Session checked!');
-      setIsLoading(false);
-    } catch (error: any) {
-      console.log(error);
-      setStatus(error.message);
-      setIsLoading(false);
-    }
-  };
-
-  const handleEndSession = async () => {
-    try {
-      setIsLoading(true);
-
-      const response = await viseryaApi.post(
-        `/sessions/${MOCK_CHANNEL_ID}/end`,
-      );
-
-      console.log('🔴', response);
-
-      setStatus('Session ended successfully');
+      setStatus('Databases cleared successfully');
       setIsLoading(false);
     } catch (error: any) {
       console.log(error);
@@ -124,41 +70,6 @@ export default function Page() {
       setCharProfile(response.data as CharacterProfile);
 
       setStatus('Character data retrieved!');
-      setIsLoading(false);
-    } catch (error: any) {
-      console.log(error);
-      setStatus(error.message);
-      setIsLoading(false);
-    }
-  };
-
-  const handleClearDB = async () => {
-    try {
-      setIsLoading(true);
-
-      await viseryaApi.delete('/sessions');
-      await viseryaApi.delete('/sessions/messages');
-
-      setStatus('Databases cleared successfully');
-      setIsLoading(false);
-    } catch (error: any) {
-      console.log(error);
-      setStatus(error.message);
-      setIsLoading(false);
-    }
-  };
-
-  const handleTextToSpeech = async () => {
-    try {
-      setIsLoading(true);
-
-      const response = await viseryaApi.post('assistants/tts', {
-        text: 'Greetings, brave adventurers! I am Voryn, the Guardian of the Deep, guiding you through the enchanting mysteries of the Realm of Viserya. Together, we shall weave tales of wonder and heroism!',
-      });
-
-      console.log('🟢', response.data);
-
-      setStatus('Text-to-speech created successfully');
       setIsLoading(false);
     } catch (error: any) {
       console.log(error);
@@ -197,85 +108,57 @@ export default function Page() {
 
   return (
     <>
-      <CardsContainer>
+      <SectionContainer>
         {status && <Notify>{status}</Notify>}
 
-        <ButtonIcon
+        <Button
           $variant="secondary"
           $isLoading={isLoading}
           disabled={isLoading}
           onClick={handleRegisterCommand}
-          icon="Command"
-        />
+          $icon="Command"
+        >
+          Register Commands
+        </Button>
 
-        <ButtonIcon
+        <Button
           $variant="primary"
           $isLoading={isLoading}
           disabled={isLoading}
-          onClick={handleDatabase}
-          icon="Database"
-        />
-
-        <ButtonIcon
-          $variant="danger"
-          $isLoading={isLoading}
-          disabled={isLoading}
-          onClick={handleTextToSpeech}
-          icon="CassetteTape"
-        />
-
-        <ButtonIcon
-          $variant="info"
-          $isLoading={isLoading}
-          disabled={isLoading}
           onClick={handleCharacter}
-          icon="User"
-        />
+          $icon="User"
+        >
+          Get Character
+        </Button>
 
-        <ButtonIcon
-          $variant="info"
+        <Button
+          $variant="secondary"
           $isLoading={isLoading}
           disabled={isLoading}
-          onClick={checkSessions}
-          icon="Check"
-        />
+          onClick={handleDatabase}
+          $icon="Database"
+        >
+          Handle Database
+        </Button>
+      </SectionContainer>
 
-        <ButtonIcon
-          $variant="success"
-          $isLoading={isLoading}
-          disabled={isLoading}
-          onClick={handleStartSession}
-          icon="Play"
-        />
-
-        <ButtonIcon
-          $variant="warning"
-          $isLoading={isLoading}
-          disabled={isLoading}
-          onClick={handleEndSession}
-          icon="Stop"
-        />
-
-        <ButtonIcon
-          $variant="danger"
-          $isLoading={isLoading}
-          disabled={isLoading}
-          onClick={handleClearDB}
-          icon="Trash"
-        />
-
-        <ButtonIcon
+      <SectionContainer>
+        <Button
           href={`https://discord.com/api/oauth2/authorize?client_id=${NEXT_PUBLIC_DISCORD_APP_ID}&permissions=1759218604441591&scope=bot`}
           rel="noreferrer noopener"
           target="_blank"
-          icon="SignIn"
+          $icon="SignIn"
           as={Link}
-        />
-      </CardsContainer>
+        >
+          Invite Bot
+        </Button>
+      </SectionContainer>
 
       {charProfile && (
-        <CardsContainer>
+        <SectionContainer>
           <Card>
+            <hr />
+
             {avatar && (
               <Image
                 src={avatar ?? ''}
@@ -286,11 +169,11 @@ export default function Page() {
               />
             )}
 
-            <CardHeader>
+            <div>
               <CardTitle>
                 {name}, {race}, {classes}
               </CardTitle>
-            </CardHeader>
+            </div>
 
             <div>
               <span>Age: {age} / </span>
@@ -302,17 +185,13 @@ export default function Page() {
               <span>Weight: {weight}lbs.</span>
             </div>
 
-            <>
-              <CardTitle>Backstory</CardTitle>
-              <p>{backstory}</p>
-            </>
+            <hr />
 
-            <>
-              <CardTitle>Appearance</CardTitle>
-              <p>{appearance}</p>
-            </>
+            <p>{appearance}</p>
+
+            <hr />
           </Card>
-        </CardsContainer>
+        </SectionContainer>
       )}
     </>
   );

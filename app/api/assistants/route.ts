@@ -1,16 +1,19 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { AssistantCreateParams } from 'openai/resources/beta/assistants';
 import { openai } from '@viserya/config/openai';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
 
-// Create a new assistant
-export async function POST() {
-  const assistant = await openai.beta.assistants.create({
-    name: 'Assistant Name',
-    model: 'gpt-4o',
-    instructions: `Assistant Instructions`,
-    tools: [],
-  });
+export async function POST(request: NextRequest) {
+  try {
+    const assistant = (await request.json()) as AssistantCreateParams;
 
-  return Response.json({ assistantId: assistant.id });
+    await openai.beta.assistants.create(assistant);
+
+    return NextResponse.json({ status: 200 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error });
+  }
 }

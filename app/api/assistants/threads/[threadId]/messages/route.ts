@@ -1,7 +1,6 @@
 import { NextRequest } from 'next/server';
-import { assistantIds } from '@viserya/config/assistants';
+import { ASSISTANT_ID } from '@viserya/config/constants';
 import { openai } from '@viserya/config/openai';
-import { MessagesRecord } from '@viserya/types';
 import { AssistantMessageParams } from '@viserya/types/openai';
 import { formatThreadMessage } from '@viserya/utils/formatThreadMessage';
 import { isJsonString } from '@viserya/utils/isJsonString';
@@ -48,7 +47,7 @@ export async function POST(
   // }
 
   const stream = openai.beta.threads.runs.stream(threadId, {
-    assistant_id: assistantIds.dm,
+    assistant_id: ASSISTANT_ID,
   });
 
   return new Response(stream.toReadableStream());

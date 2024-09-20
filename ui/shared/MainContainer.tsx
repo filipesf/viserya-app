@@ -6,7 +6,7 @@ export const MainContainer = styled.main`
   gap: var(--spacing-rg);
   padding: 0 var(--spacing-md) var(--spacing-xl) var(--spacing-md);
   margin: 0 auto;
-  max-width: 800px;
+  max-width: 960px;
   font-size: var(--font-size-md);
   line-height: 1.5;
   color: var(--text-color);
