@@ -157,6 +157,9 @@ export const GlobalStyles = createGlobalStyle`
   /* Card */
   --card-background-color: var(--secondary-background-color);
 
+  /* Main Container */
+  --main-container-width: 800px;
+
   @media screen and (max-width: 768px) {
     /* Spacing */
     --spacing-rg: var(--spacing-3);
