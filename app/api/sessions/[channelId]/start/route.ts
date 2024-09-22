@@ -108,9 +108,11 @@ export async function POST(
       };
 
       if (sessionChannels[channelId as string]) {
-        channelThreadName = await createRandomSessionName(
-          sessionChannels[channelId as string] as SessionType,
-        );
+        channelThreadName = (
+          await createRandomSessionName(
+            sessionChannels[channelId as string] as SessionType,
+          )
+        ).name;
       } else {
         channelThreadName = getRandomTavernName();
       }
