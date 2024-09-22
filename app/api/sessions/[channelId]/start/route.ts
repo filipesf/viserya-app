@@ -80,12 +80,8 @@ export async function POST(
       return NextResponse.json({ status: 200 });
     }
 
-    console.log('🐞🐞🐞🐞🐞');
-
     const channelResponse = await discordApi.get(`/channels/${channelId}`);
     const channel = channelResponse.data;
-
-    console.log('🐛🐛🐛🐛🐛');
 
     let channelThreadId;
     let channelThreadName;
@@ -101,8 +97,6 @@ export async function POST(
           locked: false,
         });
       }
-
-      console.log('🪲🪲🪲🪲🪲');
     } else {
       console.log(`📜 CREATING A NEW THREAD IN CHANNEL ${channelId}`);
 
@@ -119,10 +113,8 @@ export async function POST(
             sessionChannels[channelId as string] as SessionType,
           )
         ).name;
-        console.log('🪳🪳🪳🪳🪳');
       } else {
         channelThreadName = await getRandomTavernName();
-        console.log('🦟🦟🦟🦟🦟');
       }
 
       const newThreadResponse = await discordApi.post(
@@ -132,8 +124,6 @@ export async function POST(
           type: 11, // Public thread
         },
       );
-
-      console.log('🕷️🕷️🕷️🕷️🕷️');
 
       channelThreadId = newThreadResponse.data.id;
       channelThreadName = newThreadResponse.data.name;

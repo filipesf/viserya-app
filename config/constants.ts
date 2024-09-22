@@ -9,6 +9,10 @@ export const CHARSHEET_API = process.env.CHARSHEET_API || '';
 
 export const LOCAL_STORAGE_THEME = 'viserya-theme';
 
+export const ROLE_ID_ADVENTURER: string = '1285324503383019694';
+export const ROLE_ID_SPECTATOR: string = '1285324668965879839';
+export const ROLE_ID_BOTS: string = '1285899977763328000';
+
 export const CHANNEL_ID_ADVENTURES: string = '1268511570594631766';
 export const CHANNEL_ID_CHARACTERS: string = '1285356770583248907';
 export const CHANNEL_ID_DOWNTIME: string = '1285641292528746567';
