@@ -78,6 +78,54 @@ export default function Page() {
     }
   };
 
+  const handleSessionName = async () => {
+    try {
+      setIsLoading(true);
+
+      const { data: adventure } = await viseryaApi.post(
+        `/actions/random/session/name`,
+        {
+          type: 'adventure',
+        },
+      );
+
+      const { data: character } = await viseryaApi.post(
+        `/actions/random/session/name`,
+        {
+          type: 'character',
+        },
+      );
+
+      const { data: downtime } = await viseryaApi.post(
+        `/actions/random/session/name`,
+        {
+          type: 'downtime',
+        },
+      );
+
+      const { data: tavern } = await viseryaApi.post(
+        `/actions/random/session/name`,
+        {
+          type: 'tavern',
+        },
+      );
+
+      console.log('🛡️', {
+        adventure: `${adventure.name}`,
+        character: `${character.name}`,
+        downtime: `${downtime.name}`,
+        tavern: `${tavern.name}. ${tavern.description}`,
+      });
+
+      setStatus('Character data retrieved!');
+      setIsLoading(false);
+    } catch (error: any) {
+      console.log(error);
+      setStatus(error.message);
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (status) {
       const timer = setTimeout(() => {
@@ -129,6 +177,16 @@ export default function Page() {
           $icon="User"
         >
           Get Character
+        </Button>
+
+        <Button
+          $variant="primary"
+          $isLoading={isLoading}
+          disabled={isLoading}
+          onClick={handleSessionName}
+          $icon="Sword"
+        >
+          Get Session Name
         </Button>
 
         <Button

@@ -4,6 +4,7 @@ export * from './createItem';
 export * from './createLocation';
 export * from './createMonster';
 export * from './createOrganisation';
+export * from './createSessionName';
 export * from './createTavern';
 export * from './writeLore';
 export * from './writeStory';

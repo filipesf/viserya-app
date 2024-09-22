@@ -1,9 +1,16 @@
 import { APIInteraction } from 'discord.js';
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
+import {
+  CHANNEL_ID_ADVENTURES,
+  CHANNEL_ID_CHARACTERS,
+  CHANNEL_ID_DOWNTIME,
+  CHANNEL_ID_TAVERN,
+} from '@viserya/config/constants';
 import { discordApi } from '@viserya/services/bot/discordApi';
+import { createRandomSessionName } from '@viserya/services/gpt/actions';
 import { viseryaApi } from '@viserya/services/viseryaApi';
-import { SessionRecordParams } from '@viserya/types';
+import { SessionRecordParams, SessionType } from '@viserya/types';
 import { getRandomTavernName } from '@viserya/utils/getRandomElement';
 
 type Option = {
@@ -93,7 +100,20 @@ export async function POST(
     } else {
       console.log(`📜 CREATING A NEW THREAD IN CHANNEL ${channelId}`);
 
-      channelThreadName = await getRandomTavernName();
+      const sessionChannels: Record<string, SessionType> = {
+        [CHANNEL_ID_ADVENTURES]: 'adventure',
+        [CHANNEL_ID_CHARACTERS]: 'character',
+        [CHANNEL_ID_DOWNTIME]: 'downtime',
+        [CHANNEL_ID_TAVERN]: 'tavern',
+      };
+
+      if (sessionChannels[channelId as string]) {
+        channelThreadName = await createRandomSessionName(
+          sessionChannels[channelId as string] as SessionType,
+        );
+      } else {
+        channelThreadName = getRandomTavernName();
+      }
 
       const newThreadResponse = await discordApi.post(
         `/channels/${channelId}/threads`,

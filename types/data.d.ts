@@ -52,3 +52,21 @@ export interface TavernData {
   location: string[];
   rumor: string[];
 }
+
+export interface AdventureSessionData {
+  theme: string[];
+  symbol: string[];
+  myth: string[];
+}
+
+export interface CharacterSessionData {
+  discovery: string[];
+  theme: string[];
+  element: string[];
+}
+
+export interface DowntimeSessionData {
+  activity: string[];
+  place: string[];
+  theme: string[];
+}

@@ -1,5 +1,8 @@
 import {
+  AdventureSessionData,
   CharacterData,
+  CharacterSessionData,
+  DowntimeSessionData,
   ItemData,
   LocationData,
   MonsterData,
@@ -16,6 +19,9 @@ type CombinedData = {
   monster: MonsterData;
   organisation: OrganisationData;
   tavern: TavernData;
+  adventureSession: AdventureSessionData;
+  characterSession: CharacterSessionData;
+  downtimeSession: DowntimeSessionData;
 };
 
 const loadData = async (): Promise<CombinedData> => {
@@ -27,6 +33,9 @@ const loadData = async (): Promise<CombinedData> => {
       'monsters',
       'organisations',
       'taverns',
+      'adventureSession',
+      'characterSession',
+      'downtimeSession',
     ];
 
     const dataArray = await Promise.all(
@@ -40,6 +49,9 @@ const loadData = async (): Promise<CombinedData> => {
       monster: dataArray[3],
       organisation: dataArray[4],
       tavern: dataArray[5],
+      adventureSession: dataArray[6],
+      characterSession: dataArray[7],
+      downtimeSession: dataArray[8],
     };
 
     return combinedData;
@@ -220,4 +232,64 @@ export const getRandomTavern = async (): Promise<string> => {
   const locationReference = getRandomElement(LOCATION_DATA.reference);
 
   return `${tavernAbout} ${tavernLocation} Located near ${locationReference}. ${tavernRumor}`;
+};
+
+/**
+ * Generates a random adventure session name using predefined data sets.
+ *
+ * @returns {string} - A randomly generated adventure session name.
+ * @throws {Error} - Throws an error if adventureSession data is not loaded.
+ */
+export const getAdventureSessionName = async (): Promise<string> => {
+  const data = await loadData();
+
+  const ADV_SESSION_DATA = data.adventureSession;
+
+  if (!ADV_SESSION_DATA) throw new Error('Adventure Session data not loaded.');
+
+  const theme = getRandomElement(ADV_SESSION_DATA.theme);
+  const symbol = getRandomElement(ADV_SESSION_DATA.symbol);
+  const myth = getRandomElement(ADV_SESSION_DATA.myth);
+
+  return `${theme} ${symbol} ${myth}`;
+};
+
+/**
+ * Generates a random character session name using predefined data sets.
+ *
+ * @returns {string} - A randomly generated character session name.
+ * @throws {Error} - Throws an error if characterSession data is not loaded.
+ */
+export const getCharacterSessionName = async (): Promise<string> => {
+  const data = await loadData();
+
+  const CHAR_SESSION_DATA = data.characterSession;
+
+  if (!CHAR_SESSION_DATA) throw new Error('Character Session data not loaded.');
+
+  const discovery = getRandomElement(CHAR_SESSION_DATA.discovery);
+  const theme = getRandomElement(CHAR_SESSION_DATA.theme);
+  const element = getRandomElement(CHAR_SESSION_DATA.element);
+
+  return `${discovery} ${theme} ${element}`;
+};
+
+/**
+ * Generates a random downtime session name using predefined data sets.
+ *
+ * @returns {string} - A randomly generated downtime session name.
+ * @throws {Error} - Throws an error if downtimeSession data is not loaded.
+ */
+export const getDowntimeSessionName = async (): Promise<string> => {
+  const data = await loadData();
+
+  const DTIME_SESSION_DATA = data.downtimeSession;
+
+  if (!DTIME_SESSION_DATA) throw new Error('Downtime Session data not loaded.');
+
+  const activity = getRandomElement(DTIME_SESSION_DATA.activity);
+  const place = getRandomElement(DTIME_SESSION_DATA.place);
+  const theme = getRandomElement(DTIME_SESSION_DATA.theme);
+
+  return `${activity} ${place} ${theme}`;
 };

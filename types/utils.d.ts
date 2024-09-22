@@ -32,3 +32,10 @@ export type ContentSelectorButtons = {
 export type CharacterAttributes = {
   [key: string]: any;
 };
+
+export type SessionNameResponse = {
+  name: string;
+  description?: string;
+};
+
+export type SessionType = 'adventure' | 'character' | 'downtime' | 'tavern';
