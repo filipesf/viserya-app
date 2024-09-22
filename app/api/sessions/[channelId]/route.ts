@@ -89,8 +89,8 @@ export async function DELETE(
   request: NextRequest,
   { params: { channelId } }: SessionRecordParams,
 ) {
-  const requestJson = (await request.json()) as Partial<SessionsRecord>;
-  const { id } = requestJson;
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
 
   if (!id || typeof id !== 'string') {
     return NextResponse.json(

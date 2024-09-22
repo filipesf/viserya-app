@@ -44,7 +44,9 @@ export default function Page() {
         // viseryaApi.delete('/sessions'),
         // viseryaApi.delete('/sessions/messages'),
         // viseryaApi.delete('/sessions/messages/1286816543216500768'),
-        // viseryaApi.delete('/sessions/1287383205586014219'),
+        // viseryaApi.delete('/sessions/1287391368959758438', {
+        //   params: { id: '677e8615-4e41-41cc-b522-4b1cd0c3053a' },
+        // }),
       ]);
 
       console.log(response);
