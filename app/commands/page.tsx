@@ -39,16 +39,15 @@ export default function Page() {
     try {
       setIsLoading(true);
 
-      // await Promise.all([
-      //   viseryaApi.get('/db/create'),
-      //   viseryaApi.delete('/sessions'),
-      //   viseryaApi.delete('/sessions/messages'),
-      //   viseryaApi.delete('/sessions/messages/1286412614020370484'),
-      //   viseryaApi.delete('/sessions/messages/1286432911666446552'),
-      //   viseryaApi.delete('/sessions/messages/1286579465207414816'),
-      //   viseryaApi.delete('/sessions/messages/1285978202485030953'),
-      //   viseryaApi.delete('/sessions/messages/1286005104771596409'),
-      // ]);
+      const response = await Promise.all([
+        // viseryaApi.get('/db/create'),
+        // viseryaApi.delete('/sessions'),
+        // viseryaApi.delete('/sessions/messages'),
+        // viseryaApi.delete('/sessions/messages/1286816543216500768'),
+        // viseryaApi.delete('/sessions/1287383205586014219'),
+      ]);
+
+      console.log(response);
 
       setStatus('Databases cleared successfully');
       setIsLoading(false);

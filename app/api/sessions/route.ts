@@ -18,8 +18,7 @@ export async function GET(request: NextRequest) {
       await discordApi.post(`/interactions/${id}/${token}/callback`, {
         type: 5,
         data: {
-          content:
-            'Weaving the threads of your request...',
+          content: 'Weaving the threads of your request...',
           flags: 64,
         },
       });
@@ -84,20 +83,20 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function DELETE() {
-  try {
-    console.log('🤞 ATTEMPTING TO DELETE SESSIONS');
-
-    await sql`DELETE FROM sessions;`;
-
-    console.log('🗑️ SESSIONS CLEARED');
-
-    return NextResponse.json(null, { status: 200 });
-  } catch (error) {
-    console.error(
-      '💀 Error while trying to delete the sessions:',
-      NextResponse.json(error),
-    );
-    return NextResponse.error();
-  }
-}
+// export async function DELETE() {
+//   try {
+//     console.log('🤞 ATTEMPTING TO DELETE SESSIONS');
+//
+//     await sql`DELETE FROM sessions;`;
+//
+//     console.log('🗑️ SESSIONS CLEARED');
+//
+//     return NextResponse.json(null, { status: 200 });
+//   } catch (error) {
+//     console.error(
+//       '💀 Error while trying to delete the sessions:',
+//       NextResponse.json(error),
+//     );
+//     return NextResponse.error();
+//   }
+// }

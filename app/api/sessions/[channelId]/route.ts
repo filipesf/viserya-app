@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 import { discordApi } from '@viserya/services/bot/discordApi';
-import { SessionRecordParams } from '@viserya/types';
+import { SessionsRecord, SessionRecordParams } from '@viserya/types';
 import { convertKeys } from '@viserya/utils/convertKeys';
-import { plural } from '@viserya/utils/plural';
 
 export async function GET(
   request: NextRequest,
@@ -83,5 +82,60 @@ export async function GET(
     }
 
     return NextResponse.error();
+  }
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params: { channelId } }: SessionRecordParams,
+) {
+  const requestJson = (await request.json()) as Partial<SessionsRecord>;
+  const { id } = requestJson;
+
+  if (!id || typeof id !== 'string') {
+    return NextResponse.json(
+      { error: '💀 `id` parameter is required and must be a string.' },
+      { status: 400 },
+    );
+  }
+
+  if (!channelId || typeof channelId !== 'string') {
+    return NextResponse.json(
+      { error: '💀 `channelId` parameter is required and must be a string.' },
+      { status: 400 },
+    );
+  }
+
+  try {
+    console.log('🤞 ATTEMPTING TO DELETE SESSION:', channelId);
+
+    await sql`BEGIN`;
+
+    const result = await sql`
+      DELETE FROM sessions
+      WHERE id=${id} AND channel_id=${channelId};
+    `;
+
+    if (result.rowCount === 0) {
+      throw new Error('No session found to delete');
+    }
+
+    await sql`COMMIT`;
+    console.log('🗑️ SESSION DELETED');
+    return NextResponse.json({}, { status: 200 });
+  } catch (error: any) {
+    await sql`ROLLBACK`;
+    if (error.message === 'No session found to delete') {
+      return NextResponse.json(
+        { error: '💀 No session found to delete.' },
+        { status: 404 },
+      );
+    }
+
+    console.error('💀 Error while trying to delete the session:', error);
+    return NextResponse.json(
+      { error: '💀 Internal server error occurred.' },
+      { status: 500 },
+    );
   }
 }
