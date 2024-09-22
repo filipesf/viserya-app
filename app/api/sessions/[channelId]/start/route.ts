@@ -114,7 +114,7 @@ export async function POST(
           )
         ).name;
       } else {
-        channelThreadName = getRandomTavernName();
+        channelThreadName = await getRandomTavernName();
       }
 
       const newThreadResponse = await discordApi.post(
