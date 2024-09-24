@@ -1,16 +1,8 @@
-import fs from 'fs';
 import { NextRequest, NextResponse } from 'next/server';
-import path from 'path';
 import { openai } from '@viserya/config/openai';
-import { getUUID } from '@viserya/utils/getUUID';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
-
-const speechFile = path.resolve(
-  process.cwd(),
-  `public/speech/voryn_${getUUID()}.mp3`,
-);
 
 export async function POST(request: NextRequest) {
   const { text } = await request.json();
@@ -31,8 +23,6 @@ export async function POST(request: NextRequest) {
       voice: 'onyx',
       input: text,
     });
-
-    // console.log('💿 OPENAI API RETURNED:', mp3);
 
     if (mp3 === null || mp3 === undefined) {
       return NextResponse.json(

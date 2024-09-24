@@ -38,22 +38,36 @@ export type ImageAngle = {
 };
 
 export async function POST(request: NextRequest) {
+  const { description, angle, size } = await request.json();
+  const { image } = (await readDataFile('prompts')) as Prompts;
+
+  const aspectRatios: ImageSize = {
+    square: '1024x1024',
+    wide: '1792x1024',
+  };
+
+  if (description === null || description === undefined) {
+    return NextResponse.json(
+      { error: '💀 Description is null or undefined.' },
+      { status: 400 },
+    );
+  }
+
+  const prompt = `${image.style}\n\n${description}\n\n${image.angle[angle as keyof ImageAngle]}`.trim();
+
+  console.log('📑 IMAGE PROMPT:', prompt);
+  console.log('👨‍🎨 PAINTING THE REQUESTED IMAGE');
+
   try {
-    const { description, angle, size } = await request.json();
-    const { image } = (await readDataFile('prompts')) as Prompts;
-
-    const aspectRatios: ImageSize = {
-      square: '1024x1024',
-      wide: '1792x1024',
-    };
-
     const response = await openai.images.generate({
-      prompt: `${image.style} ${description} ${image.angle[angle as keyof ImageAngle]}`,
       size: aspectRatios[size as keyof ImageSize],
       model: 'dall-e-3',
       style: 'vivid',
+      prompt,
       n: 1,
     });
+
+    console.log('🖼️ IMAGE GENERATED');
 
     return NextResponse.json(response.data[0]);
   } catch (error) {
