@@ -85,6 +85,42 @@ export async function GET(
   }
 }
 
+export async function PUT(
+  request: NextRequest,
+  { params: { channelId } }: SessionRecordParams,
+) {
+  const requestJson = await request.json();
+  const { id, status } = requestJson as SessionsRecord;
+
+  if (!status) {
+    return NextResponse.json(
+      { error: '💀 `status` parameter is required.' },
+      { status: 400 },
+    );
+  }
+
+  try {
+    await sql`BEGIN`;
+
+    const result = await sql`
+      UPDATE sessions
+      SET status=${status}, end_time=NOW()
+      WHERE id=${id} AND channel_id=${channelId};
+    `;
+
+    if (result.rowCount === 0) {
+      throw new Error('No session found to delete');
+    }
+
+    await sql`COMMIT`;
+
+    return NextResponse.json({}, { status: 200 });
+  } catch (error) {
+    console.error('💀 Error while trying to update the session:', error);
+    return NextResponse.json({ error });
+  }
+}
+
 export async function DELETE(
   request: NextRequest,
   { params: { channelId } }: SessionRecordParams,

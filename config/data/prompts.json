@@ -5,7 +5,7 @@
     "scene": "Provide a compelling and detailed description of this scene, ensuring to capture the essence of the location and atmosphere. Include details about the setting's physical layout (landscape, architecture, notable landmarks), the weather (temperature, sky conditions, any weather phenomena), lighting (time of day, sources of light), sounds (ambient noises, distant or close sounds), smells (distinct aromas, any noticeable scents), and textures (surfaces, materials). Incorporate any unique elements or features that make the scene memorable and distinctive. Additionally, consider the mood and emotional tone of the scene, reflecting how it might impact or be perceived by characters present."
   },
   "image": {
-    "style": "Create a dark fantasy comic book-style illustration. Use a rich yet subdued palette with soft lighting, employing gentle highlights and shadows for depth. Blur the background slightly to maintain focus on the subject while preserving the environmental context. Do not include frames, panels, or comic book-style text boxes in the illustration.",
+    "style": "Create a dark fantasy comic book-style illustration. Use a rich yet subdued palette with soft lighting, employing gentle highlights and shadows for depth. Blur the background slightly to maintain focus on the subject while preserving the environmental context.",
     "size": {
       "square": "1024x1024",
       "wide": "1792x1024"
