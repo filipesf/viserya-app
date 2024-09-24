@@ -28,34 +28,36 @@ export type ImageSize = {
 };
 
 export type ImageAngle = {
-  generalView: string;
-  battleEncounter: string;
-  characterPortrait: string;
-  monsterPortrait: string;
-  charactersAreIndoors: string;
-  cityOverview: string;
-  overviewFromWithinTheCity: string;
-  socialEncounter: string;
-  withMultipleCharacters: string;
+  battle: string;
+  character: string;
+  city: string;
+  general: string;
+  item: string;
+  monster: string;
+  social: string;
 };
 
 export async function POST(request: NextRequest) {
-  const { description, angle, size } = await request.json();
-  const { image } = (await readDataFile('prompts')) as Prompts;
+  try {
+    const { description, angle, size } = await request.json();
+    const { image } = (await readDataFile('prompts')) as Prompts;
 
-  const aspectRatios: ImageSize = {
-    square: '1024x1024',
-    wide: '1792x1024',
-  };
+    const aspectRatios: ImageSize = {
+      square: '1024x1024',
+      wide: '1792x1024',
+    };
 
-  const response = await openai.images.generate({
-    model: 'dall-e-3',
-    prompt: `${image.style} ${description} ${image.angle[angle as keyof ImageAngle]}`,
-    n: 1,
-    size: aspectRatios[size as keyof ImageSize],
-    style: 'vivid',
-    user: getUUID(),
-  });
+    const response = await openai.images.generate({
+      prompt: `${image.style} ${description} ${image.angle[angle as keyof ImageAngle]}`,
+      size: aspectRatios[size as keyof ImageSize],
+      model: 'dall-e-3',
+      style: 'vivid',
+      n: 1,
+    });
 
-  return NextResponse.json(response.data[0]);
+    return NextResponse.json(response.data[0]);
+  } catch (error) {
+    console.error('💀 Error while trying to generate image:', error);
+    return NextResponse.error();
+  }
 }
