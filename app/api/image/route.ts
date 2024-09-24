@@ -61,6 +61,7 @@ export async function POST(request: NextRequest) {
   try {
     const response = await openai.images.generate({
       size: aspectRatios[size as keyof ImageSize],
+      response_format: 'b64_json',
       model: 'dall-e-3',
       style: 'vivid',
       prompt,
@@ -69,7 +70,7 @@ export async function POST(request: NextRequest) {
 
     console.log('🖼️ IMAGE GENERATED');
 
-    return NextResponse.json(response.data[0]);
+    return NextResponse.json(response.data[0].b64_json);
   } catch (error) {
     console.error('💀 Error while trying to generate image:', error);
     return NextResponse.error();
