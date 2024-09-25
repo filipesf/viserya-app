@@ -41,12 +41,14 @@ export const createRandomSessionName = async (
 ): Promise<SessionNameResponse> => {
   switch (sessionType) {
     case 'adventure':
+    case 'training':
       return await createAdventureSessionName();
     case 'character':
       return await createCharacterSessionName();
     case 'downtime':
       return await createDowntimeSessionName();
     case 'tavern':
+    default:
       return await createTavernSessionName();
   }
 };

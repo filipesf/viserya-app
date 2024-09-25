@@ -38,4 +38,10 @@ export type SessionNameResponse = {
   description?: string;
 };
 
-export type SessionType = 'adventure' | 'character' | 'downtime' | 'tavern';
+export type SessionType =
+  | 'adventure'
+  | 'character'
+  | 'downtime'
+  | 'marketplace'
+  | 'tavern'
+  | 'training';

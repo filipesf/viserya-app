@@ -6,6 +6,7 @@ import {
   CHANNEL_ID_CHARACTERS,
   CHANNEL_ID_DOWNTIME,
   CHANNEL_ID_TAVERN,
+  CHANNEL_ID_TRAINING,
 } from '@viserya/config/constants';
 import { discordApi } from '@viserya/services/bot/discordApi';
 import { createRandomSessionName } from '@viserya/services/gpt/actions';
@@ -105,6 +106,7 @@ export async function POST(
         [CHANNEL_ID_CHARACTERS]: 'character',
         [CHANNEL_ID_DOWNTIME]: 'downtime',
         [CHANNEL_ID_TAVERN]: 'tavern',
+        [CHANNEL_ID_TRAINING]: 'training',
       };
 
       if (sessionChannels[channelId as string]) {
