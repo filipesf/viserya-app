@@ -41,9 +41,17 @@ export async function POST(
   const { id, application_id, token, userId, member, data } =
     requestJson as RequestJSON;
 
-  const lang =
+  let channelThreadId;
+  let sessionName;
+  let sessionType;
+
+  const sessionLanguage =
     data?.options?.find((option) => option?.name === 'language')?.value ??
     'pt-bt';
+
+  const previouslyId =
+    data?.options?.find((option) => option?.name === 'previousSession')
+      ?.value ?? null;
 
   const shouldCallDiscord = (id || application_id || userId || member) && token;
 
@@ -84,13 +92,9 @@ export async function POST(
     const channelResponse = await discordApi.get(`/channels/${channelId}`);
     const channel = channelResponse.data;
 
-    let channelThreadId;
-    let channelThreadName;
-    let channelThreadType;
-
     if ([10, 11, 12].includes(channel.type)) {
       channelThreadId = channel.id;
-      channelThreadName = channel.name;
+      sessionName = channel.name;
 
       const shouldReopenThread = channel.thread_metadata?.locked === true;
 
@@ -111,32 +115,30 @@ export async function POST(
       };
 
       if (sessionChannels[channelId as string]) {
-        channelThreadType = sessionChannels[channelId as string] as SessionType;
+        sessionType = sessionChannels[channelId as string] as SessionType;
 
-        channelThreadName = (
+        sessionName = (
           await createRandomSessionName(
             sessionChannels[channelId as string] as SessionType,
           )
         ).name;
       } else {
-        channelThreadType = 'tavern';
-        channelThreadName = await getRandomTavernName();
+        sessionType = 'tavern';
+        sessionName = await getRandomTavernName();
       }
 
       const newThreadResponse = await discordApi.post(
         `/channels/${channelId}/threads`,
         {
-          name: channelThreadName,
+          name: sessionName,
           type: 11, // Public thread
         },
       );
 
       channelThreadId = newThreadResponse.data.id;
-      channelThreadName = newThreadResponse.data.name;
+      sessionName = newThreadResponse.data.name;
 
-      console.log(
-        `📋 NEW THREAD CREATED: ${channelThreadName} (${channelThreadId})`,
-      );
+      console.log(`📋 NEW THREAD CREATED: ${sessionName} (${channelThreadId})`);
 
       await discordApi.put(
         `/channels/${channelThreadId}/thread-members/${userId}`,
@@ -151,14 +153,12 @@ export async function POST(
     console.log(`📋 NEW GPT THREAD CREATED FOR ${channelId} CHANNEL`);
 
     await sql`
-      INSERT INTO sessions (type, language, name, thread_id, channel_id, user_id)
-      VALUES (${channelThreadType}, ${lang}, ${channelThreadName},${assistantThreadId}, ${channelThreadId}, ${userId})
+      INSERT INTO sessions (type, language, name, thread_id, channel_id, user_id, previously_id)
+      VALUES (${sessionType}, ${sessionLanguage}, ${sessionName}, ${assistantThreadId}, ${channelThreadId}, ${userId}, ${previouslyId});
       RETURNING id;
     `;
 
-    console.log(
-      `🎉 SESSION STARTED SUCCESSFULLY IN THREAD: ${channelThreadName}`,
-    );
+    console.log(`🎉 SESSION STARTED SUCCESSFULLY IN THREAD: ${sessionName}`);
 
     if (shouldCallDiscord) {
       await discordApi.patch(

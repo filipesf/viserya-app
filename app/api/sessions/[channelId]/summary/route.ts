@@ -11,19 +11,7 @@ export async function PUT(
   { params: { channelId } }: SessionRecordParams,
 ) {
   const requestJson = await request.json();
-  const { threadId, status, summary } =
-    requestJson as TypeToCamelCase<SessionsRecord>;
-
-    console.log('🪲 SUMMARY REQUEST', requestJson)
-
-  // if (!status || !summary || !threadId) {
-  //   return NextResponse.json(
-  //     {
-  //       error: '💀 `status`, `summary` and `threadId` parameters are required.',
-  //     },
-  //     { status: 400 },
-  //   );
-  // }
+  const { threadId, summary } = requestJson as TypeToCamelCase<SessionsRecord>;
 
   try {
     await sql`BEGIN`;
