@@ -14,16 +14,16 @@ export async function PUT(
   const { threadId, status, summary } =
     requestJson as TypeToCamelCase<SessionsRecord>;
 
-    console.log('🪲 ENDSESSION REQUEST', requestJson)
+    console.log('🪲 SUMMARY REQUEST', requestJson)
 
-  if (!status || !summary || !threadId) {
-    return NextResponse.json(
-      {
-        error: '💀 `status`, `summary` and `threadId` parameters are required.',
-      },
-      { status: 400 },
-    );
-  }
+  // if (!status || !summary || !threadId) {
+  //   return NextResponse.json(
+  //     {
+  //       error: '💀 `status`, `summary` and `threadId` parameters are required.',
+  //     },
+  //     { status: 400 },
+  //   );
+  // }
 
   try {
     await sql`BEGIN`;
