@@ -6,19 +6,19 @@ import { ExecuteCommand } from '@viserya/types';
 export const register = new SlashCommandBuilder()
   .setName('startsession')
   .setDescription('Start a new session in this channel.')
-  // .addStringOption((option) =>
-  //   option
-  //     .setName('language')
-  //     .setDescription('In which language should the session be in. Default: Português')
-  //     .setRequired(false)
-  //     .addChoices(
-  //       { name: 'Português', value: 'pt-br' },
-  //       { name: 'English', value: 'en-gb' },
-  //     ),
-  // )
   .addStringOption((option) =>
     option
-      .setName('previousSession')
+      .setName('language')
+      .setDescription('In which language should the session be in. Default: Português')
+      .setRequired(false)
+      .addChoices(
+        { name: 'Português', value: 'pt-br' },
+        { name: 'English', value: 'en-gb' },
+      ),
+  )
+  .addStringOption((option) =>
+    option
+      .setName('previoussession')
       .setDescription('Select a previously ended session')
       .setRequired(false)
       .setAutocomplete(true),
