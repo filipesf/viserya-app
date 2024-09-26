@@ -14,6 +14,8 @@ export async function PUT(
   const { threadId, status, summary } =
     requestJson as TypeToCamelCase<SessionsRecord>;
 
+    console.log('🪲 ENDSESSION REQUEST', requestJson)
+
   if (!status || !summary || !threadId) {
     return NextResponse.json(
       {
