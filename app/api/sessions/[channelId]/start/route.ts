@@ -164,7 +164,7 @@ export async function POST(
 
     await sql`
       INSERT INTO sessions (type, language, name, thread_id, channel_id, user_id, previously_id)
-      VALUES (${sessionType}, ${sessionLanguage}, ${sessionName}, ${assistantThreadId}, ${channelThreadId}, ${userId}, ${previouslyId});
+      VALUES (${sessionType}, ${sessionLanguage}, ${sessionName}, ${assistantThreadId}, ${channelThreadId}, ${userId}, ${previouslyId})
       RETURNING id;
     `;
 
