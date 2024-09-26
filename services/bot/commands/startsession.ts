@@ -15,14 +15,14 @@ export const register = new SlashCommandBuilder()
         { name: 'Português', value: 'pt-br' },
         { name: 'English', value: 'en-gb' },
       ),
-  )
-  .addStringOption((option) =>
-    option
-      .setName('previousSession')
-      .setDescription('Select a previously ended session')
-      .setRequired(false)
-      .setAutocomplete(true),
   );
+  // .addStringOption((option) =>
+  //   option
+  //     .setName('previousSession')
+  //     .setDescription('Select a previously ended session')
+  //     .setRequired(false)
+  //     .setAutocomplete(true),
+  // );
 
 export const execute: ExecuteCommand = async (interaction: APIInteraction) => {
   const channelId = interaction.channel?.id;
