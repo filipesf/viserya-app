@@ -86,6 +86,7 @@ export async function POST(
 
     let channelThreadId;
     let channelThreadName;
+    let channelThreadType;
 
     if ([10, 11, 12].includes(channel.type)) {
       channelThreadId = channel.id;
@@ -110,12 +111,15 @@ export async function POST(
       };
 
       if (sessionChannels[channelId as string]) {
+        channelThreadType = sessionChannels[channelId as string] as SessionType;
+
         channelThreadName = (
           await createRandomSessionName(
             sessionChannels[channelId as string] as SessionType,
           )
         ).name;
       } else {
+        channelThreadType = 'tavern';
         channelThreadName = await getRandomTavernName();
       }
 
@@ -147,8 +151,8 @@ export async function POST(
     console.log(`📋 NEW GPT THREAD CREATED FOR ${channelId} CHANNEL`);
 
     await sql`
-      INSERT INTO sessions (thread_id, channel_id, user_id, language)
-      VALUES (${assistantThreadId}, ${channelThreadId}, ${userId}, ${lang})
+      INSERT INTO sessions (type, language, name, thread_id, channel_id, user_id)
+      VALUES (${channelThreadType}, ${lang}, ${channelThreadName},${assistantThreadId}, ${channelThreadId}, ${userId})
       RETURNING id;
     `;
 
