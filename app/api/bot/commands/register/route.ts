@@ -23,12 +23,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     console.log('🤞 TRYING TO REGISTER COMMANDS');
 
-    await discordApi.put(
+    const response = await discordApi.put(
       `/applications/${NEXT_PUBLIC_DISCORD_APP_ID!}/commands`,
       arrayOfSlashCommandsRegisterJSON,
     );
 
     console.log('🎉 COMMANDS REGISTERED', arrayOfSlashCommandsRegisterJSON);
+
+    console.log('🐛', response.data);
 
     return NextResponse.json({ error: null });
   } catch (error) {
