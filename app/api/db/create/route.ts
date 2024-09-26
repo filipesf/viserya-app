@@ -9,10 +9,14 @@ export async function GET() {
       CREATE TABLE IF NOT EXISTS sessions (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         status VARCHAR(50) NOT NULL DEFAULT 'active',
-        channel_id VARCHAR(255) NOT NULL,
-        thread_id VARCHAR(255) NOT NULL,
-        user_id VARCHAR(255) NOT NULL,
+        type VARCHAR(50),
         language VARCHAR(255) NOT NULL,
+        name VARCHAR(255),
+        summary TEXT,
+        thread_id VARCHAR(255) NOT NULL,
+        channel_id VARCHAR(255) NOT NULL,
+        user_id VARCHAR(255) NOT NULL,
+        previously_id UUID,
         start_time TIMESTAMP NOT NULL DEFAULT NOW(),
         end_time TIMESTAMP
       );
@@ -23,11 +27,10 @@ export async function GET() {
     await sql`
       CREATE TABLE IF NOT EXISTS messages (
         id VARCHAR(255) PRIMARY KEY,
-        channel_id VARCHAR(255) NOT NULL,
         thread_id VARCHAR(255) NOT NULL,
+        channel_id VARCHAR(255) NOT NULL,
         user_id VARCHAR(255) NOT NULL,
         type VARCHAR(50) NOT NULL DEFAULT 'decision',
-        role VARCHAR(50) NOT NULL,
         text TEXT NOT NULL,
         created_at TIMESTAMP NOT NULL DEFAULT NOW(),
         edited_at TIMESTAMP
