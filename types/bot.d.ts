@@ -22,15 +22,17 @@ export type BaseRecord = {
 };
 
 export type SessionsRecord = BaseRecord & {
+  status: string;
+  type: string;
+  language: string;
+  name: string;
+  summary: string;
   start_time: Date;
   end_time: Date | null;
-  status: string;
-  language: string;
 };
 
 export type MessagesRecord = BaseRecord & {
   type: ChatMessageType;
-  role: ChatMessageRole;
   text: string;
   created_at: Date;
   edited_at: Date | null;
