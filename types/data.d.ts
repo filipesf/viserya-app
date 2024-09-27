@@ -70,3 +70,9 @@ export interface DowntimeSessionData {
   place: string[];
   theme: string[];
 }
+
+export interface MarketplaceSession {
+  market: string[];
+  kingdom: string[];
+  goods: string[];
+}

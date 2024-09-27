@@ -5,6 +5,7 @@ import {
   getDowntimeSessionName,
   getRandomTavernName,
   getRandomTavern,
+  getMarketplaceSessionName,
 } from '@viserya/utils/getRandomElement';
 
 export const createAdventureSessionName =
@@ -36,6 +37,13 @@ export const createTavernSessionName =
     return { name: tavernName, description: tavernDescription };
   };
 
+export const createMarketplaceSessionName =
+  async (): Promise<SessionNameResponse> => {
+    const marketplaceSessionName = await getMarketplaceSessionName();
+    console.log(`Marketplace Session created: ${marketplaceSessionName}`);
+    return { name: marketplaceSessionName };
+  };
+
 export const createRandomSessionName = async (
   sessionType: SessionType,
 ): Promise<SessionNameResponse> => {
@@ -47,6 +55,8 @@ export const createRandomSessionName = async (
       return await createCharacterSessionName();
     case 'downtime':
       return await createDowntimeSessionName();
+    case 'marketplace':
+      return await createMarketplaceSessionName();
     case 'tavern':
     default:
       return await createTavernSessionName();

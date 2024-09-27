@@ -5,6 +5,7 @@ import {
   CHANNEL_ID_ADVENTURES,
   CHANNEL_ID_CHARACTERS,
   CHANNEL_ID_DOWNTIME,
+  CHANNEL_ID_MARKETPLACE,
   CHANNEL_ID_TAVERN,
   CHANNEL_ID_TRAINING,
 } from '@viserya/config/constants';
@@ -29,6 +30,7 @@ type Data = {
 
 type RequestJSON = APIInteraction &
   Partial<{
+    applicationId: string;
     userId: string;
     data: Data;
     language: 'en-gb' | 'pt-br';
@@ -40,14 +42,14 @@ export async function POST(
   { params: { channelId } }: SessionRecordParams,
 ) {
   const requestJson = (await request.json()) as RequestJSON;
-  const { id, application_id, token, userId, member, language, previouslyId } =
+  const { id, applicationId, token, userId, language, previouslyId } =
     requestJson as RequestJSON;
 
   let channelThreadId;
   let sessionName;
   let sessionType;
 
-  const shouldCallDiscord = (id || application_id || userId || member) && token;
+  const shouldCallDiscord = (id || applicationId || userId) && token;
 
   try {
     console.log('🤖 EXECUTING STARTSESSION COMMAND');
@@ -72,7 +74,7 @@ export async function POST(
     if (existingSession.rows.length > 0) {
       if (shouldCallDiscord) {
         await discordApi.patch(
-          `/webhooks/${application_id}/${token}/messages/@original`,
+          `/webhooks/${applicationId}/${token}/messages/@original`,
           {
             content:
               'A session currently breathes in this channel. Please conclude the ongoing tale before commencing a new one.',
@@ -104,6 +106,7 @@ export async function POST(
         [CHANNEL_ID_ADVENTURES]: 'adventure',
         [CHANNEL_ID_CHARACTERS]: 'character',
         [CHANNEL_ID_DOWNTIME]: 'downtime',
+        [CHANNEL_ID_MARKETPLACE]: 'marketplace',
         [CHANNEL_ID_TAVERN]: 'tavern',
         [CHANNEL_ID_TRAINING]: 'training',
       };
@@ -146,16 +149,6 @@ export async function POST(
 
     console.log(`📋 NEW GPT THREAD CREATED FOR ${channelId} CHANNEL`);
 
-    console.log({
-      sessionType,
-      language,
-      sessionName,
-      assistantThreadId,
-      channelThreadId,
-      userId,
-      previouslyId,
-    });
-
     await sql`
       INSERT INTO sessions (type, language, name, thread_id, channel_id, user_id, previously_id)
       VALUES (${sessionType}, ${language}, ${sessionName}, ${assistantThreadId}, ${channelThreadId}, ${userId}, ${previouslyId})
@@ -166,7 +159,7 @@ export async function POST(
 
     if (shouldCallDiscord) {
       await discordApi.patch(
-        `/webhooks/${application_id}/${token}/messages/@original`,
+        `/webhooks/${applicationId}/${token}/messages/@original`,
         {
           content: 'The session has been summoned successfully!',
         },
@@ -182,7 +175,7 @@ export async function POST(
 
     if (shouldCallDiscord) {
       await discordApi.patch(
-        `/webhooks/${application_id}/${token}/messages/@original`,
+        `/webhooks/${applicationId}/${token}/messages/@original`,
         {
           content:
             'A shadow has fallen; an error disrupts the initiation of the session. Ponder and try again later.',

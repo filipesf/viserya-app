@@ -5,6 +5,7 @@ import {
   DowntimeSessionData,
   ItemData,
   LocationData,
+  MarketplaceSession,
   MonsterData,
   OrganisationData,
   TavernData,
@@ -22,6 +23,7 @@ type CombinedData = {
   adventureSession: AdventureSessionData;
   characterSession: CharacterSessionData;
   downtimeSession: DowntimeSessionData;
+  marketplaceSession: MarketplaceSession;
 };
 
 const loadData = async (): Promise<CombinedData> => {
@@ -36,6 +38,7 @@ const loadData = async (): Promise<CombinedData> => {
       'adventureSession',
       'characterSession',
       'downtimeSession',
+      'marketplaceSession',
     ];
 
     const dataArray = await Promise.all(
@@ -52,6 +55,7 @@ const loadData = async (): Promise<CombinedData> => {
       adventureSession: dataArray[6],
       characterSession: dataArray[7],
       downtimeSession: dataArray[8],
+      marketplaceSession: dataArray[9],
     };
 
     return combinedData;
@@ -292,4 +296,25 @@ export const getDowntimeSessionName = async (): Promise<string> => {
   const theme = getRandomElement(DTIME_SESSION_DATA.theme);
 
   return `${activity} ${place} ${theme}`;
+};
+
+/**
+ * Generates a random marketplace session name using predefined data sets.
+ *
+ * @returns {string} - A randomly generated marketplace session name.
+ * @throws {Error} - Throws an error if marketplaceSession data is not loaded.
+ */
+export const getMarketplaceSessionName = async (): Promise<string> => {
+  const data = await loadData();
+
+  const MARKET_SESSION_DATA = data.marketplaceSession;
+
+  if (!MARKET_SESSION_DATA)
+    throw new Error('Marketplace Session data not loaded.');
+
+  const market = getRandomElement(MARKET_SESSION_DATA.market);
+  const kingdom = getRandomElement(MARKET_SESSION_DATA.kingdom);
+  const goods = getRandomElement(MARKET_SESSION_DATA.goods);
+
+  return `${market} ${kingdom} ${goods}`;
 };

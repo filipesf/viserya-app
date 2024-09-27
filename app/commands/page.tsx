@@ -22,10 +22,7 @@ export default function Page() {
   const handleRegisterCommand = async () => {
     try {
       setIsLoading(true);
-
-      await viseryaApi.post('/bot/commands/register');
       // await viseryaApi.post('/assistants', mithrazgar);
-
       setStatus('Commands registered!');
       setIsLoading(false);
     } catch (error: any) {
@@ -39,14 +36,23 @@ export default function Page() {
     try {
       setIsLoading(true);
 
+      // const deletions = [
+      //   {
+      //     id: '641f206e-40f7-4547-8d87-1c3d004fe77f',
+      //     channelId: '1289238599086379109',
+      //   },
+      // ];
+
       const response = await Promise.all([
         // viseryaApi.get('/db/create'),
         // viseryaApi.delete('/sessions'),
         // viseryaApi.delete('/sessions/messages'),
         // viseryaApi.delete('/sessions/messages/1286816543216500768'),
-        // viseryaApi.delete('/sessions/1287391368959758438', {
-        //   params: { id: '677e8615-4e41-41cc-b522-4b1cd0c3053a' },
-        // }),
+        // deletions.map((deletion) =>
+        //   viseryaApi.delete(`/sessions/${deletion.channelId}`, {
+        //     params: { id: deletion.id },
+        //   }),
+        // ),
       ]);
 
       console.log(response);
