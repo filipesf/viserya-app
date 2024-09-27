@@ -6,7 +6,7 @@ servers:
   - url: https://viserya.app
     description: Actions definition for creating adventures in Viserya
 paths:
-  /api/actions/create/adventure:
+  /api/generate/adventure:
     post:
       operationId: createAdventure
       tags:
@@ -47,7 +47,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/actions/random/adventure:
+  /api/generate/random/adventure:
     post:
       operationId: createRandomAdventure
       tags:

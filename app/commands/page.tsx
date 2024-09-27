@@ -84,28 +84,28 @@ export default function Page() {
       setIsLoading(true);
 
       const { data: adventure } = await viseryaApi.post(
-        `/actions/random/session/name`,
+        `/generate/random/session/name`,
         {
           type: 'adventure',
         },
       );
 
       const { data: character } = await viseryaApi.post(
-        `/actions/random/session/name`,
+        `/generate/random/session/name`,
         {
           type: 'character',
         },
       );
 
       const { data: downtime } = await viseryaApi.post(
-        `/actions/random/session/name`,
+        `/generate/random/session/name`,
         {
           type: 'downtime',
         },
       );
 
       const { data: tavern } = await viseryaApi.post(
-        `/actions/random/session/name`,
+        `/generate/random/session/name`,
         {
           type: 'tavern',
         },

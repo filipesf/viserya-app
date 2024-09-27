@@ -6,7 +6,7 @@ servers:
   - url: https://viserya.app
     description: Actions definition for creating monsters in Viserya
 paths:
-  /api/actions/create/monster:
+  /api/generate/monster:
     post:
       operationId: createMonster
       tags:
@@ -47,7 +47,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/actions/random/monster:
+  /api/generate/random/monster:
     post:
       operationId: createRandomMonster
       tags:

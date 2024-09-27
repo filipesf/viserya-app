@@ -6,7 +6,7 @@ servers:
   - url: https://viserya.app
     description: Actions definition for writing stories in Viserya
 paths:
-  /api/actions/write/story:
+  /api/actions/generate/story:
     post:
       operationId: writeStory
       tags:

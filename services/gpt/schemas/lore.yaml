@@ -6,7 +6,7 @@ servers:
   - url: https://viserya.app
     description: Actions definition for documenting lore in Viserya
 paths:
-  /api/actions/write/lore:
+  /api/actions/generate/lore:
     post:
       operationId: writeLore
       tags:

@@ -6,7 +6,7 @@ servers:
   - url: https://viserya.app
     description: Actions definition for retrieving markdown templates
 paths:
-  /api/actions/template:
+  /api/templates:
     get:
       operationId: getTemplate
       description: This endpoint retrieves the specific markdown template.

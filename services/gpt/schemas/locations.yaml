@@ -6,7 +6,7 @@ servers:
   - url: https://viserya.app
     description: Actions definition for creating locations in Viserya
 paths:
-  /api/actions/create/location:
+  /api/generate/location:
     post:
       operationId: createLocation
       tags:
@@ -47,7 +47,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/actions/random/location:
+  /api/generate/random/location:
     post:
       operationId: createRandomLocation
       tags:

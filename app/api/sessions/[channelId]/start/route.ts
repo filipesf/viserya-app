@@ -31,6 +31,8 @@ type RequestJSON = APIInteraction &
   Partial<{
     userId: string;
     data: Data;
+    language: 'en-gb' | 'pt-br';
+    previouslyId: string;
   }>;
 
 export async function POST(
@@ -38,20 +40,12 @@ export async function POST(
   { params: { channelId } }: SessionRecordParams,
 ) {
   const requestJson = (await request.json()) as RequestJSON;
-  const { id, application_id, token, userId, member, data } =
+  const { id, application_id, token, userId, member, language, previouslyId } =
     requestJson as RequestJSON;
 
   let channelThreadId;
   let sessionName;
   let sessionType;
-
-  const sessionLanguage =
-    data?.options?.find((option) => option?.name === 'language')?.value ??
-    'pt-bt';
-
-  const previouslyId =
-    data?.options?.find((option) => option?.name === 'previousSession')
-      ?.value ?? null;
 
   const shouldCallDiscord = (id || application_id || userId || member) && token;
 
@@ -154,7 +148,7 @@ export async function POST(
 
     console.log({
       sessionType,
-      sessionLanguage,
+      language,
       sessionName,
       assistantThreadId,
       channelThreadId,
@@ -164,7 +158,7 @@ export async function POST(
 
     await sql`
       INSERT INTO sessions (type, language, name, thread_id, channel_id, user_id, previously_id)
-      VALUES (${sessionType}, ${sessionLanguage}, ${sessionName}, ${assistantThreadId}, ${channelThreadId}, ${userId}, ${previouslyId})
+      VALUES (${sessionType}, ${language}, ${sessionName}, ${assistantThreadId}, ${channelThreadId}, ${userId}, ${previouslyId})
       RETURNING id;
     `;
 

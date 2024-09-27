@@ -6,7 +6,7 @@ servers:
   - url: https://viserya.app
     description: Actions definition for creating items in Viserya
 paths:
-  /api/actions/create/item:
+  /api/generate/item:
     post:
       operationId: createItem
       tags:
@@ -46,7 +46,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/actions/random/item:
+  /api/generate/random/item:
     post:
       operationId: createRandomItem
       tags:

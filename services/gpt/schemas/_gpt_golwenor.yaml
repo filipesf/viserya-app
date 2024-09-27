@@ -6,7 +6,7 @@ servers:
   - url: https://viserya.app
     description: Actions definition for Golwenor, The Storyweaver
 paths:
-  /api/actions/create/adventure:
+  /api/generate/adventure:
     post:
       operationId: createAdventure
       tags:
@@ -49,7 +49,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/actions/create/character:
+  /api/generate/character:
     post:
       operationId: createCharacter
       tags:
@@ -92,7 +92,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/actions/random/adventure:
+  /api/generate/random/adventure:
     post:
       operationId: createRandomAdventure
       tags:
@@ -131,7 +131,7 @@ paths:
                   complete:
                     type: boolean
                     description: Indicates if the generation is complete.
-  /api/actions/random/character:
+  /api/generate/random/character:
     post:
       operationId: createRandomCharacter
       tags:
