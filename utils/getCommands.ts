@@ -25,6 +25,9 @@ const getCommands = async () => {
         '../services/bot/commands/' + file
       )) as CommandModule;
       if (fileContents) commands[file] = fileContents;
+      if (fileContents.autocomplete) {
+        commands[file].autocomplete = fileContents.autocomplete;
+      }
     } catch (error) {
       console.error('💀 Error loading command:', error);
       continue;

@@ -63,7 +63,7 @@ export const autocomplete: AutocompleteOption = async (interaction) => {
     interaction.commandName === 'startsession' &&
     interaction.options.getFocused(true).name === 'previoussession'
   ) {
-    console.log('🔍 FETCHING PREVIOUS SESSIONS');
+    console.log('🔍 FETCHING PREVIOUS SESSIONS', interaction.commandName);
 
     try {
       const {
@@ -79,10 +79,10 @@ export const autocomplete: AutocompleteOption = async (interaction) => {
           focused: true,
         }));
 
-      return await interaction.respond(choices.slice(0, 25));
+      await interaction.respond(choices.slice(0, 25));
     } catch (error) {
       console.error('💀 ERROR FETCHING PREVIOUS SESSIONS:', error);
-      return await interaction.respond([]);
+      await interaction.respond([]);
     }
   }
 };
