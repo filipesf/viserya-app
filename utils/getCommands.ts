@@ -1,11 +1,12 @@
 import { resolve } from 'path';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { ExecuteCommand } from '@viserya/types';
+import { AutocompleteOption, ExecuteCommand } from '@viserya/types';
 import getTsFiles from './getTsFiles';
 
 type CommandModule = {
   execute: ExecuteCommand;
   register: SlashCommandBuilder;
+  autocomplete?: AutocompleteOption;
 };
 
 let SeenCommands: {
