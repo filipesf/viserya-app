@@ -31,8 +31,10 @@ export const register = new SlashCommandBuilder()
   );
 
 export const execute: ExecuteCommand = async (interaction: APIInteraction) => {
-  const channelId = interaction.channel?.id;
-  const userId = interaction.member?.user.id;
+  const { id, channel, application_id, token, member, data } = interaction;
+
+  const channelId = channel?.id;
+  const userId = member?.user.id;
 
   console.log('🤖 EXECUTING STARTSESSION COMMAND');
 
@@ -40,8 +42,12 @@ export const execute: ExecuteCommand = async (interaction: APIInteraction) => {
     console.log('🔍 CHECKING FOR ACTIVE SESSION IN CHANNEL:', channelId);
 
     const response = await viseryaApi.post(`/sessions/${channelId}/start`, {
+      application_id,
+      data,
+      id,
+      member,
+      token,
       userId,
-      ...interaction,
     });
 
     return response.data;
@@ -67,8 +73,10 @@ export const autocomplete: AutocompleteOption = async (interaction) => {
       const choices: PreviousSessionOption[] = endedSessionsInChannels
         .filter((session: SessionsRecord) => session.name && session.id)
         .map((session: SessionsRecord) => ({
+          type: 3,
           name: session.name,
           value: session.id,
+          focused: true,
         }));
 
       return await interaction.respond(choices.slice(0, 25));

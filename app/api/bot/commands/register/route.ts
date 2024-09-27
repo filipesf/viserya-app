@@ -28,7 +28,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       arrayOfSlashCommandsRegisterJSON,
     );
 
-    console.log('🎉 COMMANDS REGISTERED', arrayOfSlashCommandsRegisterJSON);
+    console.log('🎉 COMMANDS REGISTERED');
+
+    arrayOfSlashCommandsRegisterJSON.map((c) => {
+      console.log('🪲', c.name);
+      c.options?.map((o) => {
+        console.log('👹', o);
+      });
+    });
 
     console.log('🐛', response.data);
 

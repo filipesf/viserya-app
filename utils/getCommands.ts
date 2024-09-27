@@ -26,6 +26,7 @@ const getCommands = async () => {
       )) as CommandModule;
       if (fileContents) commands[file] = fileContents;
     } catch (error) {
+      console.error('💀 Error loading command:', error);
       continue;
     }
   }
