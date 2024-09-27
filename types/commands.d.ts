@@ -13,4 +13,4 @@ export type ExecuteCommand = (
 
 export type AutocompleteOption = (
   interaction: AutocompleteInteraction,
-) => Promise<APIInteractionResponse>;
+) => Promise<APIInteractionResponse | void>;

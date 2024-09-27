@@ -71,12 +71,10 @@ export const autocomplete: AutocompleteOption = async (interaction) => {
           value: session.id,
         }));
 
-      // return await interaction.respond(choices.slice(0, 25));
-      return choices.slice(0, 25) as any;
+      return await interaction.respond(choices.slice(0, 25));
     } catch (error) {
       console.error('💀 ERROR FETCHING PREVIOUS SESSIONS:', error);
-      // return await interaction.respond([]);
-      return [];
+      return await interaction.respond([]);
     }
   }
 };
