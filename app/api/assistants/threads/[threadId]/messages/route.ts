@@ -18,6 +18,11 @@ export async function POST(
 
     console.log('🪲 REQUEST JSON', { content });
 
+    console.log(
+      '🦄 formatThreadMessage',
+      formatThreadMessage(JSON.parse(content)),
+    );
+
     if (typeof content === 'string') {
       if (isJsonString(content)) {
         content = formatThreadMessage(JSON.parse(content));
