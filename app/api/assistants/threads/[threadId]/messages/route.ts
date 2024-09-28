@@ -49,11 +49,11 @@ export async function POST(
       assistant_id: ASSISTANT_ID,
     });
 
-    return NextResponse.json(stream.toReadableStream());
+    return new Response(stream.toReadableStream());
   } catch (error: any) {
     console.error('💀 ERROR HANDLING MESSAGE:', error);
 
-    return NextResponse.json(
+    return new Response(
       JSON.stringify({
         error: 'An error occurred while processing your request.',
         details: error.message || 'Unknown error',
