@@ -7,7 +7,7 @@ export default async function middleware(request: NextRequest) {
       status: 204,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS',
         'Access-Control-Allow-Headers':
           'Content-Type, Authorization, AUTHORIZATION_KEY',
       },
@@ -33,7 +33,7 @@ export default async function middleware(request: NextRequest) {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS',
         'Access-Control-Allow-Headers':
           'Content-Type, Authorization, AUTHORIZATION_KEY',
       },
@@ -44,7 +44,7 @@ export default async function middleware(request: NextRequest) {
 
   // Adding CORS headers
   response.headers.set('Access-Control-Allow-Origin', '*');
-  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
   response.headers.set(
     'Access-Control-Allow-Headers',
     'Content-Type, Authorization, AUTHORIZATION_KEY',

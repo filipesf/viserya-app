@@ -83,6 +83,18 @@ export async function GET(request: NextRequest) {
   }
 }
 
+// export async function PUT(request: NextRequest) {
+//   try {
+//     return NextResponse.json({ status: 200 });
+//   } catch (error) {
+//     console.error(
+//       '💀 Error while trying to update the sessions:',
+//       NextResponse.json(error),
+//     );
+//     return NextResponse.error();
+//   }
+// }
+
 // export async function DELETE() {
 //   try {
 //     console.log('🤞 ATTEMPTING TO DELETE SESSIONS');
