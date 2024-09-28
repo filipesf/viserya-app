@@ -10,9 +10,9 @@ export async function GET(
 ) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get('id');
-  const application_id = searchParams.get('application_id');
+  const applicationId = searchParams.get('applicationId');
   const token = searchParams.get('token');
-  const shouldCallDiscord = (id || application_id) && token;
+  const shouldCallDiscord = (id || applicationId) && token;
 
   try {
     console.log(`🔎 CHECKING FOR EXISTING SESSIONS IN ${channelId} CHANNEL`);
@@ -49,7 +49,7 @@ export async function GET(
 
     if (shouldCallDiscord) {
       await discordApi.patch(
-        `/webhooks/${application_id}/${token}/messages/@original`,
+        `/webhooks/${applicationId}/${token}/messages/@original`,
         { content: messageContent },
       );
     }
@@ -73,7 +73,7 @@ export async function GET(
 
     if (shouldCallDiscord) {
       await discordApi.patch(
-        `/webhooks/${application_id}/${token}/messages/@original`,
+        `/webhooks/${applicationId}/${token}/messages/@original`,
         {
           content:
             'A misfortune has struck while fetching session details. Please try again later.',

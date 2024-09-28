@@ -1,4 +1,3 @@
-import { APIInteraction } from 'discord.js';
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 import { discordApi } from '@viserya/services/bot/discordApi';
@@ -9,8 +8,8 @@ export async function POST(
   { params: { channelId } }: SessionRecordParams,
 ) {
   const requestJson = await request.json();
-  const { id, application_id, token } = requestJson as APIInteraction;
-  const shouldCallDiscord = (id || application_id) && token;
+  const { id, applicationId, token } = requestJson;
+  const shouldCallDiscord = (id || applicationId) && token;
 
   try {
     console.log('🤖 EXECUTING ENDSESSION COMMAND');
@@ -33,7 +32,7 @@ export async function POST(
 
     if (shouldCallDiscord && existingSession.rows.length === 0) {
       await discordApi.patch(
-        `/webhooks/${application_id}/${token}/messages/@original`,
+        `/webhooks/${applicationId}/${token}/messages/@original`,
         {
           content: `No vibrant session exists within this channel's reach.`,
         },
@@ -54,7 +53,7 @@ export async function POST(
 
     if (shouldCallDiscord) {
       await discordApi.patch(
-        `/webhooks/${application_id}/${token}/messages/@original`,
+        `/webhooks/${applicationId}/${token}/messages/@original`,
         {
           content: 'The session has been laid to rest successfully!',
         },
@@ -74,7 +73,7 @@ export async function POST(
 
     if (shouldCallDiscord) {
       await discordApi.patch(
-        `/webhooks/${application_id}/${token}/messages/@original`,
+        `/webhooks/${applicationId}/${token}/messages/@original`,
         {
           content:
             'A misstep has occurred while attempting to seal the session. Please try again later.',
