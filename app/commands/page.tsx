@@ -19,19 +19,6 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [charProfile, setCharProfile] = useState<CharacterProfile | null>(null);
 
-  const handleRegisterCommand = async () => {
-    try {
-      setIsLoading(true);
-      // await viseryaApi.post('/assistants', mithrazgar);
-      setStatus('Commands registered!');
-      setIsLoading(false);
-    } catch (error: any) {
-      console.log(error);
-      setStatus(error.message);
-      setIsLoading(false);
-    }
-  };
-
   const handleDatabase = async () => {
     try {
       setIsLoading(true);
@@ -165,16 +152,6 @@ export default function Page() {
     <>
       <SectionContainer>
         {status && <Notify>{status}</Notify>}
-
-        <Button
-          $variant="secondary"
-          $isLoading={isLoading}
-          disabled={isLoading}
-          onClick={handleRegisterCommand}
-          $icon="Command"
-        >
-          Register Commands
-        </Button>
 
         <Button
           $variant="primary"
