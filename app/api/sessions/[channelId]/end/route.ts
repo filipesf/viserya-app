@@ -60,7 +60,6 @@ export async function POST(
       );
 
       await discordApi.patch(`/channels/${channelId}`, {
-        archived: true,
         locked: true,
       });
     }

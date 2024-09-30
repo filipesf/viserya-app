@@ -32,7 +32,6 @@ export async function GET() {
         server_id VARCHAR(255) NOT NULL,
         channel_id VARCHAR(255) NOT NULL,
         user_id VARCHAR(255) NOT NULL,
-        type VARCHAR(50) NOT NULL DEFAULT 'decision',
         text TEXT NOT NULL,
         created_at TIMESTAMP NOT NULL DEFAULT NOW(),
         edited_at TIMESTAMP

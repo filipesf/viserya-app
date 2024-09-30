@@ -10,8 +10,6 @@ export type MessageRecordParams = {
   };
 };
 
-export type ChatMessageType = 'decision' | 'history';
-
 export type ChatMessageRole = 'user' | 'assistant' | 'code';
 
 export type BaseRecord = {
@@ -32,7 +30,6 @@ export type SessionsRecord = BaseRecord & {
 };
 
 export type MessagesRecord = BaseRecord & {
-  type: ChatMessageType;
   text: string;
   created_at: Date;
   edited_at: Date | null;

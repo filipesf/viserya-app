@@ -33,18 +33,18 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const { id, channelId, threadId, userId, text, type, guildId } =
+  const { id, channelId, threadId, userId, text, guildId } =
     await request.json();
 
   try {
     console.log('📝 STORING MESSAGE');
 
     await sql`
-      INSERT INTO messages (id, server_id, channel_id, thread_id, user_id, text, type)
-      VALUES (${id}, ${guildId}, ${channelId}, ${threadId}, ${userId}, ${text}, ${type});
+      INSERT INTO messages (id, server_id, channel_id, user_id, thread_id, text)
+      VALUES (${id}, ${guildId}, ${channelId}, ${userId}, ${threadId}, ${text});
     `;
 
-    console.log('✅ MESSAGE STORED');
+    console.log('📨 MESSAGE STORED');
 
     return NextResponse.json({}, { status: 200 });
   } catch (error) {

@@ -33,6 +33,7 @@ type RequestJSON = APIInteraction &
     applicationId: string;
     userId: string;
     guildId: string;
+    name: string;
     data: Data;
     language: 'en-gb' | 'pt-br';
     previouslyId: string;
@@ -43,8 +44,16 @@ export async function POST(
   { params: { channelId } }: SessionRecordParams,
 ) {
   const requestJson = (await request.json()) as RequestJSON;
-  const { id, applicationId, token, userId, language, previouslyId, guildId } =
-    requestJson as RequestJSON;
+  const {
+    id,
+    applicationId,
+    token,
+    userId,
+    language,
+    name,
+    previouslyId,
+    guildId,
+  } = requestJson as RequestJSON;
 
   let channelThreadId;
   let sessionName;
@@ -91,7 +100,7 @@ export async function POST(
 
     if ([10, 11, 12].includes(channel.type)) {
       channelThreadId = channel.id;
-      sessionName = channel.name;
+      sessionName = name ?? channel.name;
 
       const shouldReopenThread = channel.thread_metadata?.locked === true;
 
@@ -115,14 +124,16 @@ export async function POST(
       if (sessionChannels[channelId as string]) {
         sessionType = sessionChannels[channelId as string] as SessionType;
 
-        sessionName = (
-          await createRandomSessionName(
-            sessionChannels[channelId as string] as SessionType,
-          )
-        ).name;
+        sessionName =
+          name ??
+          (
+            await createRandomSessionName(
+              sessionChannels[channelId as string] as SessionType,
+            )
+          ).name;
       } else {
         sessionType = 'tavern';
-        sessionName = await getRandomTavernName();
+        sessionName = name ?? (await getRandomTavernName());
       }
 
       const newThreadResponse = await discordApi.post(
@@ -151,8 +162,8 @@ export async function POST(
     console.log(`📋 NEW GPT THREAD CREATED FOR ${channelId} CHANNEL`);
 
     await sql`
-      INSERT INTO sessions (channel_id, language, name, previously_id, server_id, thread_id, type, user_id)
-      VALUES (${channelThreadId}, ${guildId}, ${language}, ${previouslyId}, ${sessionName}, ${assistantThreadId}, ${sessionType}, ${userId})
+      INSERT INTO sessions (server_id, channel_id, user_id, thread_id, previously_id, language, name, type)
+      VALUES (${guildId}, ${channelThreadId}, ${userId}, ${assistantThreadId}, ${previouslyId}, ${language}, ${sessionName}, ${sessionType})
       RETURNING id;
     `;
 
