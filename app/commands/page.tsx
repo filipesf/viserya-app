@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import React from 'react';
 import { mithrazgar, voryn } from '@viserya/config/assistants';
 import { NEXT_PUBLIC_DISCORD_APP_ID } from '@viserya/config/constants';
 import { viseryaApi } from '@viserya/services/viseryaApi';

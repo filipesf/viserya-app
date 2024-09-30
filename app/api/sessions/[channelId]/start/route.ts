@@ -151,8 +151,8 @@ export async function POST(
     console.log(`📋 NEW GPT THREAD CREATED FOR ${channelId} CHANNEL`);
 
     await sql`
-      INSERT INTO sessions (type, language, name, thread_id, channel_id, user_id, previously_id)
-      VALUES (${sessionType}, ${language}, ${sessionName}, ${assistantThreadId}, ${channelThreadId}, ${userId}, ${previouslyId})
+      INSERT INTO sessions (channel_id, language, name, previously_id, server_id, thread_id, type, user_id)
+      VALUES (${channelThreadId}, ${guildId}, ${language}, ${previouslyId}, ${sessionName}, ${assistantThreadId}, ${sessionType}, ${userId})
       RETURNING id;
     `;
 
