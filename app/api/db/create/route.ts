@@ -14,6 +14,7 @@ export async function GET() {
         name VARCHAR(255),
         summary TEXT,
         thread_id VARCHAR(255) NOT NULL,
+        server_id VARCHAR(255) NOT NULL,
         channel_id VARCHAR(255) NOT NULL,
         user_id VARCHAR(255) NOT NULL,
         previously_id UUID,
@@ -28,6 +29,7 @@ export async function GET() {
       CREATE TABLE IF NOT EXISTS messages (
         id VARCHAR(255) PRIMARY KEY,
         thread_id VARCHAR(255) NOT NULL,
+        server_id VARCHAR(255) NOT NULL,
         channel_id VARCHAR(255) NOT NULL,
         user_id VARCHAR(255) NOT NULL,
         type VARCHAR(50) NOT NULL DEFAULT 'decision',

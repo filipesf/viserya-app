@@ -32,6 +32,7 @@ type RequestJSON = APIInteraction &
   Partial<{
     applicationId: string;
     userId: string;
+    guildId: string;
     data: Data;
     language: 'en-gb' | 'pt-br';
     previouslyId: string;
@@ -42,7 +43,7 @@ export async function POST(
   { params: { channelId } }: SessionRecordParams,
 ) {
   const requestJson = (await request.json()) as RequestJSON;
-  const { id, applicationId, token, userId, language, previouslyId } =
+  const { id, applicationId, token, userId, language, previouslyId, guildId } =
     requestJson as RequestJSON;
 
   let channelThreadId;
