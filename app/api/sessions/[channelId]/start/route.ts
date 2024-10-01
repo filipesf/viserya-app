@@ -2,6 +2,7 @@ import { APIInteraction } from 'discord.js';
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 import {
+  AVRAE_USER_ID,
   CHANNEL_ID_ADVENTURES,
   CHANNEL_ID_CHARACTERS,
   CHANNEL_ID_DOWNTIME,
@@ -149,11 +150,12 @@ export async function POST(
 
       console.log(`📋 NEW THREAD CREATED: ${sessionName} (${channelThreadId})`);
 
-      await discordApi.put(
-        `/channels/${channelThreadId}/thread-members/${userId}`,
-      );
+      await Promise.all([
+        discordApi.put(`/channels/${channelThreadId}/thread-members/${userId}`),
+        discordApi.put(`/channels/${channelThreadId}/thread-members/${AVRAE_USER_ID}`),
+      ]);
 
-      console.log(`👤 USER ${userId} ADDED TO THE THREAD ${channelThreadId}`);
+      console.log(`👤 USERS ADDED TO THE THREAD ${sessionName}`);
     }
 
     const assistantThreads = await viseryaApi.post('/assistants/threads');
