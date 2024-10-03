@@ -40,6 +40,14 @@ export async function GET() {
 
     console.log('💾 MESSAGES DATABASE CREATED');
 
+    await sql`
+      CREATE TABLE IF NOT EXISTS characters (
+        id VARCHAR(255) NOT NULL,
+        user_id VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+      );
+    `;
+
     console.log('✅ DATABASES CREATED SUCCESSFULLY');
 
     return NextResponse.json({}, { status: 200 });
