@@ -44,7 +44,7 @@ export async function GET() {
       CREATE TABLE IF NOT EXISTS characters (
         id VARCHAR(255) NOT NULL,
         user_id VARCHAR(255) NOT NULL,
-        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        created_at TIMESTAMP NOT NULL DEFAULT NOW()
       );
     `;
 
