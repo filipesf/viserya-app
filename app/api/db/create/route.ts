@@ -23,8 +23,6 @@ export async function GET() {
       );
     `;
 
-    console.log('💾 SESSIONS DATABASE CREATED');
-
     await sql`
       CREATE TABLE IF NOT EXISTS messages (
         id VARCHAR(255) PRIMARY KEY,
@@ -38,13 +36,14 @@ export async function GET() {
       );
     `;
 
-    console.log('💾 MESSAGES DATABASE CREATED');
-
     await sql`
       CREATE TABLE IF NOT EXISTS characters (
         id VARCHAR(255) NOT NULL,
         user_id VARCHAR(255) NOT NULL,
+        name VARCHAR(255) NOT NULL,
+        info VARCHAR(255) NOT NULL,
         created_at TIMESTAMP NOT NULL DEFAULT NOW()
+        updated_at TIMESTAMP
       );
     `;
 
