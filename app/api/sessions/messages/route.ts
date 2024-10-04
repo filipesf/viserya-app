@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const { id, channelId, threadId, userId, text, guildId } =
+  const { id, channelId, threadId, userId, text, serverId } =
     await request.json();
 
   try {
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
 
     await sql`
       INSERT INTO messages (id, server_id, channel_id, user_id, thread_id, text)
-      VALUES (${id}, ${guildId}, ${channelId}, ${userId}, ${threadId}, ${text});
+      VALUES (${id}, ${serverId}, ${channelId}, ${userId}, ${threadId}, ${text});
     `;
 
     console.log('📨 MESSAGE STORED');
