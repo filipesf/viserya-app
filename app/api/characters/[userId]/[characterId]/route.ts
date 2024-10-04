@@ -160,7 +160,7 @@ export async function PUT(
 
     const result = await sql`
       UPDATE characters
-      SET name=${name}, info=${info} updated_at=NOW()
+      SET name=${name}, info=${info}, updated_at=NOW()
       WHERE id=${characterId} AND channel_id=${userId};
     `;
 
