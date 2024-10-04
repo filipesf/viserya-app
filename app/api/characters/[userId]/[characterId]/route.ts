@@ -161,7 +161,7 @@ export async function PUT(
     const result = await sql`
       UPDATE characters
       SET name=${name}, info=${info}, updated_at=NOW()
-      WHERE id=${characterId} AND channel_id=${userId};
+      WHERE id=${characterId} AND user_id=${userId};
     `;
 
     if (result.rowCount === 0) {
@@ -174,7 +174,7 @@ export async function PUT(
 
     return NextResponse.json({ status: 200 });
   } catch (error) {
-    console.error('💀 Error while trying to update the session:', error);
+    console.error('💀 Error while trying to update character:', error);
     return NextResponse.json({ error });
   }
 }
