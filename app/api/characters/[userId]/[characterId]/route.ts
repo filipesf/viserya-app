@@ -41,6 +41,7 @@ export async function GET(
       traits,
       weight,
       decorations,
+      inventory,
     } = response.data.data as CharacterSheet;
 
     return NextResponse.json(
@@ -77,6 +78,16 @@ export async function GET(
         organizations: notes.organizations,
         allies: notes.allies,
         enemies: notes.enemies,
+
+        inventory: inventory
+          .filter((item: any) => !item.definition.tags.includes('Container'))
+          .map((item: any) => {
+            const qty =
+              item.quantity < 10 ? `0${item.quantity}` : item.quantity;
+            return `${qty} ${item.definition.name}`;
+          })
+          .sort()
+          .join('\n'),
 
         notes: {
           possessions: notes.personalPossessions,
