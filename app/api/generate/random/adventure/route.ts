@@ -1,9 +1,14 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { createRandomAdventure } from '@viserya/services/gpt/actions';
-import { handleAction } from '@viserya/services/handleAction';
+import { handleMiddleware } from '@viserya/services/handleMiddleware';
 
 export const dynamic = 'force-dynamic';
 
-export async function POST(request: NextRequest) {
-  return handleAction(request, createRandomAdventure);
+export async function GET(request: NextRequest) {
+  const authResponse = await handleMiddleware(request);
+  if (authResponse) return authResponse;
+
+  const data = await createRandomAdventure();
+
+  return NextResponse.json(data, { status: 200 });
 }

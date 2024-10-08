@@ -133,11 +133,10 @@ export const getRandomMonster = async (): Promise<string> => {
   const monsterAdjective = getRandomElement(MONSTER_DATA.adjective);
   const monsterType = getRandomElement(MONSTER_DATA.type);
   const monsterAlignment = getRandomElement(MONSTER_DATA.alignment);
-  const monsterCr = getRandomElement(MONSTER_DATA.cr);
   const monsterEnvironment = getRandomElement(MONSTER_DATA.environment);
   const monsterMotivation = getRandomElement(MONSTER_DATA.motivation);
 
-  return `${monsterSize} ${monsterAdjective} ${monsterType} (CR ${monsterCr}), ${monsterAlignment}, commonly found in ${monsterEnvironment} environments, driven by the desire to ${monsterMotivation}.`;
+  return `${monsterSize} ${monsterAdjective} ${monsterType}, ${monsterAlignment}, commonly found in ${monsterEnvironment} environments, driven by the desire to ${monsterMotivation}.`;
 };
 
 /**
