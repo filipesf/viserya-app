@@ -23,6 +23,10 @@ export const MainContainer = styled.main`
     color: var(--heading-text-color);
   }
 
+  p {
+    white-space: pre-line;
+  }
+
   em {
     font-style: italic;
   }
