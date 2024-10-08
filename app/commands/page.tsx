@@ -32,6 +32,7 @@ export default function Page() {
       // ];
 
       const response = await Promise.all([
+        // viseryaApi.get(`/sheet/${CHARACTER_SHEET_ID}`),
         // viseryaApi.get('/db/create'),
         // viseryaApi.delete('/sessions'),
         // viseryaApi.delete('/sessions/messages'),
