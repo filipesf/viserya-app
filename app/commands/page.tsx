@@ -24,23 +24,8 @@ export default function Page() {
     try {
       setIsLoading(true);
 
-      // const deletions = [
-      //   {
-      //     id: '641f206e-40f7-4547-8d87-1c3d004fe77f',
-      //     channelId: '1289238599086379109',
-      //   },
-      // ];
-
       const response = await Promise.all([
         // viseryaApi.get('/db/create'),
-        // viseryaApi.delete('/sessions'),
-        // viseryaApi.delete('/sessions/messages'),
-        // viseryaApi.delete('/sessions/messages/1286816543216500768'),
-        // deletions.map((deletion) =>
-        //   viseryaApi.delete(`/sessions/${deletion.channelId}`, {
-        //     params: { id: deletion.id },
-        //   }),
-        // ),
       ]);
 
       console.log(response);
@@ -58,7 +43,9 @@ export default function Page() {
     try {
       setIsLoading(true);
 
-      const response = await viseryaApi.get(`/sheet/${CHARACTER_SHEET_ID}`);
+      const response = await viseryaApi.get(
+        `/characters/408373729358512128/${CHARACTER_SHEET_ID}`,
+      );
 
       setCharProfile(response.data as CharacterProfileProps);
 
