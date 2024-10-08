@@ -32,7 +32,6 @@ export default function Page() {
       // ];
 
       const response = await Promise.all([
-        // viseryaApi.get(`/sheet/${CHARACTER_SHEET_ID}`),
         // viseryaApi.get('/db/create'),
         // viseryaApi.delete('/sessions'),
         // viseryaApi.delete('/sessions/messages'),
@@ -59,9 +58,7 @@ export default function Page() {
     try {
       setIsLoading(true);
 
-      const response = await viseryaApi.get(`/characters`, {
-        params: { characterSheetId: CHARACTER_SHEET_ID },
-      });
+      const response = await viseryaApi.get(`/sheet/${CHARACTER_SHEET_ID}`);
 
       setCharProfile(response.data as CharacterProfileProps);
 
