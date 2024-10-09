@@ -10,13 +10,13 @@
 
 # Hook
 
-[Initial plot device that draws the players into the adventure]
+[Initial plot device that draws the players into the adventure. This should be connected to the players backstory.]
 
 ---
 
 # Plot
 
-[Narrative flow and key events that guide the adventure, including main story arcs and transitions]
+[Narrative flow and key events that guide the adventure, including main story arcs and transitions. Tie the main plot to the player's backstory, though the overall plot should not depend on any of the players entirely, covering the case when one of them needs to leave the campaign.]
 
 ---
 
@@ -44,13 +44,17 @@ _[Race], [Class, if applicable], [Alignment]_
 
 **Senses.** [Senses], [Passive Perception]
 
-**Languages.** [Languages]
+**Languages.** [The Languages that the NPC speaks]
 
 **Personality.** [Describe the NPC's personality, including ideals, bonds, and flaws]
 
-**Motivations.** [Main motivations driving the NPC]
+**Motivations.** [Main motivations driving this NPC]
+
+**Backstory.** [The NPC's backstory, including any rumours or other relevant information they may know]
 
 **Appearance.** [Describe the NPC's physical appearance, including hair, eyes, skin, facial features, jewellery, clothing, and unique features]
+
+**Equipment.** [The NPC's equipment, including weapons, armor, and other items, if applicable]
 
 [/NPCs_Section]
 
@@ -58,7 +62,7 @@ _[Race], [Class, if applicable], [Alignment]_
 
 # Encounters
 
-[Obstacles, enemies, and other difficulties the players will face, including combat scenarios, puzzles, and social challenges. If applicable, provide `Combat_Encounters_Section` and/or `Puzzle_Trap_Encounters_Section`]
+[Obstacles, enemies, and other difficulties the players will face, including combat scenarios, puzzles, and social challenges. If applicable, provide `Combat_Encounters_Section` and/or `Puzzle_Trap_Encounters_Section` including the `Combat_Encounters_Loot_Section` and/or `Puzzle_Trap_Encounters_Loot_Section`.]
 
 [Combat_Encounters_Section]
 
@@ -74,6 +78,18 @@ _[Race], [Class, if applicable], [Alignment]_
 | ------------------- | ------ | ------ | -------------------- | ------------------------------- | ------------------ |
 | [List Enemies Name] | [HP]   | [AC]   | [Attack Description] | [Special Abilities Description] | [Additional Notes] |
 
+[Combat_Encounters_Loot_Section]
+
+### Loot (Optional)
+
+[Items, treasure, or other rewards the players can obtain after defeating the enemies]
+
+| **Loot**         | **Type**       | **Description**                    | **Value**                         | **Notes**                                |
+| ---------------- | -------------- | ---------------------------------- | --------------------------------- | ---------------------------------------- |
+| [List Loot Name] | [Type of loot] | [Detailed description of the loot] | [Value in gold or other currency] | [Additional notes or special properties] |
+
+[/Combat_Encounters_Loot_Section]
+
 [/Combat_Encounters_Section]
 
 [Puzzle_Trap_Encounters_Section]
@@ -88,15 +104,19 @@ _[Race], [Class, if applicable], [Alignment]_
 | ------------------------- | ------------- | -------------------------------------------- | ----------------------------------------------- | -------------------------------------- | ---------------------------------------- |
 | [List Puzzles/Traps Name] | [Puzzle/Trap] | [Detailed description of the puzzle or trap] | [Method to solve the puzzle or disarm the trap] | [Effect or outcome of the puzzle/trap] | [Additional notes or special properties] |
 
-[/Puzzle_Trap_Encounters_Section]
+[Puzzle_Trap_Encounters_Loot_Section]
 
-## Loot
+### Loot (Optional)
 
 [Items, treasure, or other rewards the players can obtain after defeating the enemies]
 
 | **Loot**         | **Type**       | **Description**                    | **Value**                         | **Notes**                                |
 | ---------------- | -------------- | ---------------------------------- | --------------------------------- | ---------------------------------------- |
 | [List Loot Name] | [Type of loot] | [Detailed description of the loot] | [Value in gold or other currency] | [Additional notes or special properties] |
+
+[/Puzzle_Trap_Encounters_Loot_Section]
+
+[/Puzzle_Trap_Encounters_Section]
 
 ---
 
@@ -112,7 +132,7 @@ _[Race], [Class, if applicable], [Alignment]_
 
 # Rewards
 
-[Detail the incentives or rewards for achieving the goals]
+[Detail the incentives or rewards for achieving the goals, not necessarily loot.. This may include things like XP, gold, items, valuable information,or other rewards.]
 
 | **Reward**          | **Type**         | **Description**                      | **Value**                         | **Notes**                                |
 | ------------------- | ---------------- | ------------------------------------ | --------------------------------- | ---------------------------------------- |
