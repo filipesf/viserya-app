@@ -1,7 +1,7 @@
 import { openai } from '@viserya/config/openai';
 
 export const runtime = 'nodejs';
-export const maxDuration = 300;
+export const maxDuration = 60;
 
 // Create a new thread
 export async function POST() {

@@ -12,7 +12,7 @@ import { openai } from '@viserya/config/openai';
 import { CampaignData } from '@viserya/types';
 
 export const runtime = 'nodejs';
-export const maxDuration = 300;
+export const maxDuration = 60;
 
 const CampaignSchema = z.object({
   title: z.string(),
