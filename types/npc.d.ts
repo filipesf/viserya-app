@@ -1,0 +1,34 @@
+export type NpcData = {
+  name: string;
+  size: string;
+  race: string;
+  alignment: string;
+  ac: number;
+  ac_type: string;
+  hp: number;
+  hitdice: string;
+  speed: string;
+  str: number;
+  dex: number;
+  con: number;
+  int: number;
+  wis: number;
+  cha: number;
+  proficiency: number;
+  skills: string;
+  senses: string;
+  languages: string;
+  cr: string;
+  xp: string;
+  actions: {
+    name: string;
+    description: string;
+  }[];
+  backstory: string;
+  personality?: string;
+  ideals?: string;
+  bonds?: string;
+  flaws?: string;
+  inventory?: string;
+  appearance: string;
+};

@@ -51,30 +51,18 @@
     "a wise"
   ],
   "race": [
-    "Aarakocra",
     "Aasimar",
-    "Changeling",
     "Dragonborn",
-    "Drow",
-    "Duergar",
     "Dwarf",
-    "Eladrin",
+    "Elf",
     "Firbolg",
     "Gnome",
     "Goliath",
-    "Half-Elf",
-    "Half-Orc",
     "Halfling",
-    "High Elf",
     "Human",
     "Kobold",
-    "Lizardfolk",
     "Orc",
-    "Sea Elf",
-    "Sun Elf",
-    "Tiefling",
-    "Warforged",
-    "Wood Elf"
+    "Tiefling"
   ],
   "class": [
     "Artificer",

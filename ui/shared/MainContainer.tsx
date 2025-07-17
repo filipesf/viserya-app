@@ -25,6 +25,7 @@ export const MainContainer = styled.main`
 
   p {
     white-space: pre-line;
+    text-wrap: pretty;
   }
 
   em {

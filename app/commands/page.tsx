@@ -6,8 +6,12 @@ import React from 'react';
 import { NEXT_PUBLIC_DISCORD_APP_ID } from '@viserya/config/constants';
 import { viseryaApi } from '@viserya/services/viseryaApi';
 import { CharacterProfile as CharacterProfileProps } from '@viserya/types/sheet';
-import { Button, CharacterProfile, SectionContainer } from '@viserya/ui';
-import { Notify } from '@viserya/ui/Notify';
+import {
+  Button,
+  CharacterProfile,
+  Notify,
+  SectionContainer,
+} from '@viserya/ui';
 
 const CHARACTER_SHEET_ID = '133561915'; // Vaelorn
 // const CHARACTER_SHEET_ID = '127555805'; // Kragmir

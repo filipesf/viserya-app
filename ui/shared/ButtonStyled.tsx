@@ -182,6 +182,14 @@ export const ButtonStyled = styled.button<ButtonProps<any>>`
   &:disabled {
     cursor: not-allowed;
     opacity: 0.6;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: var(--button-background-color);
+      border-color: var(--button-border-color);
+      color: var(--button-text-color);
+    }
   }
 
   ${(props) => sizeStyles[props.$size || 'md']}

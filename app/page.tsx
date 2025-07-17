@@ -81,7 +81,13 @@ export default function Home() {
 
             <CardContent>{generatedContent}</CardContent>
 
-            {abilityScores && <AbilityScores scores={abilityScores} />}
+            {abilityScores && (
+              <div>
+                <hr />
+                <AbilityScores scores={abilityScores} />
+                <hr />
+              </div>
+            )}
 
             <CardActions>
               <ButtonIcon

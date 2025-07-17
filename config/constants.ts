@@ -7,6 +7,8 @@ export const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN || '';
 export const DISCORD_KEY = process.env.DISCORD_KEY || '';
 export const CHARSHEET_API = process.env.CHARSHEET_API || '';
 
+export const ARRAY_TO_STRING_DIVIDER = ' | ';
+
 export const LOCAL_STORAGE_THEME = 'viserya-theme';
 
 export const ROLE_ID_ADVENTURER: string = '1285324503383019694';

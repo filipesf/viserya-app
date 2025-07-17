@@ -1,26 +1,54 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { CharacterAttributes } from '@viserya/types';
+import { Icon } from '../Icon/Icon';
 
-type AbilityScoresProps = {
+type ScoreContainerProps = {
+  $columns?: number;
+  $justify?: 'start' | 'center' | 'space-between' | 'space-around' | 'end';
+};
+
+type AbilityScoresProps = ScoreContainerProps & {
   scores: CharacterAttributes;
 };
 
-const ScoresContainer = styled.div`
-  --score-item-size: var(--spacing-12);
-
-  display: grid;
+export const AbilityScoresGroup = styled.div`
+  display: flex;
   align-items: center;
-  justify-content: center;
-  grid-template-columns: repeat(6, var(--score-item-size));
+  justify-content: start;
   gap: var(--spacing-rg);
-  width: 100%;
 
   @media screen and (max-width: 768px) {
-    grid-template-columns: repeat(3, var(--score-item-size));
+    gap: var(--spacing-lg);
+    justify-content: center;
   }
 `;
 
-const ScoreItem = styled.div`
+const ScoresContainer = styled.div<ScoreContainerProps>`
+  --score-item-size: var(--spacing-18);
+
+  display: grid;
+  align-items: center;
+  justify-content: space-around;
+  grid-template-columns: repeat(
+    ${({ $columns }) => $columns ?? 6},
+    var(--score-item-size)
+  );
+  gap: var(--spacing-md);
+
+  @media screen and (max-width: 768px) {
+    /* --score-item-size: var(--spacing-12); */
+
+    grid-template-columns: repeat(
+      ${({ $columns }) => $columns ? $columns / 2 : 3},
+      var(--score-item-size)
+    );
+
+    justify-content: ${({ $justify }) => $justify ?? 'center'};
+  }
+`;
+
+const ScoreItem = styled.div<{ $variant?: string }>`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,29 +56,62 @@ const ScoreItem = styled.div`
   gap: var(--spacing-xs);
   width: var(--score-item-size);
   height: var(--score-item-size);
-  border: 2px solid var(--border-color);
+  /* border: 3px solid var(--border-color); */
   border-radius: var(--border-radius-sm);
   flex-shrink: 0;
+
+  ${({ $variant }) =>
+    ($variant === 'hp' || $variant === 'ac') &&
+    css`
+      border: none;
+
+      ${ScoreLabel} {
+        display: none;
+      }
+
+      ${ScoreValue} {
+        font-size: var(--font-size-md);
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      > svg {
+        position: absolute;
+        top: -9px;
+        fill: var(--border-color);
+      }
+    `}
 `;
 
 const ScoreLabel = styled.span`
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-rg);
   font-weight: 600;
   line-height: 1;
+  text-transform: uppercase;
   opacity: 0.65;
+
+  /* @media screen and (max-width: 768px) {
+    font-size: var(--font-size-xs);
+  } */
 `;
 
 const ScoreValue = styled.span`
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
   font-weight: 600;
   line-height: 1;
+
+  /* @media screen and (max-width: 768px) {
+    font-size: var(--font-size-sm);
+  } */
 `;
 
-export function AbilityScores({ scores }: AbilityScoresProps) {
+export function AbilityScores({ scores, $columns }: AbilityScoresProps) {
   return (
-    <ScoresContainer>
+    <ScoresContainer $columns={$columns ?? Object.entries(scores).length}>
       {Object.entries(scores).map(([key, value]) => (
-        <ScoreItem key={key}>
+        <ScoreItem key={key} $variant={key}>
+          {key === 'ac' && <Icon name="Shield" weight="light" size={64} />}
+          {key === 'hp' && <Icon name="Heart" weight="light" size={64} />}
           <ScoreLabel>{key}</ScoreLabel>
           <ScoreValue>{value}</ScoreValue>
         </ScoreItem>

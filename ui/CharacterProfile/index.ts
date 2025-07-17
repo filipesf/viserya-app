@@ -4,3 +4,4 @@ export * from './CharacterProfileHeader';
 export * from './CharacterProfileContent';
 export * from './CharacterProfileCard';
 export * from './CharacterProfileAvatar';
+export * from './NPCProfile';

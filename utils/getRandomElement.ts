@@ -10,6 +10,15 @@ import {
   OrganisationData,
   TavernData,
 } from '@viserya/types';
+import {
+  STR_QUESTIONS,
+  DEX_QUESTIONS,
+  CON_QUESTIONS,
+  INT_QUESTIONS,
+  WIS_QUESTIONS,
+  CHA_QUESTIONS,
+  Question,
+} from '@viserya/utils/questions';
 import { readDataFile } from './readFiles';
 import { toTitleCase } from './toTitleCase';
 
@@ -65,11 +74,22 @@ const loadData = async (): Promise<CombinedData> => {
   }
 };
 
-const getRandomElement = (arr: string[]): string => {
+const getRandomElement = <T>(arr: T[]): T => {
   if (arr.length === 0) {
     throw new Error('Array is empty.');
   }
   return arr[Math.floor(Math.random() * arr.length)];
+};
+
+export const getQuizQuestions = (): Question[] => {
+  return [
+    getRandomElement(STR_QUESTIONS),
+    getRandomElement(DEX_QUESTIONS),
+    getRandomElement(CON_QUESTIONS),
+    getRandomElement(INT_QUESTIONS),
+    getRandomElement(WIS_QUESTIONS),
+    getRandomElement(CHA_QUESTIONS),
+  ];
 };
 
 export const getRandomCharacter = async (): Promise<string> => {
@@ -316,4 +336,41 @@ export const getMarketplaceSessionName = async (): Promise<string> => {
   const goods = getRandomElement(MARKET_SESSION_DATA.goods);
 
   return `${market} ${kingdom} ${goods}`;
+};
+
+export const getRandomPlaceholder = (): string => {
+  const placeholders = [
+    'Uncover the mystery of this NPC, or choose one of the provided prompts...',
+    'Learn the story of this NPC, or pick a direction to explore...',
+    'Reveal the background of this NPC, or select from the options below...',
+    'Unveil the identity of this NPC, or choose a prompt to continue...',
+    'Discover the past of this NPC, or select a path from the prompts...',
+    'Summon the details of this NPC, or choose one of the available threads...',
+    'Expose the hidden truths of this NPC, or pick a prompt to follow...',
+    'Let the tale of this NPC unfold, or choose your next prompt...',
+    'Learn more about this NPC, or select a new course from the prompts...',
+    'Seek the history of this NPC, or choose from the prompts to continue...',
+    'Tell the story of this NPC, or select a prompt to dive deeper...',
+    'Reveal the secrets of this NPC, or choose a prompt to shape your journey...',
+    'Unravel the mysteries of this NPC, or pick a prompt from the list below...',
+    'Let the legend of this NPC be known, or select one of the following prompts...',
+    'Discover the identity of this NPC, or choose a different direction from the prompts...',
+    'Bring forth the tale of this NPC, or choose one of the available prompts...',
+    'Reveal what you wish to know about this NPC, or select a new path...',
+    'Explore the background of this NPC, or pick a prompt to lead you forward...',
+    'Unveil more about this NPC, or choose a prompt to follow their story...',
+    'Speak the history of this NPC, or select a path from the prompts below...',
+    "Let this NPC's story come to light, or choose your next prompt...",
+    'Unravel the enigma of this NPC, or follow one of the provided threads...',
+    'Seek the truth of this NPC, or select a prompt to continue your exploration...',
+    'Uncover the tale behind this NPC, or choose a prompt to guide your discovery...',
+    'Learn what lies beneath the surface of this NPC, or select a new course from the prompts...',
+    'Reveal the tale that shapes this NPC, or choose one of the available prompts...',
+    'Explore the depths of this NPC, or select a prompt to uncover more...',
+    'Unearth the history of this NPC, or follow one of the provided prompts...',
+    'Tell the tale of this NPC, or choose a path to further your journey...',
+    'Summon the details of this NPC’s life, or choose a prompt to explore...',
+  ];
+
+  return placeholders[Math.floor(Math.random() * placeholders.length)];
 };

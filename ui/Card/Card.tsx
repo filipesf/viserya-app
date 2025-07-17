@@ -10,4 +10,12 @@ export const Card = styled.div`
   padding: var(--spacing-md);
   border-radius: var(--border-radius-md);
   background-color: var(--card-background-color);
+
+  > * {
+    width: 100%;
+  }
+
+  hr {
+    margin: var(--spacing-rg) 0;
+  }
 `;

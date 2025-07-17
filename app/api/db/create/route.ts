@@ -47,6 +47,39 @@ export async function GET() {
       );
     `;
 
+    await sql`
+      CREATE TABLE IF NOT EXISTS npc (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        name VARCHAR(100) NOT NULL,
+        race VARCHAR(50) NOT NULL,
+        class VARCHAR(50) NOT NULL,
+        background VARCHAR(100),
+        alignment VARCHAR(50),
+        hp INT,
+        hitdice VARCHAR(50),
+        ac INT,
+        armor_type VARCHAR(50),
+        speed INT,
+        str INT,
+        dex INT,
+        con INT,
+        int INT,
+        wis INT,
+        cha INT,
+        skills TEXT,
+        senses TEXT,
+        passive_perception INT,
+        languages TEXT,
+        actions TEXT,
+        personality TEXT,
+        motivations TEXT,
+        backstory TEXT,
+        appearance TEXT,
+        equipment TEXT,
+        created_at TIMESTAMP NOT NULL DEFAULT NOW()
+      );
+    `;
+
     console.log('✅ DATABASES CREATED SUCCESSFULLY');
 
     return NextResponse.json({}, { status: 200 });

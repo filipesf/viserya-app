@@ -4,7 +4,7 @@ _[Race], [Class, if applicable], [Alignment]_
 
 **Armor Class** [Armor Class] ([Armor Class Type])
 
-**Hit Points** [Hit Points]
+**Hit Points** [Hit Points] ([Hit Dies])
 
 **Speed** [Speed]
 
@@ -17,6 +17,8 @@ _[Race], [Class, if applicable], [Alignment]_
 **Senses.** [Senses], [Passive Perception]
 
 **Languages.** [The Languages that the NPC speaks]
+
+**Actions.** [The Actions the NPC can take]
 
 ---
 

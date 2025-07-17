@@ -17,7 +17,7 @@ export type DescriptionPrompt = {
 };
 
 export type ImagePrompt = {
-  style: string;
+  style: ImageStyle;
   size: ImageSize;
   angle: ImageAngle;
 };
@@ -25,6 +25,12 @@ export type ImagePrompt = {
 export type ImageSize = {
   square: '1024x1024' | null;
   wide: '1792x1024' | null;
+};
+
+export type ImageStyle = {
+  comicbook: string;
+  watercolor: string;
+  shadowdark: string;
 };
 
 export type ImageAngle = {
@@ -38,7 +44,7 @@ export type ImageAngle = {
 };
 
 export async function POST(request: NextRequest) {
-  const { description, angle, size } = await request.json();
+  const { description, angle, size, style } = await request.json();
   const { image } = (await readDataFile('prompts')) as Prompts;
 
   const aspectRatios: ImageSize = {
@@ -53,7 +59,8 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const prompt = `${image.style}\n\n${description}\n\n${image.angle[angle as keyof ImageAngle]}`.trim();
+  const prompt =
+    `${image.style[style as keyof ImageStyle]}\n\n${description}\n\n${image.angle[angle as keyof ImageAngle]}`.trim();
 
   console.log('📑 IMAGE PROMPT:', prompt);
   console.log('👨‍🎨 PAINTING THE REQUESTED IMAGE');

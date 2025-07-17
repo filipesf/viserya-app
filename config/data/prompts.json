@@ -6,6 +6,11 @@
   },
   "image": {
     "style": "Create an illustration with a dark fantasy atmosphere, featuring bold lines and dramatic contrasts. Use a rich but subdued colour palette to convey depth and mood. Apply soft lighting with delicate highlights and shadows for dimensionality. Blur the background slightly to maintain environmental context but keep the focus on the central figure.",
+    "styles": {
+      "comicbook": "Create an illustration with a dark fantasy atmosphere, featuring bold lines and dramatic contrasts. Use a rich but subdued colour palette to convey depth and mood. Apply soft lighting with delicate highlights and shadows for dimensionality. Blur the background slightly to maintain environmental context but keep the focus on the central figure.",
+      "watercolor": "Create an illustration with a dark fantasy atmosphere, using a watercolor style with soft, fluid lines and gentle gradients. Incorporate dramatic contrasts with a rich yet subdued color palette to convey depth and mood. Apply soft, diffused lighting with delicate washes of color, allowing highlights and shadows to blend naturally for a layered, atmospheric effect. Blur the background slightly to maintain environmental context without sharp details, keeping the focus on the central figure while embracing the translucent, organic quality of watercolor.",
+      "shadowdark": "Create an illustration with a dark fantasy atmosphere, rendered entirely in a monochromatic black-and-white palette. Use bold, intricate linework and dramatic contrasts to convey a sense of depth and intensity. Incorporate dense textures through cross-hatching and fine details to enhance the organic or grotesque elements. Employ sharp, high-contrast lighting with stark highlights and deep shadows to emphasize the central figure. Keep the background filled with subtle, abstract patterns or hints of the environment, ensuring it complements the central focus without overpowering it. Focus on a raw, graphic style evocative of traditional woodcuts or etchings."
+    },
     "size": {
       "square": "1024x1024",
       "wide": "1792x1024"
