@@ -12,7 +12,7 @@ import { openai } from '@viserya/config/openai';
 import { NpcData } from '@viserya/types';
 
 export const runtime = 'nodejs';
-export const maxDuration = 300;
+
 
 const NpcSchema = z.object({
   name: z.string(),

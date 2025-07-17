@@ -12,7 +12,6 @@ import { openai } from '@viserya/config/openai';
 import { CityData } from '@viserya/types';
 
 export const runtime = 'nodejs';
-export const maxDuration = 300;
 
 const CitySchema = z.object({
   name: z.string(),
