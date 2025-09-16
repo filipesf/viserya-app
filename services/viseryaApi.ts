@@ -6,7 +6,7 @@ const getBaseUrl = () => {
   if (typeof window !== 'undefined') {
     return `${window.location.origin}/api/`;
   } else {
-    return `https://${process.env.HOST || 'viserya.app'}/api/`;
+    return `https://${process.env.HOST || 'viserya-app.vercel.app'}/api/`;
   }
 };
 
